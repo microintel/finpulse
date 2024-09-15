@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinPulse</title>
+    <link rel="stylesheet" href="finpulse.css">
+</head>
+<body>
+
+<div id="cnrdi" class="cnrd">
+<form action="#" onsubmit="appendC(event,'nria','nrid','nrif','nrie','nrib')">
+   <fieldset>
+   <legend>Create New Record</legend>
+    <input type="number" placeholder="Enter Amount" id="nria" required>
+    <input type="text" placeholder="Slect Date" onfocus="(this.type='date')" id="nrid" required >
+    <input type="text" placeholder="Enter Amount Source" id="nrif" required>
+    <input type="number" placeholder="Enter Expence" id="nrie" required>
+    <input type="number" placeholder="Enter Balance" id="nrib" required>
+    <hr style="width:100%;">
+    <div style="display:flex;width:100%;justify-content:space-around;">
+    <button type="submit" >Save Record</button>
+    <button type="button" onclick="clo('cnrdi')">Close</button>
+    </div>
+  </fieldset>
+  </form>
+</button>
+</div>
+
+
+<div id="anrdi" class="anrd">
+    <form action="#" onsubmit="addTr(event, 'anria', 'anrid', 'anrif')">
+        <fieldset>
+            <legend>Add Transaction</legend>
+            <input type="number" placeholder="Enter Amount" id="anria" required>
+            <input type="text" placeholder="Select Date" onfocus="(this.type='date')" id="anrid" required>
+            <input type="text" placeholder="Enter Amount Source" id="anrif" required>
+            <hr style="width:100%;">
+            <div style="display:flex;width:100%;justify-content:space-around;">
+                <button type="submit">Save Record</button>
+                <button type="button" onclick="clo('anrdi')">Close</button>
+            </div>
+        </fieldset>
+    </form>
+</div>
+
+
+
+
+<div class="menu" id="mmmm">
+
+<div class="om">
+  <img width="30px" id="mimg" src="https://img.icons8.com/?size=100&id=36389&format=png&color=FFFFFF">
+    <ul class="feed">
+      <li onclick="location.href='https://microintel.github.io/endgram/file/coding.html'">Profile</li>
+      <li class="cnrr" onclick="discr('cnrdi')">Add Record</li>
+      <li onclick="location.href='https://microintel.github.io/endgram/file/coding.html'"onclick="">Statistics</li>
+      <li><font onclick="printe()">Print</font></li>
+      <li onclick="location.href='https://microintel.github.io/endgram/file/coding.html'">Log out</li>
+    </ul>
+  </div>
+  
+  <img id="tttim" width="100px" height="35px" src="https://raw.githubusercontent.com/microintel/endgram/main/photo/finpulse-white.png">
+
+<div id="yyyy" class="theame">
+  <img onclick="theame(this.id)" id="w" src="https://img.icons8.com/?size=100&id=Ppe22DwOvBTF&format=png&color=FFFFFF">
+  </div>
+
+</div>
+<br>
+<center><h2 style="text-align:left;" id="adapa">FinPulse</h2></center>
+
+
+<div class="bsea">
+<a href="#sinpp">&#x1F50D</a>
+
+</div>
+
+  <div id="ssinp" class="sinp">
+  
+  <input type="text" id="sinpp" placeholder="Amount &#x1F50D ..." oninput="searTa()" />
+        
+        <input type="text" id="seait" placeholder="Tran &#x1F50D ..." oninput="sea()" />
+        <img ondblclick="borww('block')" id="bori" src="https://img.icons8.com/?size=100&id=rRTAE6XGGP2Q&format=png&color=FFFFFF">
+        
+       </div> 
+   <br>
+   
+   <div id="borwi" class="borw">
+   <div class="canh">
+   <h4 style="margin:0px;padding:0px;color:transparent;">B</h4>
+   <center>
+   <h4 style="margin:0px;padding:0px;color:var(--b)">Borrows</h4>
+   </center>
+   <p id="canb" style="padding:0px;margin:0px;" onclick="borww('none')"><i class="material-icons" style="padding:0px;margin;0x;font-size:22px;color:red">cancel</i></p>
+   </div>
+   
+  <p>1. 3000MF + 5000Suzolol</p>
+   <p>2. 11,150 to vadimama [ sanga+vandi service charges ] he told return [ 6800 ]</p>
+   <p>3. 522, Ambika atthe May Mobile Recharge She told to me I will Return it but No-Return</p>
+   
+   </div>
+   
+   <br>
+   <div id="crai" class="cra">
+  <div id="donutchart"></div>
+   <details id="radiii" class="rad">
+        <summary id="rsumi" class="rsum"></summary>
+        <div id="rsdi" class="rsd">
+       </div>
+   </details>
+   </div>
+   <br>
+    <center>
+        <div id="stytt" class="styt">
+        <div id="staa">
+        
+        <p>INCOME</p>
+        <p>EXPENCE</p>
+        <p>BALANCE</p>
+        <p>TRAN EXP</p>
+        </div>
+        <div id="sta">
+       
+        <p id="allin"></p>
+        <p id="exp"></p>
+        <p id="bal"></p>
+        <p id="exex"></p>
+        </div>
+        </div>
+
+        <br>
+        <div id="ppr" class="parnt">
+           <div class="child">
+              <div class="idfeb">
+                  <font class="incomeColumn">1000</font>
+                  <font class="dateColumn">3/4/24</font>
+                  <font class="fromm">sal</font>
+                  <font class="exep">1000</font>
+                 <font class='Abal'>0</font>
+                  <font onclick="discr('anrdi','adtra')" id="adtra"><img class="adimg" src="https://img.icons8.com/?size=100&id=szDzfecravBo&format=png&color=FA5252"></font>
+              </div>
+              
+              <div id="trandi" class="trand">
+                   <div class="trans">
+                       <font class="mony">600</font>
+                       <font class="tdate">08/20/23</font>
+                       <font class="tdes">gobi djjdd djej ieneejie eiieieke isejenje ieej</font>
+                   </div>
+                   <div class="trans">
+                       <font class="mony">300</font>
+                       <font class="tdate">09/20/23</font>
+                       <font class="tdes">pups</font>
+                   </div>
+                   <div class="trans">
+                       <font class="mony">100</font>
+                       <font class="tdate">18/20/23</font>
+                       <font class="tdes">recharge</font>
+                   </div>
+              </div>
+        </div>
+        
+        <div class="child">
+             <div class="idfeb">
+               <font class="incomeColumn">10000</font>
+               <font class="dateColumn">7/4/24</font>
+               <font class="fromm">dip</font>
+               <font class="exep">8000</font>
+               <font class='Abal'>2000</font>
+               <font onclick="discr('anrdi',this.id)" id="adtra1"><img class="adimg" src="https://img.icons8.com/?size=100&id=szDzfecravBo&format=png&color=FA5252"></font>
+             </div>
+        
+            <div class="trand">
+                 <div class="trans">
+                    <font class="mony">1000</font>
+                    <font class="tdate">08/5/23</font>
+                    <font class="tdes">movie</font>
+                 </div>
+                 <div class="trans">
+                    <font class="mony">2000</font>
+                    <font class="tdate">08/7/23</font>
+                    <font class="tdes">jathre</font>
+                 </div>
+                 <div class="trans">
+                   <font class="mony">5000</font>
+                   <font class="tdate">08/33/23</font>
+                  <font class="tdes">gundlu pete</font>
+                </div>
+            </div>
+        </div>
+        
+       
+        
+        <div class="child">
+        <div class="idfeb">
+        <font class="incomeColumn">60000</font>
+        <font class="dateColumn">9/14/24</font>
+        <font class="fromm">Fashion</font>
+        <font class="exep">25000</font>
+        <font class='Abal'>35000</font>
+        <font onclick="discr('anrdi',this.id)" id="adtra33">
+        <img class="adimg" src="https://img.icons8.com/?size=100&id=szDzfecravBo&format=png&color=FA5252" />
+        </font>
+        </div>
+        
+        <div class="trand">
+        <div class="trans">
+        <font class="mony">10000</font>
+        <font class="tdate">09/05/24</font>
+        <font class="tdes">Spa Treatment</font>
+        </div>
+        <div class="trans">
+        <font class="mony">13000</font>
+        <font class="tdate">09/10/24</font>
+        <font class="tdes">Designer Dress</font>
+        </div>
+        <div class="trans">
+        <font class="mony">2000</font>
+        <font class="tdate">09/12/24</font>
+        <font class="tdes">Lunch Date</font>
+        </div>
+        </div>
+        </div>
+        
+        <div class="child">
+        <div class="idfeb">
+        <font class="incomeColumn">120000</font>
+        <font class="dateColumn">9/14/24</font>
+        <font class="fromm">Business</font>
+        <font class="exep">50000</font>
+        <font class='Abal'>70000</font>
+        <font onclick="discr('anrdi',this.id)" id="adtr389">
+        <img class="adimg" src="https://img.icons8.com/?size=100&id=szDzfecravBo&format=png&color=FA5252" />
+        </font>
+        </div>
+        
+        <div class="trand">
+        <div class="trans">
+        <font class="mony">15000</font>
+        <font class="tdate">09/01/24</font>
+        <font class="tdes">Office Rent</font>
+        </div>
+        <div class="trans">
+        <font class="mony">20000</font>
+        <font class="tdate">09/08/24</font>
+        <font class="tdes">Marketing Campaign</font>
+        </div>
+        <div class="trans">
+        <font class="mony">15000</font>
+        <font class="tdate">09/12/24</font>
+        <font class="tdes">Staff Training</font>
+        </div>
+        </div>
+        </div>
+    
+        <div class="child">
+        <div class="idfeb">
+        <font class="incomeColumn">90000</font>
+        <font class="dateColumn">9/14/24</font>
+        <font class="fromm">Freelance</font>
+        <font class="exep">35000</font>
+        <font class='Abal'>55000</font>
+        <font onclick="discr('anrdi',this.id)" id="adta367">
+        <img class="adimg" src="https://img.icons8.com/?size=100&id=szDzfecravBo&format=png&color=FA5252" />
+        </font>
+        </div>
+        
+        <div class="trand">
+        <div class="trans">
+        <font class="mony">10000</font>
+        <font class="tdate">09/02/24</font>
+        <font class="tdes">Tech Conference</font>
+        </div>
+        <div class="trans">
+        <font class="mony">15000</font>
+        <font class="tdate">09/07/24</font>
+        <font class="tdes">New Laptop</font>
+        </div>
+        <div class="trans">
+        <font class="mony">5000</font>
+        <font class="tdate">09/10/24</font>
+        <font class="tdes">Online Courses</font>
+        </div>
+        </div>
+        </div>
+        
+        <div class="child">
+        <div class="idfeb">
+        <font class="incomeColumn">12000</font>
+        <font class="dateColumn">9/14/24</font>
+        <font class="fromm">Part-Time</font>
+        <font class="exep">5000</font>
+        <font class='Abal'>7000</font>
+        <font onclick="discr('anrdi',this.id)" id="adt379u6">
+        <img class="adimg" src="https://img.icons8.com/?size=100&id=szDzfecravBo&format=png&color=FA5252" />
+        </font>
+        </div>
+        
+        <div class="trand">
+        <div class="trans">
+        <font class="mony">2000</font>
+        <font class="tdate">09/02/24</font>
+        <font class="tdes">Textbooks</font>
+        </div>
+        <div class="trans">
+        <font class="mony">1500</font>
+        <font class="tdate">09/08/24</font>
+        <font class="tdes">Campus Meals</font>
+        </div>
+        <div class="trans">
+        <font class="mony">1500</font>
+        <font class="tdate">09/12/24</font>
+        <font class="tdes">Public Transportation</font>
+        </div>
+        </div>
+        </div>
+        
+        <div class="child">
+        <div class="idfeb">
+        <font class="incomeColumn">50000</font>
+        <font class="dateColumn">9/14/24</font>
+        <font class="fromm">Savings</font>
+        <font class="exep">20000</font>
+        <font class='Abal'>30000</font>
+        <font onclick="discr('anrdi',this.id)" id="ad5433h">
+        <img class="adimg" src="https://img.icons8.com/?size=100&id=szDzfecravBo&format=png&color=FA5252" />
+        </font>
+        </div>
+        
+        <div class="trand">
+        <div class="trans">
+        <font class="mony">7000</font>
+        <font class="tdate">09/01/24</font>
+        <font class="tdes">Flight Tickets</font>
+        </div>
+        <div class="trans">
+        <font class="mony">10000</font>
+        <font class="tdate">09/05/24</font>
+        <font class="tdes">Hotel Accommodation</font>
+        </div>
+        <div class="trans">
+        <font class="mony">3000</font>
+        <font class="tdate">09/10/24</font>
+        <font class="tdes">Local Transportation</font>
+        </div>
+        </div>
+        </div>
+        <div class="child">
+        <div class="idfeb">
+        <font class="incomeColumn">200000</font>
+        <font class="dateColumn">9/14/24</font>
+        <font class="fromm">Marvel</font>
+        <font class="exep">80000</font>
+        <font class='Abal'>120000</font>
+        <font onclick="discr('anrdi',this.id)" id="adtr365tff">
+        <img class="adimg" src="https://img.icons8.com/?size=100&id=szDzfecravBo&format=png&color=FA5252" />
+        </font>
+        </div>
+        
+        <div class="trand">
+        <div class="trans">
+        <font class="mony">25000</font>
+        <font class="tdate">09/01/24</font>
+        <font class="tdes">Special Effects</font>
+        </div>
+        <div class="trans">
+        <font class="mony">35000</font>
+        <font class="tdate">09/05/24</font>
+        <font class="tdes">Actor Salaries</font>
+        </div>
+        <div class="trans">
+        <font class="mony">20000</font>
+        <font class="tdate">09/10/24</font>
+        <font class="tdes">Marketing and Promotions</font>
+        </div>
+        </div>
+        </div>
+        </div>
+        
+        </div>
+        
+        <script src="finpulse.js"></script>
+       
+       <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+       <script type="text/javascript">
+       google.charts.load("current", {packages:["corechart"]});
+       google.charts.setOnLoadCallback(drawChart);
+       
+       </script>
+       <br><br>
+        <center>
+        <img class="dbimg" id="parr" src="https://raw.githubusercontent.com/microintel/endgram/main/photo/microintel-black-small.png">
+        </center>
+        </body>
+        </html>
