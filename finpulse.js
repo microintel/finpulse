@@ -1,5 +1,5 @@
 let preNo = "";
-       
+       alert("This is still in development. No data is saved yet. Future updates will include data storage and statistics .");
        function addTr(event,a,b,c) {
        event.preventDefault();
        let tA = document.getElementById(a);
