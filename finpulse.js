@@ -223,8 +223,8 @@ let preNo = "";
         var data = google.visualization.arrayToDataTable([
         ['adapaavi', 'finpulse'],
         ['Income',cin],
-        ['Expence', cexp],
-        ['Balance',cbala]
+        ['Expence',cbala],
+        ['Balance',cexp]
         ]);
         
         var options = {

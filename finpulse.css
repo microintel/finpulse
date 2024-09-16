@@ -426,16 +426,17 @@
         }
         .feed{
         position:absolute;
-        width:130px;
-        height:150px;
+        width:150px;
+        height:180px;
         left:30px;
         background-color:var(--w);
         padding:0px;
         margin:0px;
         display:flex;
         display:none;
-        border-radius:8px;
+        border-radius:3px;
         flex-direction:column;
+        
         border:1px solid var(--tbor);
         justify-content:space-around;
         align-items:center;
@@ -448,9 +449,9 @@
         color:var(--b);
         height:100%;
         border-bottom:1.5px solid var(--tbor);
-        text-align:center;
+        text-align:left;
         }
-        li:nth-child(5){
+        li:nth-child(6){
         border-bottom:none;
         }
         .om:hover .feed{
