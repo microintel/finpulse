@@ -60,7 +60,7 @@ FinPulse includes a lending feature to track money lent to others. This function
 
 ---
 
-## 5. Print FinPulse
+## 2.9 Print FinPulse
 
 FinPulse offers an option to print transaction statistics and amounts for physical records or reporting purposes:
 
@@ -81,3 +81,5 @@ In upcoming versions of FinPulse, we plan to introduce advanced features like **
 - **User-Friendly Interface**: The interface is designed to be simple and intuitive, making it easy to create new records, add transactions, and access financial data efficiently.
 
 ---
+
+[FinPulse](https://microintel.github.io/finpulse)
