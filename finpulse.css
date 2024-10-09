@@ -17,8 +17,9 @@
             color:var(--w);
             background-color:var(--back);
           font-family: Times New Roman, Times, serif;
-            margin:10px;
-            padding:0;
+            margin:0px;
+            padding:8px;
+            
         }
 
       
@@ -53,6 +54,7 @@
         }
         #allin{
         color:var(--inc);
+        
         }
         #exp{
         color:var(--exp);
@@ -121,13 +123,15 @@
         
         .child {
         display: flex;
-        flex-direction: column;
-        flex-wrap: wrap;
+        flex-direction:row;
+        flex-wrap:wrap;
+        
         gap:10px;
-        width: 320px;
+        width:100%;
         border: 1px solid var(--tbor);
-        justify-content: center;
         background-color:var(--w);
+        backdrop-filter: blur(10px);
+
         border-radius: 6px;
         border-left:3px solid var(--bor);
         }
@@ -136,7 +140,8 @@
         display: flex;
         flex-direction: row;
         width: 100%;
-        height:15px;
+        
+        min-height::15px;
         justify-content: space-around;
         font-weight: bold;
         align-items:center;
@@ -156,7 +161,7 @@
         .trand {
         display: flex;
         flex-direction: column;
-        flex-wrap: wrap;
+        
         width: 100%;
         border-top: 1px solid var(--bor);
         padding-top: 10px;
@@ -271,8 +276,8 @@
         display:flex;
          width:100%;
          height:160px;
-         justify-content:center;
-         align-items:center
+         justify-content:flex-start;
+         align-items:flex-start;
         }
         
         .cra #donutchart{
@@ -330,6 +335,27 @@
         border:2px solid var(--b);
         }
         .bsea a{
+        text-decoration:none;
+        }
+        
+        .veri{
+        position:fixed;
+        width:30px;
+        height:30px;
+        font-size:28px;
+        z-index:7;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        top:84vh;
+        left:80vw;
+        padding:8px;
+        border-radius:50px;
+        background-color:var(--w);
+        filter: blur(0.3px);
+        border:2px solid var(--b);
+        }
+        .veri a{
         text-decoration:none;
         }
         .borw{
@@ -427,7 +453,7 @@
         .feed{
         position:absolute;
         width:150px;
-        height:180px;
+        height:220px;
         left:30px;
         background-color:var(--w);
         padding:0px;
@@ -528,13 +554,52 @@
         #adapa{
         display:none;
         }
+        
+        .alver{
+        
+        display:flex;
+        width:100%;
+        flex-direction:column;
+        flex-wrap:wrap;
+        
+        }
+         table{
+       width:100%;
+       color:var(--b);
+       padding:5px;
+       border:1px solid var(--bor);
+       border-left:3px solid grey;
+       border-radius:6px;
+        }
+        
+       table tr{
+        width:300px;
+        text-align:center;
+        }
+        td{
+        padding:6px;
+        }
+        table tr td input{
+        width:80%;
+        height:10px;
+        border:1px solid orange;
+        border-radius:7px;
+        border-top:none;
+        border-left:none;
+        border-right:none;
+        background-color:transparent;
+        
+        }
+        
+        
+        
         @media print{
         
         .bsea{
            display:none !important;
         }
         #borwi,#adapa{
-         display:block !important;
+         display:none !important;
         }
         
         
@@ -563,11 +628,35 @@
         display:none !important;
         }
         #adapa{
-        color:black;
-        text-align:left;
-        width:100%;
-        padding:6px;
-        margin:0px;
-        border-bottom:2px solid black;
+        color:black !important;
+        text-align:left !important;
+        width:100% !important;
+        padding:6px !important;
+        margin:0px !important;
+        border-bottom:2px solid black !important;
         }
         }
+        
+        #dccc{
+        position:relative;
+        bottom:1%;
+        left:5%;
+        z-index:10;
+        width:23px;
+        background-color:transparent;
+        color:var(--b);
+        text-align:center;
+        border:2px dashed var(--tbor);
+        border-radius:50%;
+        }
+        
+        #texta{
+       
+        background-color:var(--w);
+        color:aqua;
+        border-bottom:2px solid aqua;
+        border-radius:4px;
+        font-family:'Economica';
+        }
+        
+       

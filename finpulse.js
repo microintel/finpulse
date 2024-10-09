@@ -1,5 +1,41 @@
+
+
 let preNo = "";
-       alert("This is still in development. We use demo data for demonstration purposes only, and no data is saved yet. Future updates will include data storage..");
+let bt="transparent";
+let a="white";
+        let b="black";
+
+
+function alve(){
+      let lenSum=0;
+      let texSu=0;
+      let eveSu=0;
+        let allen=document.getElementsByClassName("lmo");
+      // alert(allen.length);
+       for(let f=0;f<allen.length;f++){
+      // alert(allen[f].innerHTML);
+       lenSum+=parseInt(allen[f].innerHTML);
+       }
+      // alert(lenSum);
+       document.getElementById('lenI').value=lenSum;
+      let otv=parseInt(document.getElementById('oth').value);
+     let bI =parseInt(document.getElementById('bnkI').value);
+       document.getElementById("alvvs").innerHTML=lenSum+otv+bI+"<sub>rs</sub>";
+       
+       
+       let tsu=document.getElementById("texta");
+       texSu=eval(tsu.value);
+       eveSu=lenSum+texSu;
+       document.getElementById("texsum").innerHTML=texSu;
+       document.getElementById("evesum").innerHTML=eveSu;
+       
+       
+        }
+        alve();
+
+
+
+      // alert("This is still in development. We use demo data for demonstration purposes only, and no data is saved yet. Future updates will include data storage..");
        function addTr(event,a,b,c) {
        event.preventDefault();
        let tA = document.getElementById(a);
@@ -21,7 +57,8 @@ let preNo = "";
        let p = document.getElementById(preNo);
        let pa = p.parentNode.parentNode.children[1];
        pa.appendChild(diiv);
-       drawChart();
+      // drawChart();
+       dcc();
        alert("Transaction Added..");
        document.querySelector('form').reset();
        clo('anrdi');
@@ -175,9 +212,13 @@ let preNo = "";
        document.getElementById("bal").innerHTML =nnnx;
        document.getElementById("exp").innerHTML = mmmx;
        
-       drawChart(vvvx,nnnx,mmmx);
+       //drawChart(vvvx,nnnx,mmmx);
+       dcc();
+       gleE();
        
        }
+       
+       
         updateTotals();
         
         
@@ -214,12 +255,14 @@ let preNo = "";
         
         }
         updateTotals();
-        drawChart();
+        //drawChart();
+        dcc();
+        gleE();
         randE();
         }
         
         
-        function drawChart() {
+        function dd() {
         var data = google.visualization.arrayToDataTable([
         ['adapaavi', 'finpulse'],
         ['Income',cin],
@@ -261,7 +304,7 @@ let preNo = "";
         
         for(let x=0;x<almo.length;x++){
           if(almo[x].closest(".child").style.display!=="none" || almo[x].closest(".trans").style.display!=="none"){
-            if((almo[x].closest(".child").style.display!=="none" && almo[x].style.display!=="none") && parseInt(almo[x].innerHTML)>=1000){
+            if((almo[x].closest(".child").style.display!=="none" && almo[x].style.display!=="none") && parseInt(almo[x].innerHTML)>=500){
           let ft = document.createElement("font");
           
           ft.textContent =almo[x].innerHTML;
@@ -272,7 +315,7 @@ let preNo = "";
           alert(almo[x].innerHTML+" for "+almodes[x].innerHTML);
           };
           let mni=parseInt(almo[x].innerHTML);
-          if (mni >= 1000 && mni <= 1999) {
+          if (mni >= 500 && mni <= 1999) {
           ft.style.color=getComputedStyle(rut).getPropertyValue('--inc').trim();
           }
           else if (mni >= 2000 && mni <= 2999) {
@@ -301,17 +344,25 @@ let preNo = "";
        }
    
        else{
-      document.getElementById("rsumi").textContent="Over 1k is "+ratt;
+      document.getElementById("rsumi").textContent="Over 0.5k is "+ratt;
        }
         }
         }
         }
         
+        
+        
         function borww(x){
+        let preDa=new Date();
+        // let lendP=parseInt(prompt("Enter Password to proceed : "));
+         if(true){
         document.getElementById("borwi").style.display=x;
         //document.getElementById("borwi").style.width="100%";
         
         document.getElementById("canb").style.display=x;
+        }else{
+         alert("Wrong Lend PassWord.");
+         }
         }
         
        function appendC(event,a,b,c,d,e){
@@ -349,11 +400,47 @@ let preNo = "";
         let dial="New Record Created Scuessfully..\n Income : "+iA.value+"\n Date : "+iD.value+"\n From : "+iFF.value;
         alert(dial);
         document.getElementById("ppr").appendChild(dii);
-        drawChart();
+        //drawChart();
+        dcc();
+        gleE();
         }
         }
         
         function printe(){
         window.print();
         }
+        
+        
+        
+        
+        
+        
+        
+        function gleE() {
+        if (cbala > cexp) {
+        a = "#FF0000";
+        } else if (cexp > cbala) {
+        a = "#008000";
+        } else {
+        a = "#87CEEB";
+        }
+        
+        document.body.style.borderTop = `10px solid ${a}`;
+        
+        let c = b;
+        b = a;
+        a = c;
+        
+        setTimeout(gleE, 500);
+        }
+        
+        gleE();
+        
+        
+        
+        
+        
+        
+        
+        
        
