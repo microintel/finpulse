@@ -1,6 +1,8 @@
 
 
 let preNo = "";
+let tranCon="";
+let dadatra="";
 let bt="transparent";
 let a="white";
         let b="black";
@@ -36,45 +38,164 @@ function alve(){
 
 
       // alert("This is still in development. We use demo data for demonstration purposes only, and no data is saved yet. Future updates will include data storage..");
-       function addTr(event,a,b,c) {
-       event.preventDefault();
-       let tA = document.getElementById(a);
-       let tD = document.getElementById(b);
-       let tDes = document.getElementById(c);
+       function addTr() {
+       let tA = "";
+       let tD = "";
+       let tDes = "";
+       
+       return Swal.fire({
+       title: 'Enter Expense',
+       html:
+       `<input id="at" class="swal2-input" placeholder="Amount" type="text" style="width:100%;"><br><br>` +
+       `<input id="dt" class="swal2-input" placeholder="Date" type="date" style="width:100%;"><br><br>` +
+       `<select id="ct" class="swal2-input" style="width:100%;">
+       <option value="food">Food</option>
+       <option value="transport">Transport</option>
+       <option value="entertainment">Entertainment</option>
+       <option value="other">Other</option>
+       </select><br><br>` +
+       `<input id="cnt" class="swal2-input" placeholder="Category Name" style="width:100%;">`,
+       focusConfirm: false,
+       preConfirm: () => {
+       let v1 = document.getElementById('at').value.trim();
+       let v2 = document.getElementById('dt').value;
+       let v3 = document.getElementById('ct').value;
+       let v4 = document.getElementById('cnt').value.trim();
+       
+       if (!v1 || !v2 || !v3 || !v4) {
+       Swal.showValidationMessage('Fill all fields');
+       return false;
+       }else{
+       tA=v1;
+       tD=v2;
+       tDes=v3;
+       
+       
+       // tranCon=="mxx" ? console.log(123) : console.log(88);
+       let p = document.getElementById(preNo);
+       let pa = p.parentNode.parentNode.children[1];
+       
+       // event.preventDefault();
+       
+       
        if (preNo === "" || document.getElementById(preNo) === null) {
        return;
        
        }
+       
        let stu = `
-       <font class="mony">${tA.value}</font>
-       <font class="tdate">${tD.value}</font>
-       <font class="tdes">${tDes.value}</font>
+       <font class="mony">${tA}</font>
+       <font class="tdate">${tD}</font>
+       <font class="tdes">${tDes}</font>
        `;
+       let ppp1=p.parentNode.children[0].innerHTML;
+       let ppp2=p.parentNode.children[3].innerHTML;
+       let ppp3=p.parentNode.children[4].innerHTML;
+       let epp=parseInt(ppp2)+parseInt(tA);
+       
+       if(parseInt(ppp1) >= epp){
        let diiv = document.createElement('div');
        diiv.className = "trans";
        diiv.innerHTML = stu;
+       diiv.ondblclick = function(){
+       transRem(this);
+       };
        //parent.nodeName
-       let p = document.getElementById(preNo);
-       let pa = p.parentNode.parentNode.children[1];
+       let pp1=p.parentNode.children[3].innerHTML;
+       let pp2= p.parentNode.children[4].innerHTML;
+       p.parentNode.children[3].innerHTML=parseInt(pp1)+parseInt(tA);
+       p.parentNode.children[4].innerHTML=pp2-parseInt(tA);
        pa.appendChild(diiv);
-      // drawChart();
-       dcc();
-       alert("Transaction Added..");
-       document.querySelector('form').reset();
-       clo('anrdi');
+       // drawChart();
+       updateTotals();
+       Swal.fire({
+       title:"Transaction Added..",
+       icon:"success"
+       });
+       }else{
+       Swal.fire({
+       title:"You Can't Add Transaction due to insufficient balance.",
+       icon:"error"});
+       
        }
-        function discr(x,y){
+       
+       }
+       }
+       });
+       
+     
+       
+       }
+       
+       
+       function transRem(x){
+       
+      let pexp= x.parentNode.parentNode.children[0].children[3];
+      let pbal= x.parentNode.parentNode.children[0].children[4];
+      
+       Swal.fire({
+       title: "Are U Sure to delete this transaction?",
+       text: "You won't be able to undo this!",
+       icon: "warning",
+       showCancelButton: true,
+       confirmButtonColor: "#3085d6",
+       cancelButtonColor: "#d33",
+       confirmButtonText: "Yes, delete it!"
+       }).then((result) => {
+       if (result.isConfirmed) {
+     //  pbal.innerHTML= parseInt(pbal.innerHTML)+amtt;
+       let eee= parseInt(pexp.innerHTML);
+       let bbb= parseInt(pbal.innerHTML);
+       let amtt= parseInt(x.children[0].innerHTML);
+       pexp.innerHTML= eee-amtt;
+       pbal.innerHTML= bbb+amtt;
+       
+      x.parentNode.removeChild(x);
+       
+       
+       Swal.fire({
+       title: "Deleted!",
+       text: "transaction has been deleted.",
+       icon: "success"
+       });
+       updateTotals();
+       }
+       });
+       
+       }
+       
+       
+       function discr(x,y){
+       
         preNo=y;
+        let u= document.getElementById(y);
+        if(parseInt(u.parentNode.children[0].innerHTML) === parseInt(u.parentNode.children[3].innerHTML)){
+        tranCon="mxx";
+        Swal.fire({text:"You Can't Add Transaction To This Income due to Insufficint Balance"});
+        }else{
+        
+        tranCon="mx";
+        addTr();
+        /*
         let d=document.getElementById(x);
         d.style.display="flex";
         d.style.width="100vw";
         d.style.height="100vh";
         d.style.backgroundColor="var(--back)";
+        */
         }
+        }
+        
+        
+        
         function clo(x){
         document.getElementById(x).style.display="none";
        // document.getElementById("cnrdi").style.display="none";
         }
+        
+        
+        
+        
         function theame(x){
         if(x=='b'){
         
@@ -104,6 +225,8 @@ function alve(){
         document.getElementById(x).id="b";
         }
         }
+        
+        
         
         let cin;
         let ratt=0;
@@ -177,6 +300,7 @@ function alve(){
         document.getElementById("exp").innerHTML = "EXP " + tttexe;
         document.getElementById("bal").innerHTML = "BAL " + tttball;
         gi();
+        randE();
         }
        
        function gi(){
@@ -298,17 +422,18 @@ function alve(){
         }
         function randE(){
         ratt=0;
+        let ranChg= ranFill || 1000;
         document.getElementById("rsdi").innerHTML="";
         let almo = document.getElementsByClassName("mony");
         let almodes = document.getElementsByClassName("tdes");
         
         for(let x=0;x<almo.length;x++){
           if(almo[x].closest(".child").style.display!=="none" || almo[x].closest(".trans").style.display!=="none"){
-            if((almo[x].closest(".child").style.display!=="none" && almo[x].style.display!=="none") && parseInt(almo[x].innerHTML)>=500){
+            if((almo[x].closest(".child").style.display!=="none" && almo[x].style.display!=="none") && parseInt(almo[x].innerHTML)>=ranChg){
           let ft = document.createElement("font");
           
           ft.textContent =almo[x].innerHTML;
-          document.getElementById("rsumi").textContent="Over 1k is "+ratt;
+          document.getElementById("rsumi").textContent=`Over ${ranChg} is ${ratt}`;
           ratt+=parseInt(almo[x].innerHTML);
           
           ft.onclick = function() {
@@ -348,6 +473,7 @@ function alve(){
        }
         }
         }
+        document.getElementById("rsumi").textContent=`Over ${ranChg} is ${ratt}`;
         }
         
         
@@ -365,28 +491,43 @@ function alve(){
          }
         }
         
-       function appendC(event,a,b,c,d,e){
-        var fo = document.querySelector('form');
+       function appendC(){
+        Swal.fire({
+        title: 'Enter Data',
+        html:
+        `<input type="number" id="i" class="swal2-input" placeholder="Income"><br><br>` +
+        `<input type="date" id="d" class="swal2-input"><br><br>` +
+        `<input type="text" id="f" class="swal2-input" placeholder="From">`,
+        focusConfirm: false,
+        showCancelButton: true,
+        confirmButtonText: 'OK',
+        preConfirm: () => {
+        let i = document.getElementById('i').value;
+        let d = document.getElementById('d').value;
+        let f = document.getElementById('f').value;
+        if (!i || !d || !f) {
+        Swal.showValidationMessage('Fill all');
+        return false;
+        }
+        return { i, d, f };
+        }
+        }).then(r => {
+        if (r.isConfirmed) {
+        let i = parseInt(r.value.i);
+        let d = r.value.d;
+        let f = r.value.f;
         
-        if (!fo.checkValidity()) {
-        event.preventDefault();
-        alert('Please fill details.');
-        }else{
-        let iA= document.getElementById(a);
-        let iD= document.getElementById(b);
-        let iFF= document.getElementById(c);
-        let iE= document.getElementById(d);
-        let iB=document.getElementById(e);
+        
         let ran=Math.floor(Math.random() * 99999);
         let ran1=Math.floor(Math.random() * 88889);
         let raa=String("abc"+ran1+ran);
         let ccc=`
-        <div class="idfeb">
-        <font class="incomeColumn">${iA.value}</font>
-        <font class="dateColumn">${iD.value}</font>
-        <font class="fromm">${iFF.value}</font>
-        <font class="exep">${iE.value}</font>
-        <font class='Abal'>${iB.value}</font>
+        <div ondblclick="recRem(this)" class="idfeb">
+        <font class="incomeColumn">${i}</font>
+        <font class="dateColumn">${d}</font>
+        <font class="fromm">${f}</font>
+        <font class="exep"> 0 </font>
+        <font class='Abal'>${i}</font>
         <font onclick="discr('anrdi',this.id)" id="${raa}"><img class="adimg" src="https://img.icons8.com/?size=100&id=szDzfecravBo&format=png&color=FA5252"></font>
         </div>
         <div class="trand">
@@ -397,17 +538,54 @@ function alve(){
         let dii=document.createElement('div');
         dii.className='child';
         dii.innerHTML=ccc;
-        let dial="New Record Created Scuessfully..\n Income : "+iA.value+"\n Date : "+iD.value+"\n From : "+iFF.value;
-        alert(dial);
-        document.getElementById("ppr").appendChild(dii);
-        //drawChart();
+      //  let dial="New Record Created Scuessfully..\n Income : "+iA.value+"\n Date : "+iD.value+"\n From : "+iFF.value;
+        Swal.fire({
+        title:"Record Created Successfully",
+        icon:'success'
+        });
+        document.getElementById("ppr").prepend(dii);
+        updateTotals();
         dcc();
         gleE();
+        
+        
+        
+        
         }
+        });
         }
         
         function printe(){
         window.print();
+        }
+        
+        
+        function recRem(x){
+        
+        Swal.fire({
+        title: "Are U Sure to delete this Record?",
+        text: "You won't be able to undo this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+        if (result.isConfirmed) {
+        
+        x.parentNode.remove();
+        Swal.fire({
+        title: "Deleted!",
+        text: "Record has been deleted.",
+        icon: "success"
+        });
+        updateTotals();
+        }
+        });
+        
+        
+       
+        
         }
         
         

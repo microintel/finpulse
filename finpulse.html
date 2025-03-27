@@ -1,24 +1,146 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="icon" type="image/png" href="finpulse-favicon.png">
     <link href='https://fonts.googleapis.com/css?family=Economica' rel='stylesheet'>
-<script type="text/javascript">
 
-async function getDataa(){
-let fx=await fetch("https://microintel.github.io/finpulse/trans.html");
-let fdx= await fx.text();
-
-document.getElementById("ppr").innerHTML+=fdx;
-updateTotals();
-}
-
-getDataa();
-
-</script>
+<style type="text/css">
+  .swal2-input {
+    width: 93% !important;
+    box-sizing: border-box;
+    margin:0px; 
+  }
+  .recbor{
+  margin:0px;
+  padding:3px;
+  display:flex;
+  flex-direction:column;
+  width:98%;
+  gap:10px;
+  }
+  .reciv{
+ /* background-color:#2E7D32; */
+ border:2px solid #2E7D32;
+ color:#2E7D32;
+ padding:3px;
+ margin:3px;
+ border-radius:7px;
+ 
+  }
+  .borlend{
+  border:2px solid #C62828;
+  color:#C62828;
+  margin:3px;
+  padding:3px;
+  border-radius:7px;
+  }
+  .rechead,.borhead{
+   display:flex;
+   width:98%;
+   justify-content:space-between;
+   border-bottom:1px dashed grey;
+   margin:3px;
+   padding:1px;
+  }
+  .rechead div h4,.borhead div h4{
+  display:flex;
+  width:98%;
+  justify-content:space-evenly;
+  }
+  .rechead button,.borhead button,.rechead font,.borhead font{
+  max-width:24%;
+  height:1.5rem;
+  min-width:20%;
+  
+  }
+  .rechead input,.borhead input{
+  height:0.5rem;
+  max-width:24%;
+  min-width:20%;
+  }
+  
+  .recdata,.bordata{
+  display:flex;
+  width:100%;
+  flex-direction:column;
+  justify-content:space-evenly;
+  padding:5px;
+  gap:7px;
+  }
+  .recdata div,.bordata div{
+  display:flex;
+  width:100%;
+  justify-content:space-evenly;
+  gap:7px;
+  text-align:center;
+  border-bottom:1px solid grey;
+  }
+  
+  .recdata div:hover ,.bordata div:hover{
+  
+  background-color:#e3e3e3;
+  }
+  
+  .lmode,.lmodes{
+  text-align:center;
+  padding:3px;
+  }
+  .lmo,.bor{
+  
+  font-weight:bold;
+  font-size:1.2rem;
+  }
+  .lmodes{
+  border-right:2px solid black;
+  color: orange;
+  font-weight:bold;
+  }
+  
+  .borhead h4,.rechead h4{
+  margin:4px;
+  padding:4px;
+  display:flex;
+  max-width:98%;
+  min-width:90%;
+  gap:5px;
+  justify-content:space-between;
+  align-items:center;
+  }
+  .lmo.bor{
+  color:red;
+  }
+  
+  .recab,.recinp{
+  background-color:#2E7D32;
+  border:0px solid #2E7D32;
+  color:var(--back);
+  border-radius:7px;
+  }
+  .borab,.borinp{
+  background-color:#C62828;
+  border:0px solid #C62828;
+  color:var(--back);
+  border-radius:7px;
+  }
+  .borinp::placeholder,.recinp::placeholder{
+  color:var(--white);
+  }
+  
+  .addran{
+  
+  background-color:var(--back);
+  border:1.5px solid var(--bor);
+  border-radius:7px;
+  margin:3px;
+  color:brown;
+  }
+  
+</style>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FinPulse</title>
+    
     <link rel="stylesheet" href="finpulse.css">
 </head>
 <body>
@@ -69,7 +191,7 @@ getDataa();
     <ul class="feed">
       <li id="acNa">Profile</li>
       
-      <li class="cnrr" onclick="discr('cnrdi')">Add Record</li>
+      <li class="cnrr" onclick="appendC()">Add Record</li>
       <li onclick="location.href='https://microintel.github.io/endgram/file/coding.html'"onclick="">Statistics</li>
       <li><font onclick="printe()">Print</font></li>
       <li onclick="location.href='https://github.com/microintel/finpulse?tab=readme-ov-file#finpulse--documentation'">Documentation</li>
@@ -88,7 +210,7 @@ getDataa();
 <center><h2 style="text-align:left;" id="adapa">FinPulse</h2></center>
 
 
-<div class="bsea">
+<div style="display:none;" class="bsea">
 <a href="#sinpp">&#x1F50D</a>
 
 </div>
@@ -113,16 +235,32 @@ getDataa();
    <div class="canh">
    <h4 style="margin:0px;padding:0px;color:transparent;">B</h4>
    <center>
-   <h4 style="margin:0px;padding:0px;color:var(--b)">Lend</h4>
+   <h4 style="margin:0px;padding:0px;color:var(--b)"> Recivables / Borrowing</h4>
    </center>
    <p id="canb" style="padding:0px;margin:0px;" onclick="borww('none')"><i class="material-icons" style="padding:0px;margin;0x;font-size:22px;color:red">cancel</i></p>
    </div>
+   <div class="recbor">
+   <div class="reciv">
+       <div class="rechead"><h4> Recivables <button class="recab" onclick="addLR(this,'lmo')"> Add </button> <input class="recinp" placeholder="recivable.." oninput="searLR(this)"> <font> 0 </font> </h4></div>
+       
+       <div class="recdata">
+       <div ondblclick="remLR(this)"> <font class="lmo"> 1000</font><font class="lmode"> 2.2.2025</font><font class="lmodes"> descript</font></div>
+       
+       </div>
+       
+   </div>
+   
+   <div class="borlend">
+   <div class="borhead"> <h4> Borrowning <button class="borab" onclick="addLR(this,'bor')"> Add </button> <input class="borinp" placeholder="borrow.." oninput="searLR(this)"> <font> 0 </font> </h4> </div>
+   <div class="bordata">
+   <div> <font class="lmo"> 1000</font><font class="lmoda"> 2.2.2025</font><font class="lmodes"> descript</font></div>
+   <div> <font class="lmo"> 1000</font><font class="lmode"> 2.2.2025</font><font class="lmodes"> vinu script</font></div>
+   <div> <font class="lmo"> 1000</font><font class="lmode"> 2.2.2025</font><font class="lmodes"> descript</font></div>
    
    
-   <p>1. <b class="lmo">3000</b> given to friend for shopping</p>
-   <p>2. <b class="lmo">7600</b> given to neighborhood for rent</p>
-   <p>3. <b class="lmo">30909</b> in Quant Small Cap Fund</p>
-   
+   </div>
+   </div>
+   </div>
    </div>
    
    <br>
@@ -138,6 +276,7 @@ getDataa();
   <div id="donutchart"></div>
    <details  id="radiii" class="rad">
         <summary id="rsumi" class="rsum"></summary>
+        <button class="addran" id="addRan" onclick="rangeNee(this)"> Add Range</button>
         <div id="rsdi" class="rsd">
        </div>
    </details>
@@ -197,16 +336,159 @@ getDataa();
         
         <br>
         <div id="ppr" class="parnt">
+          <div style="display:none;" class="child">
+          <div ondblclick="recRem(this)" class="idfeb">
+          <font class="incomeColumn">0</font>
+          <font class="dateColumn">7/4/24</font>
+          <font class="fromm"> Example </font>
+          <font class="exep">0</font>
+          <font class='Abal'>0</font>
+          <font onclick="discr('anrdi',this.id)" id="adtra1"><img class="adimg" src="https://img.icons8.com/?size=100&id=szDzfecravBo&format=png&color=FA5252"></font>
+          </div>
           
+          <div class="trand">
+          
+          </div>
+          </div>
         </div>
+       <script type="text/javascript">
        
+       async function getDataa(){
+       let fx=await fetch("https://microintel.github.io/finpulse/trans.html");
+       let fdx= await fx.text();
+       
+       document.getElementById("ppr").innerHTML+=fdx;
+       updateTotals();
+       }
+       
+      // getDataa();
+       
+       function addLR(x,y){
+       let par = x.parentNode.parentNode;
+       
+       Swal.fire({
+       title: 'Enter details',
+       html:
+       '<input id="alr" type="number" class="swal2-input" placeholder="Amount"><br><br>' +
+       '<input id="dlr" type="date" class="swal2-input"><br><br>' +
+       '<input id="slr" class="swal2-input" placeholder="Description">',
+       focusConfirm: false,
+       preConfirm: () => {
+       let a = document.getElementById('alr').value;
+       let d = document.getElementById('dlr').value;
+       let s = document.getElementById('slr').value;
+       
+       if (!a || !d || !s) {
+       Swal.showValidationMessage('Please fill in all fields');
+       return false;
+       }
+       
+       return { a, d, s };
+       }
+       }).then(r => {
+       if (r.isConfirmed) {
+       let v = r.value;
+       
+       let sd = `
+       <font class="${y}">${v.a}</font>
+       <font class="lmode">${v.d}</font>
+       <font class="lmodes">${v.s}</font>
+       `;
+       
+       let divg = document.createElement("div");
+       divg.innerHTML = sd;
+       divg.ondblclick= function(){
+       remLR(this)
+       };
+       par.parentNode.children[1].prepend(divg);
+       alve();
+       }
+       });
+       }
+       
+       
+       
+       function remLR(v){
+       let qu="";
+       v.parentNode.className === "recdata" ? qu="recivale" : qu="borrowing";
+       Swal.fire({
+       title: `Are U Sure to delete this ${qu}?`,
+       text: "You won't be able to undo this!",
+       icon: "warning",
+       showCancelButton: true,
+       confirmButtonColor: "#3085d6",
+       cancelButtonColor: "#d33",
+       confirmButtonText: "Yes, delete it!"
+       }).then((result) => {
+       if (result.isConfirmed) {
+       
+       v.parentNode.removeChild(v);
+       Swal.fire({
+       title: "Deleted!",
+       text: "Record has been deleted.",
+       icon: "success"
+       });
+       alve();
+       }
+       });
+       
+       
+       }
+       
+       
+       
+       
+       function searLR(x){
+       let i=x;
+       let sss=0;
+       let chlen = x.parentNode.parentNode.parentNode.children[1];
+       let mx =i.parentNode.children[2];
+       for(let xr=0;xr<chlen.children.length;xr++){
+       let st= chlen.children[xr].children[2].innerHTML;
+       if(st.toLowerCase().includes(i.value.toLowerCase())){
+       
+       chlen.children[xr].style.display="";
+       
+       }else{
+       chlen.children[xr].style.display="none";
+       }
+       
+       }
+       if(chlen){
+       for(let v=0;v<chlen.children.length;v++){
+       if(chlen.children[v].style.display!=="none"){
+        sss+=parseInt(chlen.children[v].children[0].innerHTML);
+        mx.innerHTML=sss;
+       }
+       }
+       
+       }
+      // sss+=parseInt(chlen.children[xr].children[0].innerHTML);
+       
+       }
+       
+       let ranFill=0;
+       function rangeNee(x){
+       
+       Swal.fire({
+       title: 'Enter Range to Filter',
+       html: '<input id="nranE" type="number" class="swal2-input" placeholder="Enter Range">',
+       preConfirm: () => document.getElementById('nranE').value
+       }).then(r => {
+       if (r.isConfirmed) {
+       let v = r.value;
+       ranFill=parseInt(v);
+       randE();
+       }
+       });
+       
+       }
+       </script>
       <script src="finpulse.js"></script>
        
        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
        <script src="finC.js"></script>
-       <script type="text/javascript">
-       
-       </script>
+       <script src="tranAdd.js"></script>
        <br><br>
       
         <center>
