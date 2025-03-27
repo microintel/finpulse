@@ -8,9 +8,9 @@ google.charts.load("current", {packages:["corechart"]});
 
     function fls() {
         if (!document.fullscreenElement) {
-            document.documentElement.requestFullscreen();
+           // document.documentElement.requestFullscreen();
         } else {
-            document.exitFullscreen();
+           // document.exitFullscreen();
         }
     }
 
