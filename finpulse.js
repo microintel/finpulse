@@ -201,7 +201,7 @@ function alve(){
         
         document.getElementById(x).src="https://img.icons8.com/?size=100&id=Ppe22DwOvBTF&format=png&color=FFFFFF";
         document.getElementById("mimg").src="https://img.icons8.com/?size=100&id=36389&format=png&color=FFFFFF";
-        document.getElementById("tttim").src="https://raw.githubusercontent.com/microintel/endgram/main/photo/finpulse-white.png";
+        document.getElementById("tttim").src="https://raw.githubusercontent.com/microintel/endgram/main/photo/blackroadwhite.png";
         
         document.documentElement.style.setProperty('--w',"black");
         document.documentElement.style.setProperty('--b',"#FFFFFF");
@@ -215,7 +215,7 @@ function alve(){
          
         document.getElementById("mimg").src="https://img.icons8.com/?size=100&id=36389&format=png&color=000000";
         document.getElementById(x).src="https://img.icons8.com/?size=100&id=45475&format=png&color=1A1A1A";
-        document.getElementById("tttim").src="https://raw.githubusercontent.com/microintel/endgram/main/photo/finpulse-red.png";
+        document.getElementById("tttim").src="https://raw.githubusercontent.com/microintel/endgram/main/photo/blackroadred1.png";
         document.documentElement.style.setProperty('--w',"#FFFFFF");
         document.documentElement.style.setProperty('--b',"black");
         document.documentElement.style.setProperty('--tbor',"black");
