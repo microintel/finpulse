@@ -39,7 +39,7 @@
       r.onupgradeneeded = e => {
         const d = e.target.result;
         if (!d.objectStoreNames.contains("sst")) {
-          d.createObjectStore("sst", { keyPath: "id", autoIncrement: true });
+          d.createObjectStore("sst");
         }
       };
 
