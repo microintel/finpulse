@@ -28,7 +28,7 @@ function backINCGET(){
         function backINCADD(){
         
         let dataT= document.getElementById("ppr").innerHTML.replace(/\s+/g, ' ').trim();
-        alert(dataT);
+       
         
         const r = indexedDB.open("black");
         r.onsuccess = e => {

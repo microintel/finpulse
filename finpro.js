@@ -44,21 +44,42 @@ function addLR(x,y){
        
        
        
-       function remLR(v){
-       let qu="";
-       v.parentNode.className === "recdata" ? qu="recivale" : qu="borrowing";
+       function remLR(v) {
+       let qu = "";
+       qu = v.parentNode.className === "recdata" ? "recivale" : "borrowing";
+       
+       const ran = Math.floor(1000 + Math.random() * 9000);
+       
        Swal.fire({
-       title: `Are U Sure to delete this ${qu}?`,
-       text: "You won't be able to undo this!",
+       title: `Verify OTP : ${ran}`,
+       html: `
+       <h5> Are U Sure to delete this ${qu}?<br><br>
+       <span style="color:red">You won't be able to undo this!</span></h5>
+       <input id="myInp" 
+       type="number" 
+       inputmode="numeric" 
+       pattern="[0-9]*" 
+       placeholder="Enter OTP"
+       autocomplete="off" />
+       `,
        icon: "warning",
        showCancelButton: true,
+       confirmButtonText: 'Submit',
+       cancelButtonText: 'Cancel',
        confirmButtonColor: "#3085d6",
        cancelButtonColor: "#d33",
-       confirmButtonText: "Yes, delete it!"
+       preConfirm: () => {
+       const input = document.getElementById('myInp').value;
+       if (!input) {
+       Swal.showValidationMessage('You must enter an OTP!');
+       } else if (input !== ran.toString()) {
+       Swal.showValidationMessage('OTP does not match!');
+       }
+       return input;
+       }
        }).then((result) => {
        if (result.isConfirmed) {
-       
-       v.parentNode.removeChild(v);
+       v.parentNode.remove();
        backRecADD();
        Swal.fire({
        title: "Deleted!",
@@ -68,8 +89,6 @@ function addLR(x,y){
        alve();
        }
        });
-       
-       
        }
        
        
