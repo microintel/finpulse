@@ -1,0 +1,56 @@
+<html>
+<head>
+  <title>Black Login</title>
+  <style type="text/css">
+  form{
+  margin-top:20%;
+  }
+  body{
+   background-color:black;
+   color:white;
+   
+  }
+  input,button{
+  padding:20px;
+  }
+  
+  </style>
+</head>
+<body>
+<center>
+<br><br>
+<h3> Black Road - Login </h3>
+  <form id="f">
+    <input type="text" id="u" placeholder="Username" required><br><br>
+    <input type="password" id="p" placeholder="Password" required><br><br>
+    <button type="submit">Login</button>
+  </form>
+</center>
+  <script>
+    document.getElementById('f').addEventListener('submit', e => {
+      e.preventDefault();
+      const u = document.getElementById('u').value;
+      const p = document.getElementById('p').value;
+
+      const r = indexedDB.open("black", 2);
+
+      r.onupgradeneeded = e => {
+        const d = e.target.result;
+        if (!d.objectStoreNames.contains("sst")) {
+          d.createObjectStore("sst", { keyPath: "id", autoIncrement: true });
+        }
+      };
+
+      r.onsuccess = e => {
+        const d = e.target.result;
+        console.log("DB ready");
+        location.href="finpulse.html";
+      };
+
+      r.onerror = e => {
+        console.error("DB error");
+      };
+    });
+  </script>
+</body>
+</html>

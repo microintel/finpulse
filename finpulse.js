@@ -46,10 +46,12 @@ function alve(){
        return Swal.fire({
        title: 'Enter Expense',
        html:
-       `<input id="at" class="swal2-input" placeholder="Amount" type="text" style="width:100%;"><br><br>` +
+       `<input id="at" class="swal2-input" placeholder="Amount" type="number" style="width:100%;"><br><br>` +
        `<input id="dt" class="swal2-input" placeholder="Date" type="date" style="width:100%;"><br><br>` +
        `<select id="ct" class="swal2-input" style="width:100%;">
        <option value="food">Food</option>
+       <option value="health"> Health </option>
+       <option value="digit"> Digital </option>
        <option value="transport">Transport</option>
        <option value="entertainment">Entertainment</option>
        <option value="other">Other</option>
@@ -84,9 +86,9 @@ function alve(){
        }
        
        let stu = `
-       <font class="mony">${tA}</font>
-       <font class="tdate">${tD}</font>
-       <font class="tdes">${tDes}</font>
+       <font ondblclick="transRem(this)" class="mony">${tA}</font>
+       <font ondblclick="transRem(this)" class="tdate">${tD}</font>
+       <font ondblclick="transRem(this)" class="tdes">${tDes}</font>
        `;
        let ppp1=p.parentNode.children[0].innerHTML;
        let ppp2=p.parentNode.children[3].innerHTML;
@@ -108,6 +110,7 @@ function alve(){
        pa.appendChild(diiv);
        // drawChart();
        updateTotals();
+       backINCADD();
        Swal.fire({
        title:"Transaction Added..",
        icon:"success"
@@ -129,35 +132,64 @@ function alve(){
        
        
        function transRem(x){
-       
-      let pexp= x.parentNode.parentNode.children[0].children[3];
-      let pbal= x.parentNode.parentNode.children[0].children[4];
+       let di= x.parentNode.children[0].innerHTML;
+       let did=x.parentNode.children[1].innerHTML;
+       let dide= x.parentNode.children[2].innerHTML;
+      let pexp= x.parentNode.parentNode.parentNode.children[0].children[3];
+      let pbal= x.parentNode.parentNode.parentNode.children[0].children[4];
       
+       const ran = Math.floor(1000 + Math.random() * 9000);
+       
        Swal.fire({
-       title: "Are U Sure to delete this transaction?",
-       text: "You won't be able to undo this!",
-       icon: "warning",
+       title: `Verify OTP : ${ran}`,
+       html: `
+       <h5> Are U Sure To Delete This Transaction? <br><br>
+       <span style="color:red"> Amount : </span> ${di} <br>
+       <span style="color:red"> Date : </span> ${did} <br>
+       <span style="color:red"> Description : </span> ${dide} </h5>
+       <input id="myInp" 
+       type="number" 
+       inputmode="numeric" 
+       pattern="[0-9]*" 
+       placeholder="OTP"
+       autocomplete="off" />
+       `,
        showCancelButton: true,
+       confirmButtonText: 'Submit',
+       cancelButtonText: 'Cancel',
        confirmButtonColor: "#3085d6",
        cancelButtonColor: "#d33",
-       confirmButtonText: "Yes, delete it!"
+       preConfirm: () => {
+       const input = document.getElementById('myInp').value;
+       if (!input) {
+       Swal.showValidationMessage('You must enter an OTP!');
+       } else if (input !== ran.toString()) {
+       Swal.showValidationMessage('OTP does not match!');
+       }
+       return input;
+       }
        }).then((result) => {
        if (result.isConfirmed) {
-     //  pbal.innerHTML= parseInt(pbal.innerHTML)+amtt;
-       let eee= parseInt(pexp.innerHTML);
-       let bbb= parseInt(pbal.innerHTML);
-       let amtt= parseInt(x.children[0].innerHTML);
-       pexp.innerHTML= eee-amtt;
-       pbal.innerHTML= bbb+amtt;
+       let eee = parseInt(pexp.innerHTML);
+       let bbb = parseInt(pbal.innerHTML);
+       let amtt = parseInt(x.parentNode.children[0].innerHTML);
        
-      x.parentNode.removeChild(x);
+       pexp.innerHTML = eee - amtt;
+       pbal.innerHTML = bbb + amtt;
        
+       x.parentNode.remove();
+       backINCADD();
+       famtC();
+       addCats();
+       add("frotu");
        
        Swal.fire({
        title: "Deleted!",
-       text: "transaction has been deleted.",
+       text: "Transaction has been deleted.",
        icon: "success"
        });
+       
+       
        updateTotals();
        }
        });
@@ -543,7 +575,10 @@ function alve(){
         title:"Record Created Successfully",
         icon:'success'
         });
-        document.getElementById("ppr").prepend(dii);
+        let paren = document.getElementById("ppr");
+        let refer = paren.firstChild;
+        paren.insertBefore(dii, refer);
+        backINCADD();
         updateTotals();
         dcc();
         gleE();
@@ -562,23 +597,44 @@ function alve(){
         
         function recRem(x){
         
+        const ran = Math.floor(1000 + Math.random() * 9000);
+        
         Swal.fire({
-        title: "Are U Sure to delete this Record?",
-        text: "You won't be able to undo this!",
+        title: `Verify OTP : ${ran}`,
+        html: `
+        <h5> Are U Sure To Delete This Record?<br><br>
+        <span style="color:red">You won't be able to undo this!</span></h5>
+        <input id="myInp" 
+        type="number" 
+        inputmode="numeric" 
+        pattern="[0-9]*" 
+        placeholder="Enter OTP"
+        autocomplete="off" />
+        `,
         icon: "warning",
         showCancelButton: true,
+        confirmButtonText: 'Submit',
+        cancelButtonText: 'Cancel',
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!"
+        preConfirm: () => {
+        const input = document.getElementById('myInp').value;
+        if (!input) {
+        Swal.showValidationMessage('You must enter an OTP!');
+        } else if (input !== ran.toString()) {
+        Swal.showValidationMessage('OTP does not match!');
+        }
+        return input;
+        }
         }).then((result) => {
         if (result.isConfirmed) {
-        
         x.parentNode.remove();
         Swal.fire({
         title: "Deleted!",
         text: "Record has been deleted.",
         icon: "success"
         });
+        backINCADD();
         updateTotals();
         }
         });
