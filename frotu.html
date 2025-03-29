@@ -1,0 +1,540 @@
+
+<html>
+<head>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.cdnfonts.com/css/fake-receipt" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  
+  <title>Full Scroll</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <style>
+    html, body { margin: 0; height: 100%; background-color:grey;}
+    .s {
+      height: 100vh;
+    }
+    .sl {
+      width: 100%;
+      height: 100%;
+      background: #ddd;
+    }
+    .sl1,.sl2{
+    background-color:black;
+    }
+    
+    .seaEx{
+    margin:5px;
+    padding:10px 20px;
+    display:flex;
+    flex-direction:row;
+    justify-content:space-between;
+    align-items:center;
+    }
+    
+    h3{
+    color:#ff8c42;
+    font-size:1.2rem;
+    }
+    
+    .sumCat{
+    display:flex;
+    flex-direction:column;
+    color:#ff8c42;
+    width:90%;
+    text-align:left;
+    justify-content:center;
+    align-items:space-around;
+    margin:5px;
+    padding:10px 10px;
+    }
+    .catSum{
+    display:flex;
+    flex-direction:column;
+    justify-content:space-around;
+    width:100%;
+    }
+    
+    .catSum .cccat{
+    display:flex;
+    width:100%;
+    justify-content:space-around;
+    }
+    
+    .red{
+    position:fixed;
+    bottom:0px;
+    margin:0px;
+    padding:10px;
+    display:flex;
+    width:100%;
+    justify-content:space-evenly;
+    align-items:center;
+    background-color:black;
+    color:#ff8c42;
+    }
+    .red span{
+    border-radius:100px;
+    font-size:2.4rem;
+    background-color:black;
+    }
+    .red span:hover{
+    color:white;
+    }
+    
+    .swal2-input {
+    width: 93% !important;
+    box-sizing: border-box;
+    margin:0px; 
+    }
+    
+    .alll{
+    background-color: #3b4f70;
+    }
+    
+    
+    #myInp {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    border-radius: 8px;
+    
+    width: 78%;
+    padding: 10px;
+    margin-top: 10px;
+    }
+    
+    table {
+    width: 100%;
+    border-collapse: collapse;
+    }
+    th, td {
+    padding: 15px;
+    text-align: left;
+    font-size: 16px;
+    }
+    tr{
+    border-bottom:1px solid grey;
+    }
+    th {
+    background-color:transparent;
+    color: #ff8c42;
+    font-weight: bold;
+    }
+    td {
+    background-color:transparent;
+    color: #ffffff;
+    }
+    tr:hover td {
+    background-color: #3b2f60;
+    transition: 0.3s ease;
+    }
+    
+    .famt{
+    color:lightgreen;
+    font-weight:bold;
+    }
+    
+    .terb{
+    height:80vh;
+    overflow-y:scroll;
+    
+    }
+    
+    .seaEC{
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+    align-items:center;
+    }
+    
+    .seaEC input{
+    
+    background-color:transparent;
+    width:50%;
+    border-radius:7px;
+    border:none;
+    color:#ff8c42;
+    transition:0.5s ease-out;
+    }
+    .seaEC input:hover{
+    
+    width:80%;
+    border:1.5px solid #ff8c42;
+    }
+    .frs thead tr, .frs tbody tr td{
+    padding:2px;
+    margin:2px;
+    }
+    
+    #tabtran,.tabb{
+    max-height:60vh;
+    overflow-y:scroll;
+    
+    }
+    
+    .tabnkn{
+    
+    position:sticky;
+    top:0;
+    background-color:#3b2f60;
+    color:black;
+    }
+    
+  </style>
+</head>
+<body>
+  <div class="swiper s">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide sl sl1">
+      
+      <div class="red">
+      
+      <span onclick="location.href='finpulse.html'" class="bi bi-house"> </span><span onclick="addFrotu()" class="bi bi-plus">  </span><span onclick="location.href='#sea'" class="bi bi-arrow-up"> </span>
+      
+      
+      </div>
+      <div id="ttt" class="seaEx">
+      <h3 id="frt" style="margin:0;padding:0;padding:5px;font-size:1.5rem;">Frotu </h3>
+      <div class="seaEC">
+      <input oninput="srh()" id="sea" type="text" placeholder="&#128269" >  <span style="border:none;font-size:1.3rem;color:#ff8c42" onclick="pri(this) " onmouseover="pri('hover')" class="bi bi-printer"></span>
+      
+      </div>
+      </div>
+      
+      <div class="terb">
+      
+      <div class="sumCat">
+      <h3 id="fsu" style="margin:0;padding:0;padding:5px;text-align:center;"></h3>
+      
+      <table>
+      <tr class="alll" onclick="nknall()" id="frrrc">
+      <th> Category</th> <th> Sum </th>
+      </tr>
+      
+      <tr onclick="undis('free')">
+      <td> Free </td> <td id="ffr"> 0</td>
+      </tr>
+      
+      <tr onclick="undis('reward')">
+      <td> Rewards / Refunds </td> <td id="frew"> 0</td>
+      </tr>
+      
+      <tr onclick="undis('passive')">
+      <td> Passive Income </td> <td id="fpas"> 0</td>
+      </tr>
+      
+      
+      <tr onclick="undis('unknown')">
+      <td> Unknown </td> <td id="fun"> 0</td>
+      </tr>
+      
+      <tr onclick="undis('overtime')">
+      <td> OverTime </td> <td id="fot"> 0</td>
+      </tr>
+      
+      
+      <tr onclick="undis('other')">
+      <td> Other  </td> <td id="fo"> 0</td>
+      </tr>
+      
+      
+      </table>
+      
+      <br><br>
+      
+      <table id="tabgif">
+      <thead>
+      <tr>
+      <th>Frotu</th>
+      <th> Date</th>
+      <th>From</th>
+      </tr>
+      </thead>
+      <tbody class="frx" id="frodatr">
+        
+        </tbody>
+      </table>
+      
+      </div>
+      
+      </div>
+      
+      
+      </div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <div class="swiper-slide sl sl2">
+      
+      <div class="red">
+      
+      <span onclick="location.href='finpulse.html'" class="bi bi-house"> </span><span onclick="addFrotuEX()" class="bi bi-plus">  </span><span onclick="location.href='#sea'" class="bi bi-arrow-up"> </span>
+      
+      
+      </div>
+      
+      
+            <div id="ttt" class="seaEx">
+            <h3 id="frt" style="margin:0;padding:0;padding:5px;font-size:1.5rem;">Frotu </h3>
+            <div class="seaEC">
+            <input oninput="srh()" id="sea" type="text" placeholder="&#128269" > 
+            
+            </div>
+            </div>
+            
+            <div class="ibet">
+            
+            <table id="frs">
+            <thead>
+            <tr>
+            <th>Income</th>
+            <th> Expense </th></th>
+            <th> Balance </th>
+            <th> Tran </th>
+            </tr>
+            </thead>
+            <tbody class="frrrrr" id="frodda">
+            <tr>
+            <td id="froIN"> 10000000 </td><td id="froEXP">1000000</td><td id="froBAL">100000</td><td>1000000</td>
+            </tr>
+            </tbody>
+            </table>
+            
+            </div>
+            
+            <br><br>
+            <div class="tabb">
+            <table id="tabtran">
+            <thead class="tabnkn">
+            <tr>
+            <th> Expense </th>
+            <th> Date</th>
+            <th> Purpose </th>
+            </tr>
+            </thead>
+            <tbody class="frrrr" id="frodaEX">
+            
+            <tr><td class="expamt"> 100 </td><td>0</td><td>jsjenetguginehu ejene</td></tr> 
+            
+            </tbody>
+            </table>
+      </div>
+      
+      
+      </div>
+      <div class="swiper-slide sl">Right</div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script>
+  
+  let glofIN=0;
+  let glofEX=0;
+  let allfd={inc:0,exp:0};
+  
+    new Swiper('.s', {
+      slidesPerView: 'auto',
+      centeredSlides: true,
+      spaceBetween: 0,
+      intialSlide:2
+    });
+  </script>
+  
+  <script type="text/javascript">
+  
+  function calAFE(){
+  let fesum=0;
+  let el=document.querySelectorAll(".expamt").forEach((mx)=>{
+  
+  fesum+=parseInt(mx.innerHTML);
+  });
+  
+  
+  let inc=document.getElementById("froIN");
+  let exp= document.getElementById("froEXP");
+  let bal=document.getElementById("froBAL");
+  
+ setTimeout( ()=>{
+ 
+ inc.innerHTML=glofIN;
+ exp.innerHTML=glofEX;
+ bal.innerHTML= glofIN-glofEX
+ 
+ },2000);
+  
+  
+  }
+  
+  
+  
+  calAFE();
+  
+  
+  
+  async function addFrotuEX() {
+  
+  let ii=document.getElementById("froIN");
+  let ee=document.getElementById("froEXP");
+  let bb=document.getElementById("froBAL");
+  if(parseInt(ee.innerHTML) == parseInt(ii.innerHTML)){
+  Swal.fire({
+  text:" U Can't Add Expense Due to Insufficient Balance",
+  icon:"warning"
+  });
+  return
+  }else{
+  
+  const { value: v } = await Swal.fire({
+  title: "Enter Frotu Input",
+  html:
+  `<input id="a" type="number" class="swal2-input" placeholder="Amount"><br><br>` +
+  `<select id="c" class="swal2-input">
+  <option value="">Select Category</option>
+  <option value="food">Food</option>
+  <option value="telephone"> Telephone </option>
+  <option value="shopping"> Shopping </option>
+  <option value="beauty"> Beauty </option>
+  <option value="sport"> Sport </option>
+  <option value="social"> Social </option>
+  <option value="transporation"> Transporation </option>
+  <option value="clothing"> Clothing </option>
+  <option value="car"> Car </option>
+  <option value="wine-cigaratte"> wine/cigaratte.. </option>
+  <option value="eletronics"> Eletronics </option>
+  <option value="travel">  Travel </option>
+  <option value="health"> Health </option>
+  <option value="pet"> Pet </option>
+  <option value="repair">  Repair </option>
+  <option value="housing"> Housing </option>
+  <option value="home"> Home </option>
+  <option value="gift"> Gift </option>
+  <option value="donate"> Donate </option>
+  <option value="other"> Others </option>
+  </select><br><br>` +
+  `<input id="d" type="date" class="swal2-input"><br><br>` +
+  `<input id="ds" class="swal2-input" placeholder="Description">`,
+  focusConfirm: false,
+  preConfirm: () => {
+  let a = document.getElementById("a").value;
+  let c = document.getElementById("c").value;
+  let d = document.getElementById("d").value;
+  let ds = document.getElementById("ds").value;
+  if (!a || !c || !d || !ds) return Swal.showValidationMessage("All fields required");
+  return { a, c, d, ds };
+  }
+  });
+  if (v){ 
+  
+  let sa=`
+  <td onclick="remfroEx(this)" class="expamt"> ${v.a}</td> <td onclick="remfroEx(this)">${v.d}</td> <td onclick="remfroEx(this)"> ( ${v.c} ) ${v.ds} </td>
+  `;
+  
+  let nee= document.createElement("tr");
+  nee.className=v.c;
+  nee.innerHTML=sa;
+  nee.onclick= function(){
+  remfroEx(this)
+  };
+  
+  let frt=document.getElementById("frodaEX");
+  frt.insertBefore(nee,frt.firstChild);
+
+ ee.innerHTML= parseInt(ee.innerHTML)+parseInt(v.a);
+ bb.innerHTML = parseInt(bb.innerHTML)-parseInt(v.a); 
+  frexadd()
+ // alert(glofEX=parseInt(ee.innerHTML))
+  
+  };
+  
+  }
+  }
+  
+  
+  
+  
+  
+  function remfroEx(x){
+  
+  let di= x.parentNode.children[0].innerHTML;
+  let did=x.parentNode.children[1].innerHTML;
+  let dide= x.parentNode.children[2].innerHTML;
+  
+  let ii=document.getElementById("froIN");
+  let ee=document.getElementById("froEXP");
+  let bb=document.getElementById("froBAL");
+  
+  
+  
+  const ran = Math.floor(1000 + Math.random() * 9000);
+  
+  Swal.fire({
+  title: `Verify OTP : ${ran}`,
+  html: `
+  <h5> Are U Sure To Delete This Record <br><br> <span style="color:red"> Amount : </span> ${di} <br> <span style="color:red"> Date : </span> ${did} <br> <span style="color:red"> Descryption : </span> ${dide} </h5>
+  <input id="myInp" 
+  type="number" 
+  inputmode="numeric" 
+  pattern="[0-9]*" 
+  placeholder="OTP"
+  autocomplete="off" />
+  `,
+  showCancelButton: true,
+  confirmButtonText: 'Submit',
+  cancelButtonText: 'Cancel',
+  preConfirm: () => {
+  const input = document.getElementById('myInp').value;
+  if (!input) {
+  Swal.showValidationMessage('You must enter a OTP!');
+  } else if (input !== ran.toString()) {
+  Swal.showValidationMessage('OTP does not match!');
+  }
+  return input;
+  }
+  }).then((result) => {
+  if (result.isConfirmed) {
+  ee.innerHTML=parseInt(ee.innerHTML)-parseInt(di);
+  bb.innerHTML= parseInt(bb.innerHTML)+parseInt(di);
+  
+  x.parentNode.remove();
+  frinadd();
+  frexadd()
+  famtC();
+  addCats();
+  Swal.fire('Success', 'Record Deleted from FROTU', 'success');
+  }
+  });
+  
+ 
+  
+  }
+  
+  
+  
+  
+  </script>
+  
+  
+  
+ <script src="frotudatabase.js"> </script>
+   <script src="frotu.js"></script>
+</body>
+</html>
