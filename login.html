@@ -55,7 +55,18 @@ s();
       r.onsuccess = e => {
         const d = e.target.result;
         console.log("DB ready");
-        location.href="finpulse.html";
+        function s() {
+  var n = "blacroadC";
+  if (document.cookie.split('; ').find(r => r.startsWith(n + '='))) {
+    window.location.href = "finpulse.html";
+  } else {
+    var d = new Date();
+    d.setMonth(d.getMonth() + 1);
+    document.cookie = n + "=1; expires=" + d.toUTCString() + "; path=/";
+  }
+}
+s();
+        location.href="finpulse.html;
       };
 
       r.onerror = e => {
