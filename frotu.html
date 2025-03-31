@@ -427,6 +427,7 @@
       <div class="frotuCh">
       <canvas id="pieChart" width="100" height="100"></canvas>
       <canvas id="pieChartCat" width="100" height="50"></canvas>
+      <canvas id="pieChartEx" width="100" height="50"></canvas>
       </div>
       <br>
       </div>
@@ -480,16 +481,55 @@
   extranfIXB.children[0].innerHTML = resu.froIXB.inc;
   extranfIXB.children[1].innerHTML = parseInt(resu.froIXB.exp);
   extranfIXB.children[2].innerHTML = resu.froIXB.bal;
-  
+ // alert(frotuOBS.froED);
   famtC();
   addCats();
+  
   }
   setTimeout(()=>{
-  shofroPie();
+  shofroPie("NKN");
   },2000);
   }
   
   getFrotu();
+  
+  
+  
+  
+  
+  
+  function getSumCat() {
+  let rows = document.querySelectorAll("tr.froEPL");  
+  let sums = {};  
+  
+  for (let i = 0; i < rows.length; i++) {  
+  let row = rows[i];  
+  let clsList = row.className.split(" ");  
+  let cls = clsList[1];  
+  let val = parseFloat(row.children[0].textContent) || 0;  
+  
+  if (!sums[cls]) {  
+  sums[cls] = 0;  
+  }  
+  sums[cls] += val;  
+  }  
+  
+  let result = [];  
+  for (let key in sums) {  
+  result.push({ category: key, sum: sums[key] });  
+  }  
+//  alert(JSON.stringify(result));
+  return result;  
+  
+  }  
+  
+ // console.log(getSum());
+  
+  
+  
+  
+  
+  
   
   
  
@@ -546,7 +586,7 @@
   
   famtC?.();
   addCats?.();
-  shofroPie();
+  shofroPie("CAT");
   setTimeout(()=>{
   location.reload();
   },1000);
@@ -610,7 +650,7 @@
   
   famtC?.();
   addCats?.();
-  
+  shofroPie("CAT");
   Swal.fire('Success', 'Record Deleted from FROTU', 'success');
   };
   }
@@ -757,7 +797,7 @@
   `;
   
   let nee= document.createElement("tr");
-  nee.className=v.c;
+  nee.className=`froEPL ${v.c}`;
   nee.innerHTML=sa;
   nee.onclick= function(){
   remfroEx(this)
@@ -783,7 +823,7 @@
   frotuOBS.froIXB.bal -= parseInt(v.a);
   
   st.put(frotuOBS, "frotuXMMXG");
-  shofroPie();
+  shofroPie("EXP");
   
   };
   
@@ -908,7 +948,7 @@
   }
   famtC();
   addCats();
-  shofroPie();
+  shofroPie("EXP");
   Swal.fire('Success', 'Record Deleted from FROTU', 'success');
   //location.reload();
   }
