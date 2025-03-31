@@ -2,7 +2,7 @@
 <html>
 <head>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://fonts.cdnfonts.com/css/fake-receipt" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
@@ -10,7 +10,10 @@
   <title>Frotu</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
   <style>
-    html, body { margin: 0; height: 100%; background-color:grey;}
+    html, body { margin: 0; height: 100%; background-color:grey;font-family:'Lato'}
+    *{
+    font-family:'Times New Roman';
+    }
     .s {
       height: 100vh;
     }
@@ -24,6 +27,11 @@
     }
     .sl11{
     color:white;
+    }
+    .sl3{
+    background-color:black;
+    width:100%;
+    overflow-y:auto;
     }
     
     .seaEx{
@@ -70,11 +78,13 @@
     margin:0px;
     padding:10px;
     display:flex;
-    width:100%;
+    width:94%;
     justify-content:space-evenly;
     align-items:center;
     background-color:black;
     color:#ff8c42;
+    border-top:1.5px solid grey;
+    border-radius:15px;
     }
     .red span{
     border-radius:100px;
@@ -140,7 +150,7 @@
     }
     
     .terb{
-    height:80vh;
+    height:72vh;
     overflow-y:scroll;
     
     }
@@ -205,7 +215,7 @@
     }
     
     .mivnkn i{
-    color:white;
+    color:#999;
     padding:3px;
     font-size:0.6rem;
     }
@@ -216,6 +226,24 @@
     .mivnkn button:hover{
     color:white;
     }
+    
+    .frotuCh{
+    
+    padding:10px;
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+    
+    justify-content:center;
+    align-items:center;
+    margin:10px;
+    }
+    .frotuCh canvas{
+    border-radius:10px;
+    padding:10px;
+    background-color:#222;
+    }
+    
   </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
@@ -340,7 +368,7 @@
       </div>
       
       <div class="mivnkn">
-      <button onclick="swiper.slideToLoop(1)"> <i class="fa-solid fa-less-than"></i>  Frotu </button>
+      <button onclick="swiper.slideToLoop(1)"> <i class="fa-solid fa-less-than"></i>  Frotu </button>  <button onclick="swiper.slideToLoop(3)">  Graphs <i class="fa-solid fa-less-than"></i> </button>
       </div>
             <div id="ttt" class="seaEx">
             <h3 id="frt" style="margin:0;padding:0;padding:5px;font-size:1.5rem;">Frotu </h3>
@@ -389,6 +417,19 @@
       
       
       </div>
+      
+      <div class="swiper-slide sl sl3">
+      <div class="mivnkn">
+      <button onclick="swiper.slideToLoop(2)"> <i class="fa-solid fa-less-than"></i>  Frotu Expence </button> <button onclick="location.href='finpulse.html'"> Black Road <i class="fa-solid fa-greater-than"></i></button>
+      </div>
+      <center> <h3> Frotu Statistics </h3></center>
+     
+      <div class="frotuCh">
+      <canvas id="pieChart" width="100" height="100"></canvas>
+      <canvas id="pieChartCat" width="100" height="50"></canvas>
+      </div>
+      <br>
+      </div>
      
     </div>
   </div>
@@ -409,8 +450,8 @@
   
   let fetFrotu = false;
   let frotuOBS = { froID: "", froED: "", froIXB: { inc: 0, exp: 0, bal: 0 } };
-  
-  // Get Frotu Data
+  let frotuCatOb={};
+ 
   async function getFrotu() {
   let intranf = document.getElementById("frodatr");
   let extranf = document.getElementById("frodaEX");
@@ -440,14 +481,18 @@
   extranfIXB.children[1].innerHTML = parseInt(resu.froIXB.exp);
   extranfIXB.children[2].innerHTML = resu.froIXB.bal;
   
-  famtC?.();
-  addCats?.();
+  famtC();
+  addCats();
   }
+  setTimeout(()=>{
+  shofroPie();
+  },2000);
   }
   
   getFrotu();
   
-  // Add new entry to Frotu
+  
+ 
   async function addfrotuIS() {
   let extranfIXB = document.getElementById("frodaIXP");
   
@@ -501,12 +546,13 @@
   
   famtC?.();
   addCats?.();
+  shofroPie();
   setTimeout(()=>{
   location.reload();
   },1000);
   }
   
-  // Remove Frotu Entry
+  
   function remFrotuIS(x) {
   let extranfIXB = document.getElementById("frodaIXP");
   
@@ -603,6 +649,7 @@
   let ffun=0;
   let ffov=0;
   let ffoth=0;
+  
   document.querySelectorAll(".free").forEach((x)=>{ ffamt+=parseInt(x.children[0].innerHTML) });
   document.querySelectorAll(".reward").forEach((x)=>{ ffrew+=parseInt(x.children[0].innerHTML) });
   document.querySelectorAll(".passive").forEach((x)=>{ ffpass+=parseInt(x.children[0].innerHTML) });
@@ -615,6 +662,14 @@
   document.getElementById("fun").innerHTML= ffun;
   document.getElementById("fot").innerHTML= ffov;
   document.getElementById("fo").innerHTML= ffoth;
+  frotuCatOb={
+  free:ffamt,
+  reward:ffrew,
+  passive:ffpass,
+  unknown:ffun,
+  overtime:ffov,
+  other:ffoth
+  };
   }
   
   
@@ -928,7 +983,7 @@
   
   
  <script src="frotu-temp.js"> </script>
-   <script src=""></script>
+   <script src="frotu-cha.js"></script>
 </body>
 
 </html>
