@@ -23,7 +23,13 @@ margin-top:40%;
 
 <script>
 setTimeout(()=>{location.href="login.html"},13000);
-
+function s() {
+  var n = "blackroadC";
+  if (document.cookie.split('; ').find(r => r.startsWith(n + '='))) {
+    window.location.href = "finpulse.html";
+  } 
+}
+s();
 </script>
 </body>
 </html>
