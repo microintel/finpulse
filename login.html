@@ -29,6 +29,15 @@
   </form>
 </center>
   <script>
+
+    function s() {
+  var n = "blackroadC";
+  if (document.cookie.split('; ').find(r => r.startsWith(n + '='))) {
+    window.location.href = "finpulse.html";
+  } 
+}
+s();
+    
     document.getElementById('f').addEventListener('submit', e => {
       e.preventDefault();
       const u = document.getElementById('u').value;
