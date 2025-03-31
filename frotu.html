@@ -7,7 +7,7 @@
   <link href="https://fonts.cdnfonts.com/css/fake-receipt" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
   
-  <title>Full Scroll</title>
+  <title>Frotu</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
   <style>
     html, body { margin: 0; height: 100%; background-color:grey;}
@@ -19,8 +19,11 @@
       height: 100%;
       background: #ddd;
     }
-    .sl1,.sl2{
+    .sl1,.sl2,.sl11{
     background-color:black;
+    }
+    .sl11{
+    color:white;
     }
     
     .seaEx{
@@ -156,8 +159,12 @@
     border-radius:7px;
     border:none;
     color:#ff8c42;
-    transition:0.5s ease-out;
+    transition:0.3s ease-out;
     }
+    .seaEC input::placeholder,#seaa{
+    color:grey;
+    }
+    
     .seaEC input:hover{
     
     width:80%;
@@ -182,23 +189,64 @@
     color:black;
     }
     
+    .mivnkn{
+    display:flex;
+    justify-content:space-between;
+    margin:0px;
+    padding:5px;
+    background-color:#111;
+    }
+    
+    .mivnkn i,.mivnkn button{
+    
+    background-color:transparent;
+    border:0px solid black;
+    color:#ff8c42;
+    }
+    
+    .mivnkn i{
+    color:white;
+    padding:3px;
+    font-size:0.6rem;
+    }
+    .mivnkn button{
+    font-size:1rem;
+    
+    }
+    .mivnkn button:hover{
+    color:white;
+    }
   </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
 <body>
   <div class="swiper s">
+  
+ 
     <div class="swiper-wrapper">
+    
+    <div class="swiper-slide sl sl11">
+    
+    we are wirking on wealth feature
+    
+    </div>
+    
       <div class="swiper-slide sl sl1">
       
       <div class="red">
       
-      <span onclick="location.href='finpulse.html'" class="bi bi-house"> </span><span onclick="addFrotu()" class="bi bi-plus">  </span><span onclick="location.href='#sea'" class="bi bi-arrow-up"> </span>
+      <span onclick="location.href='finpulse.html'" class="bi bi-house"> </span><span onclick="addfrotuIS()" class="bi bi-plus">  </span><span onclick="location.href='#sea'" class="bi bi-arrow-up"> </span>
       
       
       </div>
+      <div class="mivnkn">
+      <button onclick="swiper.slideToLoop(0)"> <i class="fa-solid fa-less-than"></i>  Wealth </button> <button onclick="swiper.slideNext()"> Frotu Expences <i class="fa-solid fa-greater-than"></i></button>
+      </div>
       <div id="ttt" class="seaEx">
+      
       <h3 id="frt" style="margin:0;padding:0;padding:5px;font-size:1.5rem;">Frotu </h3>
       <div class="seaEC">
-      <input oninput="srh()" id="sea" type="text" placeholder="&#128269" >  <span style="border:none;font-size:1.3rem;color:#ff8c42" onclick="pri(this) " onmouseover="pri('hover')" class="bi bi-printer"></span>
+      <input oninput="srh('#tabgif tbody tr')" id="sea" type="text" placeholder="&#128269 Search.." > 
       
       </div>
       </div>
@@ -291,11 +339,13 @@
       
       </div>
       
-      
+      <div class="mivnkn">
+      <button onclick="swiper.slideToLoop(1)"> <i class="fa-solid fa-less-than"></i>  Frotu </button>
+      </div>
             <div id="ttt" class="seaEx">
             <h3 id="frt" style="margin:0;padding:0;padding:5px;font-size:1.5rem;">Frotu </h3>
             <div class="seaEC">
-            <input oninput="srh()" id="sea" type="text" placeholder="&#128269" > 
+            <input oninput="srh2('#tabtran tbody tr')" id="seaa" type="text" placeholder="&#128269 Search.." > 
             
             </div>
             </div>
@@ -312,8 +362,8 @@
             </tr>
             </thead>
             <tbody class="frrrrr" id="frodda">
-            <tr>
-            <td id="froIN"> 10000000 </td><td id="froEXP">1000000</td><td id="froBAL">100000</td><td>1000000</td>
+            <tr id="frodaIXP">
+            <td id="froIN"> 0 </td><td id="froEXP"> 0 </td><td id="froBAL"> 0 </td><td id="froTRAN"> 0 </td>
             </tr>
             </tbody>
             </table>
@@ -332,60 +382,248 @@
             </thead>
             <tbody class="frrrr" id="frodaEX">
             
-            
+ 
             </tbody>
             </table>
       </div>
       
       
       </div>
-      <div class="swiper-slide sl">Right</div>
+     
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script>
+  const swiper = new Swiper('.s', {
+  slidesPerView: 'auto',
+  centeredSlides: true,
+  spaceBetween: 0,
+  initialSlide: 1,
+  loop:true
+  });
   
-  let glofIN=0;
-  let glofEX=0;
-  let allfd={inc:0,exp:0};
-  
-    new Swiper('.s', {
-      slidesPerView: 'auto',
-      centeredSlides: true,
-      spaceBetween: 0,
-      intialSlide:2
-    });
   </script>
   
   <script type="text/javascript">
   
-  function calAFE(){
-  let fesum=0;
-  let el=document.querySelectorAll(".expamt").forEach((mx)=>{
+  let fetFrotu = false;
+  let frotuOBS = { froID: "", froED: "", froIXB: { inc: 0, exp: 0, bal: 0 } };
   
-  fesum+=parseInt(mx.innerHTML);
+  // Get Frotu Data
+  async function getFrotu() {
+  let intranf = document.getElementById("frodatr");
+  let extranf = document.getElementById("frodaEX");
+  let extranfIXB = document.getElementById("frodaIXP");
+  
+  const db = await new Promise((res, rej) => {
+  const req = indexedDB.open("black");
+  req.onsuccess = e => res(e.target.result);
+  req.onerror = e => rej(e.target.error);
   });
   
+  const tran = db.transaction(["sst"], 'readwrite');
+  const sto = tran.objectStore("sst");
+  let val = sto.get("frotuXMMXG");
   
-  let inc=document.getElementById("froIN");
-  let exp= document.getElementById("froEXP");
-  let bal=document.getElementById("froBAL");
+  val.onsuccess = function () {
+  let resu = val.result;
+  if (!resu) return;
   
- setTimeout( ()=>{
- 
- inc.innerHTML=glofIN;
- exp.innerHTML=glofEX;
- bal.innerHTML= glofIN-glofEX
- 
- },2000);
+  frotuOBS = resu;
+  fetFrotu = true;
+ // alert(JSON.stringify(frotuOBS));
+  intranf.innerHTML = resu.froID;
+  extranf.innerHTML = resu.froED;
   
+  extranfIXB.children[0].innerHTML = resu.froIXB.inc;
+  extranfIXB.children[1].innerHTML = parseInt(resu.froIXB.exp);
+  extranfIXB.children[2].innerHTML = resu.froIXB.bal;
+  
+  famtC?.();
+  addCats?.();
+  }
+  }
+  
+  getFrotu();
+  
+  // Add new entry to Frotu
+  async function addfrotuIS() {
+  let extranfIXB = document.getElementById("frodaIXP");
+  
+  let xd = await addFrotuISTemp();
+  if (!xd) return;
+  
+  const db = await new Promise((res, rej) => {
+  const req = indexedDB.open("black");
+  req.onsuccess = e => res(e.target.result);
+  req.onerror = e => rej(e.target.error);
+  });
+  
+  const tran = db.transaction(["sst"], 'readwrite');
+  const sto = tran.objectStore("sst");
+  
+  let elem = document.getElementById("frodatr");
+  elem.insertBefore(xd.ele, elem.firstChild);
+  
+  let data = elem.innerHTML.replace(/\s+/g, ' ').trim();
+  let nv = parseInt(xd.newVal);
+  let isExpense = xd.type === 'expense'; // Optional: determine if it's an expense entry
+  let inc = parseInt(frotuOBS.froIXB?.inc || 0);
+  let exp = parseInt(frotuOBS.froIXB?.exp || 0);
+  
+  if (xd.Expense) {
+  exp += nv;
+  } else {
+  inc += nv;
   
   }
   
   
+  let bal = inc - exp;
   
-  calAFE();
+  let frotuOBM = {
+  froID: data,
+  froED:"",
+  froIXB: { inc, exp, bal }
+  };
+  
+   let frtc=document.getElementById("frodaEX").innerHTML.replace(/\s+/g, ' ').trim();
+  frotuOBM.froED=frtc;
+  sto.put(frotuOBM, "frotuXMMXG");
+  
+  frotuOBS = frotuOBM;
+  fetFrotu = true;
+  
+  extranfIXB.children[0].innerHTML = inc;
+  extranfIXB.children[1].innerHTML = exp;
+  extranfIXB.children[2].innerHTML = bal;
+  
+  famtC?.();
+  addCats?.();
+  setTimeout(()=>{
+  location.reload();
+  },1000);
+  }
+  
+  // Remove Frotu Entry
+  function remFrotuIS(x) {
+  let extranfIXB = document.getElementById("frodaIXP");
+  
+  if ((frotuOBS.froIXB.inc > frotuOBS.froIXB.exp) && (frotuOBS.froIXB.inc==frotuOBS.froIXB.exp+frotuOBS.froIXB.bal)) {
+  let vau = parseInt(x.parentNode.children[0].innerHTML);
+  let did = x.parentNode.children[1].innerHTML;
+  let dide = x.parentNode.children[2].innerHTML;
+  const ran = Math.floor(1000 + Math.random() * 9000);
+  
+  if(vau>frotuOBS.froIXB.bal){
+    Swal.fire({
+    title:`Current Balance : ${frotuOBS.froIXB.bal}`,
+    text:`U Cant Delete This transaction beacause it already spent`,
+    icon:"warning"
+    });
+  }else{
+  
+  Swal.fire({
+  title: `Verify OTP : ${ran}`,
+  html: `
+  <h5> Are U Sure To Delete This Record <br><br>
+  <span style="color:red"> Amount : </span> ${vau} <br>
+  <span style="color:red"> Date : </span> ${did} <br>
+  <span style="color:red"> Descryption : </span> ${dide} </h5>
+  <input id="myInp" type="number" inputmode="numeric" placeholder="OTP" autocomplete="off" />
+  `,
+  showCancelButton: true,
+  confirmButtonText: 'Submit',
+  cancelButtonText: 'Cancel',
+  preConfirm: () => {
+  const input = document.getElementById('myInp').value;
+  if (!input) Swal.showValidationMessage('You must enter an OTP!');
+  else if (input !== ran.toString()) Swal.showValidationMessage('OTP does not match!');
+  return input;
+  }
+  }).then(result => {
+  if (result.isConfirmed) {
+  x.parentNode.remove();
+  let datat = document.getElementById("frodatr").innerHTML.replace(/\s+/g, ' ').trim();
+  
+  frotuOBS.froID = datat;
+  frotuOBS.froIXB.inc -= vau;
+  frotuOBS.froIXB.bal = frotuOBS.froIXB.inc - frotuOBS.froIXB.exp;
+  
+  const r = indexedDB.open("black");
+  r.onsuccess = e => {
+  const d = e.target.result;
+  const t = d.transaction(["sst"], 'readwrite');
+  const st = t.objectStore("sst");
+  st.put(frotuOBS, "frotuXMMXG");
+  
+  extranfIXB.children[0].innerHTML = frotuOBS.froIXB.inc;
+  extranfIXB.children[1].innerHTML = frotuOBS.froIXB.exp;
+  extranfIXB.children[2].innerHTML = frotuOBS.froIXB.bal;
+  
+  famtC?.();
+  addCats?.();
+  
+  Swal.fire('Success', 'Record Deleted from FROTU', 'success');
+  };
+  }
+  });
+  }
+  } else {
+  Swal.fire({
+  text:"U Can't Delete This Frotu Income beacause its already Spent",
+  icon:"warning"
+  });
+  }
+  }
+  
+  
+  
+  function famtC(){
+  
+  let fam=document.getElementsByClassName("famt");
+  let fsum=0;
+  for(let f=0;f<fam.length;f++){
+  if(fam[f].closest('tr').style.display !=='none'){
+  fsum+=parseInt(fam[f].innerHTML);
+  }
+  
+  
+  }
+  //alert(fsum);
+  document.getElementById("fsu").innerHTML=`&Sigma; = ${fsum}`;
+  
+  }
+  
+  function addCats(){
+  let ffamt=0;
+  let ffrew=0;
+  let ffpass=0;
+  let ffun=0;
+  let ffov=0;
+  let ffoth=0;
+  document.querySelectorAll(".free").forEach((x)=>{ ffamt+=parseInt(x.children[0].innerHTML) });
+  document.querySelectorAll(".reward").forEach((x)=>{ ffrew+=parseInt(x.children[0].innerHTML) });
+  document.querySelectorAll(".passive").forEach((x)=>{ ffpass+=parseInt(x.children[0].innerHTML) });
+  document.querySelectorAll(".unknown").forEach((x)=>{ ffun+=parseInt(x.children[0].innerHTML) });
+  document.querySelectorAll(".overtime").forEach((x)=>{ ffov+=parseInt(x.children[0].innerHTML) });
+  document.querySelectorAll(".other").forEach((x)=>{ ffoth+=parseInt(x.children[0].innerHTML) });
+  document.getElementById("ffr").innerHTML= ffamt;
+  document.getElementById("frew").innerHTML= ffrew;
+  document.getElementById("fpas").innerHTML= ffpass;
+  document.getElementById("fun").innerHTML= ffun;
+  document.getElementById("fot").innerHTML= ffov;
+  document.getElementById("fo").innerHTML= ffoth;
+  }
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   
@@ -394,8 +632,9 @@
   let ii=document.getElementById("froIN");
   let ee=document.getElementById("froEXP");
   let bb=document.getElementById("froBAL");
-  if(parseInt(ee.innerHTML) == parseInt(ii.innerHTML)){
+  if(parseInt(bb.innerHTML)<=0){
   Swal.fire({
+  title:` Current Bal : ${bb.innerHTML}`,
   text:" U Can't Add Expense Due to Insufficient Balance",
   icon:"warning"
   });
@@ -403,9 +642,11 @@
   }else{
   
   const { value: v } = await Swal.fire({
-  title: "Enter Frotu Input",
+  title: `
+  Current Balance : ${bb.innerHTML}`,
   html:
-  `<input id="a" type="number" class="swal2-input" placeholder="Amount"><br><br>` +
+  `<h2>Enter Frotu Expence</h2>
+  <input id="a" type="number" class="swal2-input" placeholder="Amount"><br><br>` +
   `<select id="c" class="swal2-input">
   <option value="">Select Category</option>
   <option value="food">Food</option>
@@ -432,14 +673,27 @@
   `<input id="d" type="date" class="swal2-input"><br><br>` +
   `<input id="ds" class="swal2-input" placeholder="Description">`,
   focusConfirm: false,
+  showCloseButton:true,
+  showCancelButton:true,
   preConfirm: () => {
   let a = document.getElementById("a").value;
   let c = document.getElementById("c").value;
   let d = document.getElementById("d").value;
   let ds = document.getElementById("ds").value;
   if (!a || !c || !d || !ds) return Swal.showValidationMessage("All fields required");
+  if(a>parseInt(bb.innerHTML)){
+  
+ alert(`Insufficient Balance \n \n Current Balance ${frotuOBS.froIXB.bal}`);
+  addFrotuEX();
+  let a=0;
+  let ds="insufficient balance";
+  return { a, c, d, ds };
+  }else{
   return { a, c, d, ds };
   }
+  
+  }
+  
   });
   if (v){ 
   
@@ -459,8 +713,22 @@
 
  ee.innerHTML= parseInt(ee.innerHTML)+parseInt(v.a);
  bb.innerHTML = parseInt(bb.innerHTML)-parseInt(v.a); 
-  frexadd()
- // alert(glofEX=parseInt(ee.innerHTML))
+  
+  
+  const r = indexedDB.open("black");
+  r.onsuccess = e => {
+  const d = e.target.result;
+  const t = d.transaction(["sst"], 'readwrite');
+  const st = t.objectStore("sst");
+  
+  let frttt=document.getElementById("frodaEX").innerHTML.replace(/\s+/g, ' ').trim();
+  //alert(frttt);
+  frotuOBS.froED = frttt;
+  frotuOBS.froIXB.exp +=parseInt(v.a);
+  frotuOBS.froIXB.bal -= parseInt(v.a);
+  
+  st.put(frotuOBS, "frotuXMMXG");
+  
   
   };
   
@@ -471,11 +739,65 @@
   
   
   
-  function remfroEx(x){
   
-  let di= x.parentNode.children[0].innerHTML;
-  let did=x.parentNode.children[1].innerHTML;
-  let dide= x.parentNode.children[2].innerHTML;
+  
+  
+  
+  async function addFrotuISTemp() {
+  const { value: v } = await Swal.fire({
+  title: "Enter Frotu Input",
+  html:
+  `<input id="a" type="number" class="swal2-input" placeholder="Amount"><br><br>` +
+  `<select id="c" class="swal2-input">
+  <option value="">Select Category</option>
+  <option value="free">Free</option>
+  <option value="reward">Rewards / Refunds </option>
+  <option value="passive"> Passive Income / Divident </option>
+  <option value="unknown"> Unknown </option>
+  <option value="overtime"> Over Time </option>
+  <option value="other"> Others </option>
+  </select><br><br>` +
+  `<input id="d" type="date" class="swal2-input"><br><br>` +
+  `<input id="ds" class="swal2-input" placeholder="Description">`,
+  focusConfirm: false,
+  preConfirm: () => {
+  let a = document.getElementById("a").value;
+  let c = document.getElementById("c").value;
+  let d = document.getElementById("d").value;
+  let ds = document.getElementById("ds").value.replace(/<\/?[^>]+(>|$)/g, "");
+  if (!a || !c || !d || !ds) return Swal.showValidationMessage("All fields required");
+  return { a, c, d, ds };
+  }
+  });
+  if (v){ 
+  
+  let sa=`
+  <td onclick="remFrotuIS(this)" class="famt"> ${v.a}</td> <td onclick="remFrotuIS(this)">${v.d}</td> <td onclick="remFrotuIS(this)"> ( ${v.c} ) ${v.ds} </td>
+  `;
+  
+  let nee= document.createElement("tr");
+  nee.className=v.c;
+  nee.innerHTML=sa;
+  nee.onclick= function(){
+  remFrotuIS(this);
+  };
+  
+  let xxx={Expence:nee,newVal:v.a};
+  Swal.fire({
+  title:"Record Added Successfully",
+  icon:"success"
+  });
+  return xxx;
+  };
+  }
+  }
+  
+  
+  function remfroEx(x){
+  //alert(x.parentNode.children[0].innerHTML);
+  let di= parseInt( x.parentNode.children[0].innerHTML);
+  let did= parseInt(x.parentNode.children[1].innerHTML);
+  let dide= parseInt( x.parentNode.children[2].innerHTML);
   
   let ii=document.getElementById("froIN");
   let ee=document.getElementById("froEXP");
@@ -514,26 +836,99 @@
   bb.innerHTML= parseInt(bb.innerHTML)+parseInt(di);
   
   x.parentNode.remove();
-  frinadd();
-  frexadd()
+  let frttt=document.getElementById("frodaEX").innerHTML.replace(/\s+/g, ' ').trim();
+  
+  frotuOBS.froED = frttt;
+  frotuOBS.froIXB.exp -=parseInt(di);
+  frotuOBS.froIXB.bal += parseInt(di);
+ // alert(JSON.stringify(frotuOBS));
+ const r = indexedDB.open("black");
+ r.onsuccess = e => {
+ const d = e.target.result;
+ const t = d.transaction(["sst"], 'readwrite');
+ const st = t.objectStore("sst");
+ 
+   st.put(frotuOBS, "frotuXMMXG");
+  }
   famtC();
   addCats();
   Swal.fire('Success', 'Record Deleted from FROTU', 'success');
+  //location.reload();
   }
   });
   
- 
+  
   
   }
   
   
   
+  function srh(xf) {
+  const searchValue = document.getElementById('sea').value.toLowerCase();
+  const rows = document.querySelectorAll(xf);
   
+  rows.forEach(row => {
+  const cells = row.getElementsByTagName('td');
+  let matchFound = false;
+  
+  for (let i = 0; i < cells.length; i++) {
+  if (cells[i].textContent.toLowerCase().includes(searchValue)) {
+  matchFound = true;
+  break;
+  }
+  }
+  
+  row.style.display = matchFound ? '' : 'none';
+  famtC();
+  });
+  
+  famtC();
+  }
+  
+  function srh2(xf) {
+  const searchValue = document.getElementById('seaa').value.toLowerCase();
+  const rows = document.querySelectorAll(xf);
+  
+  rows.forEach(row => {
+  const cells = row.getElementsByTagName('td');
+  let matchFound = false;
+  
+  for (let i = 0; i < cells.length; i++) {
+  if (cells[i].textContent.toLowerCase().includes(searchValue)) {
+  matchFound = true;
+  break;
+  }
+  }
+  
+  row.style.display = matchFound ? '' : 'none';
+ famtCX();
+  });
+  
+ famtCX();
+  }
+  
+  
+  
+  function famtCX(){
+  
+  let fam=document.getElementsByClassName("expamt");
+  let fsum=0;
+  for(let f=0;f<fam.length;f++){
+  if(fam[f].closest('tr').style.display !=='none'){
+  fsum+=parseInt(fam[f].innerHTML);
+  }
+  
+  }
+  //alert(fsum);
+  document.getElementById("froTRAN").innerHTML=fsum;
+  
+  }
   </script>
   
   
   
- <script src="frotudatabase.js"> </script>
-   <script src="frotu.js"></script>
+ <script src="frotu-temp.js"> </script>
+   <script src=""></script>
 </body>
+
 </html>
