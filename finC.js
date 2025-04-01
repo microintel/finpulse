@@ -21,6 +21,7 @@ google.charts.load("current", {packages:["corechart"]});
         
        
         function ddd() {
+        return;
         var data = google.visualization.arrayToDataTable([
         ['Category', 'Income', 'Expenses', 'Balance'],
         ['',cin,cbala,cexp]
@@ -53,6 +54,7 @@ google.charts.load("current", {packages:["corechart"]});
         }
         
         function dcc(){
+        return;
         //alert(555);
         google.charts.load("current", {packages:["corechart"]});
         
@@ -86,6 +88,7 @@ google.charts.load("current", {packages:["corechart"]});
         
         
         function ddddd() {
+        return;
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Category');
         data.addColumn('number', 'Amount');

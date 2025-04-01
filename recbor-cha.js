@@ -1,7 +1,15 @@
 let cart=null;
-function rebocc(da){
+function rebocc(da,x){
 
+if(x){
+document.getElementById("ssuu").style.display="flex";
+document.getElementById("fsumT").innerHTML= da[0];
+document.getElementById("fsumR").innerHTML= da[1];
+document.getElementById("fsumB").innerHTML= da[2];
 
+document.getElementById('reboc').style.display="none";
+}else{
+document.getElementById("ssuu").style.display="none";
 document.getElementById('reboc').style.display="block";
 var nknx = document.getElementById('reboc').getContext('2d');
 if (cart) cart.destroy();
@@ -87,4 +95,6 @@ if (cart) cart.destroy();
             }
         });
         
-   }
+
+}
+ }

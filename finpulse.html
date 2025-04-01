@@ -146,41 +146,10 @@
 </head>
 <body>
 
-<div id="cnrdi" class="cnrd">
-<form action="#" onsubmit="appendC(event,'nria','nrid','nrif','nrie','nrib')">
-   <fieldset>
-   <legend>Create New Record</legend>
-    <input type="number" placeholder="Enter Amount" id="nria" required>
-    <input type="text" placeholder="Slect Date" onfocus="(this.type='date')" id="nrid" required >
-    <input type="text" placeholder="Enter Amount Source" id="nrif" required>
-    <input type="number" placeholder="Enter Expence" id="nrie" required>
-    <input type="number" placeholder="Enter Balance" id="nrib" required>
-    <hr style="width:100%;">
-    <div style="display:flex;width:100%;justify-content:space-around;">
-    <button type="submit" >Save Record</button>
-    <button type="button" onclick="clo('cnrdi')">Close</button>
-    </div>
-  </fieldset>
-  </form>
-</button>
-</div>
 
 
-<div id="anrdi" class="anrd">
-    <form action="#" onsubmit="addTr(event, 'anria', 'anrid', 'anrif')">
-        <fieldset>
-            <legend>Add Transaction</legend>
-            <input type="number" placeholder="Enter Amount" id="anria" required>
-            <input type="text" placeholder="Select Date" onfocus="(this.type='date')" id="anrid" required>
-            <input type="text" placeholder="Enter Amount Source" id="anrif" required>
-            <hr style="width:100%;">
-            <div style="display:flex;width:100%;justify-content:space-around;">
-                <button type="submit">Save Record</button>
-                <button type="button" onclick="clo('anrdi')">Close</button>
-            </div>
-        </fieldset>
-    </form>
-</div>
+
+
 
 
 
@@ -193,8 +162,9 @@
       <li id="acNa">Profile</li>
       
       <li class="cnrr" onclick="appendC()">Add Record</li>
-      <li onclick="location.href='https://microintel.github.io/endgram/file/coding.html'">Statistics</li>
       <li onclick="location.href='frotu.html'"> Frotu</li>
+      <li onclick="location.href='recbor.html'"> Lend </li>
+      <li onclick="location.href='https://microintel.github.io/endgram/file/coding.html'">Statistics</li>
       <li onclick="location.href='https://microintel.github.io/endgram/file/coding.html'"> BackUP</li>
       <li><font onclick="printe()">Print</font></li>
       <li onclick="location.href='https://github.com/microintel/finpulse?tab=readme-ov-file#finpulse--documentation'">Documentation</li>
@@ -229,12 +199,12 @@
   <input type="text" id="sinpp" placeholder="Amount &#x1F50D ..." oninput="searTa()" />
         
         <input type="text" id="seait" placeholder="Tran &#x1F50D ..." oninput="sea()" />
-        <img onclick="borww('block')" id="bori" src="https://img.icons8.com/?size=100&id=rRTAE6XGGP2Q&format=png&color=FFFFFF">
+        <img style="display:none;" onclick="borww('block')" id="bori" src="https://img.icons8.com/?size=100&id=rRTAE6XGGP2Q&format=png&color=FFFFFF">
         
        </div> 
    <br>
    
-   <div id="borwi" class="borw">
+   <div style="display:none;" id="borwi" class="borw">
    <div class="canh">
    <h4 style="margin:0px;padding:0px;color:transparent;">B</h4>
    <center>
@@ -263,7 +233,7 @@
    </div>
    
    <br>
-   <div id="crai" class="cra">
+   <div style="display:none;" id="crai" class="cra">
    
    <select onchange="dcc()" id="dccc">
    <option value="dft">Default</option>

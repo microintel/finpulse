@@ -453,7 +453,7 @@
         .feed{
         position:absolute;
         width:150px;
-        height:260px;
+        height:280px;
         left:2px;top:2px;
         background-color:var(--w);
         padding:0px;
@@ -468,16 +468,21 @@
         align-items:center;
         }
         li{
+        -webkit-user-select: none;  
+        -moz-user-select: none;     
+        -ms-user-select: none;     
+        user-select: none;
         list-style-type:none;
         padding:5px;
         margin:0px;
         width:90%;
         color:var(--b);
         height:100%;
+        user-select:none;
         border-bottom:1.5px solid var(--tbor);
         text-align:left;
         }
-        li:nth-child(8){
+        li:nth-child(9){
         border-bottom:none;
         }
         .om:hover .feed{

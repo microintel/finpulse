@@ -419,6 +419,7 @@ function alve(){
         
         
         function dd() {
+        return;
         var data = google.visualization.arrayToDataTable([
         ['adapaavi', 'finpulse'],
         ['Income',cin],
@@ -453,6 +454,7 @@ function alve(){
         randE();
         }
         function randE(){
+        return;
         ratt=0;
         let ranChg= ranFill || 1000;
         document.getElementById("rsdi").innerHTML="";
@@ -511,6 +513,7 @@ function alve(){
         
         
         function borww(x){
+        return;
         let preDa=new Date();
         // let lendP=parseInt(prompt("Enter Password to proceed : "));
          if(true){
