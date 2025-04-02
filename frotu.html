@@ -482,6 +482,8 @@
   extranfIXB.children[1].innerHTML = parseInt(resu.froIXB.exp);
   extranfIXB.children[2].innerHTML = resu.froIXB.bal;
  // alert(frotuOBS.froED);
+ addclontrr();
+ addclontrrEx();
   famtC();
   addCats();
   
@@ -553,7 +555,7 @@
   
   let data = elem.innerHTML.replace(/\s+/g, ' ').trim();
   let nv = parseInt(xd.newVal);
-  let isExpense = xd.type === 'expense'; // Optional: determine if it's an expense entry
+  let isExpense = xd.type === 'expense'; 
   let inc = parseInt(frotuOBS.froIXB?.inc || 0);
   let exp = parseInt(frotuOBS.froIXB?.exp || 0);
   
@@ -583,7 +585,7 @@
   extranfIXB.children[0].innerHTML = inc;
   extranfIXB.children[1].innerHTML = exp;
   extranfIXB.children[2].innerHTML = bal;
-  
+
   famtC?.();
   addCats?.();
   shofroPie("CAT");
@@ -793,7 +795,7 @@
   if (v){ 
   
   let sa=`
-  <td onclick="remfroEx(this)" class="expamt"> ${v.a}</td> <td onclick="remfroEx(this)">${v.d}</td> <td onclick="remfroEx(this)"> ( ${v.c} ) ${v.ds} </td>
+  <td> ${v.a}</td> <td>${v.d}</td> <td> ( ${v.c} ) ${v.ds} </td>
   `;
   
   let nee= document.createElement("tr");
@@ -823,6 +825,7 @@
   frotuOBS.froIXB.bal -= parseInt(v.a);
   
   st.put(frotuOBS, "frotuXMMXG");
+  addclontrrEx();
   shofroPie("EXP");
   
   };
@@ -1019,6 +1022,51 @@
   //alert(fsum);
   document.getElementById("froTRAN").innerHTML=fsum;
   
+  }
+
+
+
+  function addclontrr(){
+    let x = document.getElementById("frodatr");
+    Array.from(x.children).forEach((m,c)=>{
+      Array.from(m.children).forEach((u,i)=>{
+      if(i===0){
+             u.className="famt";
+             u.onclick= function(){
+    remFrotuIS(this)
+    };
+      }else{
+        u.onclick= function(){
+    remFrotuIS(this)
+    };
+      }
+    });
+    });
+  }
+
+
+
+
+
+  function addclontrrEx(){
+    let x = document.getElementById("frodaEX");
+      
+   Array.from(x.children).forEach((v,b)=>{
+    Array.from(v.children).forEach((n,m)=>{
+      if(m===0){
+       n.className="expamt";
+       n.onclick= function(){
+  remfroEx(this)
+  };
+      }else{
+        n.onclick= function(){
+  remfroEx(this)
+  };
+      }
+    });
+   });
+
+    
   }
   </script>
   

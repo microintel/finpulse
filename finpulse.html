@@ -4,6 +4,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="icon" type="image/png" href="black.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href='https://fonts.googleapis.com/css?family=Economica' rel='stylesheet'>
 
 <style type="text/css">
@@ -149,6 +150,12 @@
     margin: 10px;
     padding: 10px;
     max-width: fit-content;
+  }
+
+  .fa-plus{
+    color:red;
+    align-items: center;
+    font-size: 1.3rem;
   }
 </style>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -337,7 +344,20 @@
        <script src="black-cha.js" type="text/javascript">
        </script>
        <br><br>
-      
+          <script>
+
+function addclontr() {
+    document.querySelectorAll(".trans").forEach(x => 
+        Array.from(x.children).forEach((c, i) => {
+            c.className = i === 0 ? "mony" : i === 1 ? "tdate" : "tdes";
+            if (i >= 0) c.onclick = () => transRem(c);
+        })
+    );
+}
+
+            
+
+          </script>
         <center>
         <img class="dbimg" id="parr" src="https://raw.githubusercontent.com/microintel/endgram/main/photo/microintel-black-small.png">
         </center>

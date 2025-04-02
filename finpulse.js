@@ -49,16 +49,17 @@ function alve(){
 
 
 
-      // alert("This is still in development. We use demo data for demonstration purposes only, and no data is saved yet. Future updates will include data storage..");
+      
        function addTr() {
        let tA = "";
        let tD = "";
        let tDes = "";
-       
+       let cvcv = document.getElementById(preNo).parentNode.children[4].innerHTML;
        return Swal.fire({
        title: 'Enter Expense',
        html:
-       `<input id="at" class="swal2-input" placeholder="Amount" type="number" style="width:100%;"><br><br>` +
+       `<h3> Current Bal : ${cvcv}</h3>
+       <input id="at" class="swal2-input" placeholder="Amount" type="number" style="width:100%;"><br><br>` +
        `<input id="dt" class="swal2-input" placeholder="Date" type="date" style="width:100%;"><br><br>` +
        `<select id="ct" class="swal2-input" style="width:100%;">
        <option value="food">Food</option>
@@ -88,7 +89,7 @@ function alve(){
        // tranCon=="mxx" ? console.log(123) : console.log(88);
        let p = document.getElementById(preNo);
        let pa = p.parentNode.parentNode.children[1];
-       
+          alert(pa.innerHTML); 
        // event.preventDefault();
        
        
@@ -98,9 +99,7 @@ function alve(){
        }
        
        let stu = `
-       <font ondblclick="transRem(this)" class="mony">${tA}</font>
-       <font ondblclick="transRem(this)" class="tdate">${tD}</font>
-       <font ondblclick="transRem(this)" class="tdes">${tDes}</font>
+       <font>${tA}</font><font>${tD}</font><font>${tDes}</font>
        `;
        let ppp1=p.parentNode.children[0].innerHTML;
        let ppp2=p.parentNode.children[3].innerHTML;
@@ -121,7 +120,9 @@ function alve(){
        p.parentNode.children[4].innerHTML=pp2-parseInt(tA);
        pa.appendChild(diiv);
        // drawChart();
+       addclontr(); 
        updateTotals();
+       
        backINCADD();
        Swal.fire({
        title:"Transaction Added..",
@@ -586,7 +587,7 @@ function alve(){
         <font class="fromm">${f}</font>
         <font class="exep"> 0 </font>
         <font class='Abal'>${i}</font>
-        <font onclick="discr('anrdi',this.id)" id="${raa}"><img class="adimg" src="https://img.icons8.com/?size=100&id=szDzfecravBo&format=png&color=FA5252"></font>
+        <font onclick="discr('anrdi',this.id)" id="${raa}"><i class="fa fa-plus adimg"></i></font>
         </div>
         <div class="trand">
         

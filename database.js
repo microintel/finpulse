@@ -13,7 +13,7 @@ function backINCGET(){
         let hel= nkn.result;
         
         document.getElementById("ppr").innerHTML= hel.data;
-       
+        addclontr();
         updateTotals();
         
         };

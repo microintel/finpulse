@@ -29,7 +29,7 @@ async function addFrotuISTemp() {
     if (v){ 
     
     let sa=`
-    <td onclick="remFrotuIS(this)" class="famt"> ${v.a}</td> <td onclick="remFrotuIS(this)">${v.d}</td> <td onclick="remFrotuIS(this)"> ( ${v.c} ) ${v.ds} </td>
+    <td> ${v.a}</td> <td>${v.d}</td> <td> ( ${v.c} ) ${v.ds} </td>
     `;
     
     let nee= document.createElement("tr");
