@@ -13,6 +13,7 @@ function backINCGET(){
         let hel= nkn.result;
         
         document.getElementById("ppr").innerHTML= hel.data;
+       
         updateTotals();
         
         };
@@ -40,7 +41,7 @@ function backINCGET(){
         t.objectStore("sst").put(dbs, "blackroadINC");
         };
         
-        
+        updateTotals();
         }
         
         
@@ -60,7 +61,7 @@ function backINCGET(){
         
         t.objectStore("sst").put(dbsm, "blackroadReBo");
         };
-        
+        updateTotals();
         
         
         }
@@ -68,7 +69,8 @@ function backINCGET(){
         
         
         function backReDaGET(){
-        
+          return;
+      
         const r = indexedDB.open("black");
         r.onsuccess = e => {
         const d = e.target.result;
@@ -93,4 +95,4 @@ function backINCGET(){
         
         }
         
-         backReDaGET();
+        

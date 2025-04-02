@@ -6,8 +6,20 @@ let dadatra="";
 let bt="transparent";
 let a="white";
         let b="black";
-
-
+let valforgp="";
+function chgapval(x){
+valforgp=x.value;
+let inca=[];
+       let expa=[];
+       let bala=[];
+       document.querySelectorAll(".incomeColumn").forEach((x)=>{inca.push(parseInt(x.innerHTML))});
+       document.querySelectorAll(".exep").forEach((x)=>{expa.push(parseInt(x.innerHTML))});
+       document.querySelectorAll(".Abal").forEach((x)=>{bala.push(parseInt(x.innerHTML))});
+       
+      setTimeout(()=>{
+        backchhh(inca,expa,bala);
+      },100);
+}
 function alve(){
       let lenSum=0;
       let texSu=0;
@@ -301,7 +313,7 @@ function alve(){
         
         updateTotals();
         }
-        updateTotals();
+       
         function updateTotals() {
         let tttinc = 0;
         let tttexe = 0;
@@ -333,6 +345,17 @@ function alve(){
         document.getElementById("bal").innerHTML = "BAL " + tttball;
         gi();
         randE();
+        let inca=[];
+       let expa=[];
+       let bala=[];
+       document.querySelectorAll(".incomeColumn").forEach((x)=>{inca.push(parseInt(x.innerHTML))});
+       document.querySelectorAll(".exep").forEach((x)=>{expa.push(parseInt(x.innerHTML))});
+       document.querySelectorAll(".Abal").forEach((x)=>{bala.push(parseInt(x.innerHTML))});
+       
+      setTimeout(()=>{
+        backchhh(inca,expa,bala);
+      },1000);
+      
         }
        
        function gi(){
@@ -369,7 +392,7 @@ function alve(){
        document.getElementById("exp").innerHTML = mmmx;
        
        //drawChart(vvvx,nnnx,mmmx);
-       dcc();
+       
        gleE();
        
        }
@@ -426,7 +449,7 @@ function alve(){
         ['Expence',cbala],
         ['Balance',cexp]
         ]);
-        
+        alert(cexp);
         var options = {
         title:'jddmdm',
         legend:'none',

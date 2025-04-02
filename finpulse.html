@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="icon" type="image/png" href="black.png">
     <link href='https://fonts.googleapis.com/css?family=Economica' rel='stylesheet'>
@@ -136,7 +137,19 @@
   margin:3px;
   color:brown;
   }
-  
+  #linebal{
+    margin:10px;
+    padding:5px;
+  }
+
+  #grpsel{
+    background-color: var(--back);
+    color: var(--b);
+    border-radius: 6px;
+    margin: 10px;
+    padding: 10px;
+    max-width: fit-content;
+  }
 </style>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -202,7 +215,7 @@
         <img style="display:none;" onclick="borww('block')" id="bori" src="https://img.icons8.com/?size=100&id=rRTAE6XGGP2Q&format=png&color=FFFFFF">
         
        </div> 
-   <br>
+   
    
    <div style="display:none;" id="borwi" class="borw">
    <div class="canh">
@@ -232,7 +245,7 @@
    </div>
    </div>
    
-   <br>
+  
    <div style="display:none;" id="crai" class="cra">
    
    <select onchange="dcc()" id="dccc">
@@ -248,9 +261,19 @@
         <button class="addran" id="addRan" onclick="rangeNee(this)"> Add Range</button>
         <div id="rsdi" class="rsd">
        </div>
+       
    </details>
    </div>
-   <br>
+   
+   
+   <select onchange="chgapval(this)" id="grpsel">
+    <option value=""> select graph</option>
+    <option value="bal"> balance graph </option>
+    <option value="exp"> expences graph </option>
+   </select>
+   <canvas id="linebal" width="100px" height="40px"></canvas>
+   
+   
    
     <center>
         <div id="stytt" class="styt">
@@ -310,12 +333,9 @@
         
         
         <script src="database.js"> </script>
-        
-       <script src="finpro.js"> </script>
       <script src="finpulse.js"></script>
-       <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-       <script src="finC.js"></script>
-       <script src="tranAdd.js"></script>
+       <script src="black-cha.js" type="text/javascript">
+       </script>
        <br><br>
       
         <center>
