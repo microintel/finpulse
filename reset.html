@@ -143,7 +143,7 @@ disdb();
          const size = new Blob([JSON.stringify(getAll.result)]).size;
        const usedMB = (size / (1024 * 1024)).toFixed(5);
          
-     document.getElementById("used").innerHTML = `used soace ${usedMB}`;
+     document.getElementById("used").innerHTML = `used soace ${usedMB} MB`;
      db.close();
                       };
         };
