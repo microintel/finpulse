@@ -89,7 +89,7 @@ function alve(){
        // tranCon=="mxx" ? console.log(123) : console.log(88);
        let p = document.getElementById(preNo);
        let pa = p.parentNode.parentNode.children[1];
-          alert(pa.innerHTML); 
+         // alert(pa.innerHTML); 
        // event.preventDefault();
        
        
