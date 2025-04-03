@@ -14,8 +14,8 @@ balg();
 
     function balg(){
        const ctx = document.getElementById('linebal').getContext('2d');
-    let inx = i;
-    let balance = b;
+    let inx = i.reverse();
+    let balance = b.reverse();
     let cv = [];
     
     inx.forEach((x, r) => {
@@ -83,8 +83,8 @@ balg();
 function expg(){
 
        const ctx = document.getElementById('linebal').getContext('2d');
-       let inx = i;
-       let balance = e;
+       let inx = i.reverse();;
+       let balance = e.reverse();;
        let cv = [];
        
        inx.forEach((x, r) => {
