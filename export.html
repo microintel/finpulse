@@ -75,119 +75,122 @@
         #fill {
             width: 0%;
             height: 100%;
-            background: #444;
+            background: green;
             transition: width 2s linear;
         }
       </style>
     
 </head>
 <body>
-    <h1>Export u r Data</h1>
-    
-    <button onclick="show()">Download Data</button>
-    <div id="pop">
-        <p id="txt">Reading Black Road...</p>
-        <img id="img" src="https://raw.githubusercontent.com/microintel/endgram/main/photo/venom-load.gif" alt="Loading">
-        <div id="bar"><div id="fill"></div></div>
-    </div>
+  <h1 id="nkn1">Export u r Data</h1>
+  
+  <button id="nkn2" onclick="show()">Download Data</button>
+  <div id="pop" style="display:none;">
+      <p id="txt">Reading Black Road...</p>
+      <img id="img" src="https://raw.githubusercontent.com/microintel/endgram/main/photo/venom-load.gif" alt="Loading">
+      <div id="bar"><div id="fill"></div></div>
+  </div>
 
-    <script>
-        function gDB(db, store, keys) {
-            return new Promise((res, rej) => {
-                const r = indexedDB.open(db);
-    const data = {};
-                r.onsuccess = (e) => {
-          const db = e.target.result;
-                    const tx = db.transaction(store, 'readonly');
-    const os = tx.objectStore(store);
-    
-                    keys.forEach(key => {
-                  const gr = os.get(key.trim());
-                   gr.onsuccess = (ev) => {
-                      if (ev.target.result) {
-                                data[key.trim()] = ev.target.result;
-       }
-                        };
-     gr.onerror = () => rej("mlm");
-                    });
-    
-    tx.oncomplete = () => res(data);
-                };
-                r.onerror = () => rej('Error');
-            });
-        }
-    
-        function dJSON(data, name) {
-            const b = new Blob([JSON.stringify(data, null, 2)]);
-            const l = document.createElement('a');
-            l.href = URL.createObjectURL(b);
-            l.download = "Black.blackroad";
-            l.click();
-        }
-    
-        function exportData() {
-            const db = "black";
-            const store = "sst";
-               const keys = "blackroadINC,frotuXMMXG,nkncc".split(',');
-            
-            if (!db || !store || keys.length === 0) {
- alert('Please fill in all fields with valid data.');
-                return;
-                }
-            
-            gDB(db, store, keys)
-        .then(data => Object.keys(data).length ? dJSON(data, 'data.json') : alert('No data'))
-        .catch(e => alert(e));
-        
-        }
-    </script>
-    
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <script>
+      function gDB(db, store, keys) {
+          return new Promise((res, rej) => {
+              const r = indexedDB.open(db);
+              const data = {};
 
+              r.onsuccess = (e) => {
+                  const db = e.target.result;
+                  const tx = db.transaction(store, 'readonly');
+                  const os = tx.objectStore(store);
 
-    <script>
-        let msgs = [
-            "Reading data from Database...",
-            "Creating File...",
-            "Initiating download [ chakli ]..."
-        ];
-        let pop = document.getElementById("pop"),
-        txt = document.getElementById("txt"),
-        fill = document.getElementById("fill"),
-        idx = 0, 
-        dur = Math.floor(Math.random() * (18000 - 10000 + 1)) + 10000,
-        
-        intv = dur / msgs.length;
+                  keys.forEach(key => {
+                      const gr = os.get(key.trim());
+                      gr.onsuccess = (ev) => {
+                          if (ev.target.result) {
+                              data[key.trim()] = ev.target.result;
+                          }
+                      };
+                      gr.onerror = () => rej("mlm");
+                  });
 
-    function show() {
-        pop.style.display = "block";
+                  tx.oncomplete = () => res(data);
+              };
 
-        let int = setInterval(() => {
-            idx++;
-            if (idx < msgs.length) txt.innerText = msgs[idx];
-            fill.style.width = `${(idx + 1) * (100 / msgs.length)}`;
-            if (idx >= msgs.length - 1) {
-                clearInterval(int);
-                setTimeout(() =>{ 
-                    pop.style.display = "none";
-                    exportData();
-                    Toastify({
-  text: "BlackRoad Data File Downloaded Successsfully",
-  duration: 3000,
-  newWindow: true,
-  close: false,
-  gravity: "top",
-  position: "center", 
-  stopOnFocus: true, 
-  style: {
-    background: "green",
-  },
-}).showToast();
-                }, intv);
-            }
-        }, intv);
-    }
+              r.onerror = () => rej('Error opening database');
+          });
+      }
 
-</script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-    </body>
+      function dJSON(data, name) {
+          const b = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+          const l = document.createElement('a');
+          l.href = URL.createObjectURL(b);
+          l.download = "Blackroad.json";
+          l.click();
+      }
+
+      function exportData() {
+          const db = "black";
+          const store = "sst";
+          const keys = "blackroadINC,frotuXMMXG,nkncc".split(',');
+
+          if (!db || !store || keys.length === 0) {
+              alert('Please fill in all fields with valid data.');
+              return;
+          }
+
+          gDB(db, store, keys)
+              .then(data => Object.keys(data).length ? dJSON(data, 'data') : alert('No data'))
+              .catch(e => alert(e));
+      }
+
+      function show() {
+
+document.getElementById("nkn1").style.display="none";
+document.getElementById("nkn2").style.display="none";
+
+          let msgs = [
+              "Reading data from Database...",
+              "Creating File...",
+              "Initiating download [ chakli ]..."
+          ];
+          let pop = document.getElementById("pop");
+          let txt = document.getElementById("txt");
+          let fill = document.getElementById("fill");
+          let idx = 0;
+          let dur = Math.floor(Math.random() * (18000 - 10000 + 1)) + 10000;
+          let intv = dur / msgs.length;
+
+          pop.style.display = "block";
+
+          let int = setInterval(() => {
+              idx++;
+              if (idx < msgs.length) txt.innerText = msgs[idx];
+              fill.style.width = `${(idx + 1) * (100 / msgs.length)}%`;
+              if (idx >= msgs.length - 1) {
+                  clearInterval(int);
+                  setTimeout(() => {
+                      pop.style.display = "none";
+                      exportData();
+                      Toastify({
+                          text: "BlackRoad Data File Downloaded Successfully",
+                          duration: 3000,
+                          newWindow: true,
+                          close: false,
+                          gravity: "top",
+                          position: "center",
+                          stopOnFocus: true,
+                          style: {
+                              background: "green",
+                          },
+                      }).showToast();
+
+                      document.getElementById("nkn1").style.display="block";
+document.getElementById("nkn2").style.display="block";
+
+                  }, intv);
+              }
+          }, intv);
+      }
+  </script>
+</body>
 </html>

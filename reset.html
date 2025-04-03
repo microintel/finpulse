@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete IndexedDB Database</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #msg {
+            margin-top: 20px;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <h1>Factory Reset </h1>
+    <h3>Permanently Delete Every Think including BlackRoad,Frotu,Lend...</h3>
+
+    <button onclick="delDB()"> factory reset</button>
+    <p id="msg"></p>
+
+    <script>
+        function delDB() {
+            const name = "black";
+            const msg = document.getElementById("msg");
+
+            if (!name) {
+                alert("Please enter a database name.");
+                return;
+            }
+
+            const req = indexedDB.deleteDatabase(name);
+
+            req.onsuccess = () => {
+                msg.style.color = "green";
+                alert("Factory Reset Successfull");
+                // msg.textContent = `"${name}" deleted successfully.`;
+            };
+
+            req.onerror = (e) => {
+                msg.style.color = "red";
+                msg.textContent = `Failed to delete DB "${name}".`;
+                console.error(`Error deleting DB "${name}":`, e.target.error);
+            };
+
+            req.onblocked = () => {
+                msg.style.color = "orange";
+                msg.textContent = `Blocked! Close all tabs using "${name}" and try again.`;
+                console.warn(`Blocked. Close all tabs using "${name}".`);
+            };
+        }
+    </script>
+</body>
+</html>
