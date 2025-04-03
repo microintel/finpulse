@@ -1,8 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Delete IndexedDB Database</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> factory reset</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -17,17 +16,85 @@
         #msg {
             margin-top: 20px;
             color: green;
+
+
+        }
+
+        table{
+            border: 2px double grey;
+            border-collapse: collapse;
+        }
+        thead,tbody{
+            border: 2px double grey;
+            border-collapse: collapse;
         }
     </style>
 </head>
 <body>
     <h1>Factory Reset </h1>
+
+    
+
+
     <h3>Permanently Delete Every Think including BlackRoad,Frotu,Lend...</h3>
+
+             
 
     <button onclick="delDB()"> factory reset</button>
     <p id="msg"></p>
+       <h3> U R Database Map</h3>
+       <h4 id="used"></h4>
+    <table border="2">
+        <thead>
+        <tr> <th> column </th> <th> data</th></tr>
+        </thead>
+        <tbody id="tbbb">
+            
+        </tbody>
+     </table>
 
     <script>
+           let tb=document.getElementById("tbbb");
+           function disdb() {
+    let req = indexedDB.open("black");
+    req.onsuccess = function () {
+        let db = req.result;
+                    let tx = db.transaction("sst", "readonly");
+        let store = tx.objectStore("sst");
+        let keysReq = store.getAllKeys();
+  keysReq.onsuccess = function () {
+            let keys = keysReq.result;
+             keys.forEach((key) => {
+                let valReq = store.get(key);
+                valReq.onsuccess = function () {
+                    
+                                    let cxd=`
+                            
+                                        <td>${key}</td><td>${JSON.stringify(valReq.result)}</td>
+                                        
+                                    `;
+                                   let rt= document.createElement("tr");
+                                   rt.innerHTML=cxd;
+                                   tb.appendChild(rt);
+
+
+
+                };
+                         });
+
+        
+        
+        };
+    };
+
+    chkSize();
+}
+
+disdb();
+
+
+
+
         function delDB() {
             const name = "black";
             const msg = document.getElementById("msg");
@@ -42,21 +109,51 @@
             req.onsuccess = () => {
                 msg.style.color = "green";
                 alert("Factory Reset Successfull");
+                location.reload();
                 // msg.textContent = `"${name}" deleted successfully.`;
             };
 
-            req.onerror = (e) => {
-                msg.style.color = "red";
-                msg.textContent = `Failed to delete DB "${name}".`;
-                console.error(`Error deleting DB "${name}":`, e.target.error);
-            };
-
-            req.onblocked = () => {
-                msg.style.color = "orange";
-                msg.textContent = `Blocked! Close all tabs using "${name}" and try again.`;
-                console.warn(`Blocked. Close all tabs using "${name}".`);
-            };
+            
         }
+
+        
+    function chkSize() {
+        const dbN = "black";
+        const stN = "sst";
+        if (!dbN || !stN) {
+      alert("Enter both database and store names.");
+    return;
+        }
+
+        const req = indexedDB.open(dbN);
+
+        req.onsuccess = (e) => {
+        const db = e.target.result;
+        if (!db.objectStoreNames.contains(stN)) {
+        //alert(Store "${stN}" not found in "${dbN}".);
+     db.close();
+     return;
+            }
+
+            const txn = db.transaction(stN, "readonly");
+            const store = txn.objectStore(stN);
+            const getAll = store.getAll();
+
+            getAll.onsuccess = () => {
+         const size = new Blob([JSON.stringify(getAll.result)]).size;
+       const usedMB = (size / (1024 * 1024)).toFixed(5);
+         
+     document.getElementById("used").innerHTML = `used soace ${usedMB}`;
+     db.close();
+                      };
+        };
+
+        req.onerror = () => alert("Failed to open DB.");
+    }
+
+
+
+        
     </script>
 </body>
 </html>
