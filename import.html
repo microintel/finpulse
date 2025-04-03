@@ -1,0 +1,71 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Import black</title>
+    <style>
+        body{
+            background-color: black;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Import data file</h1>
+    <input type="file" id="fileInput" accept=".json" />
+    <button onclick="importData()">Import Data</button>
+
+    <script>
+        function importData() {
+            const file = document.getElementById('fileInput').files[0];
+            if (!file) {
+                alert('Please select a JSON file.');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const data = JSON.parse(e.target.result);
+                  //  alert(JSON.stringify(data));
+                    if (typeof data !== 'object' || Array.isArray(data)) throw new Error();
+
+                        const dbName = 'black';
+                    const storeName = 'sst';
+                       const dbReq = indexedDB.open(dbName,2);
+
+                    dbReq.onupgradeneeded = (event) => {
+                        const db = event.target.result;
+                        if (!db.objectStoreNames.contains(storeName)) {
+                                 db.createObjectStore(storeName);
+                                 }
+                    };
+
+         dbReq.onsuccess = (event) => {
+              const db = event.target.result;
+     const tx = db.transaction(storeName, 'readwrite');
+     const os = tx.objectStore(storeName);
+
+    for (const key in data) {
+                           console.log("nkn chakli");
+         os.put(data[key],key); 
+                                        }
+
+                        tx.oncomplete = () => {
+                            alert('Data imported successfully!');
+              db.close();
+                        };
+
+tx.onerror = () => alert('Error import.');
+                    };
+
+                    dbReq.onerror = () => alert('Error database.');
+                } catch (err) {
+                    alert('Invalid JSON file');
+                }
+            };
+
+            reader.readAsText(file);
+        }
+    </script>
+</body>
+</html>
