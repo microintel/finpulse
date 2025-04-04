@@ -198,6 +198,7 @@
         
         .tdate {
         width:20%;
+font-size:0.9rem;
         overflow-x:auto;
         text-align: center;
         color:var(--b);
