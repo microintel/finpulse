@@ -94,30 +94,53 @@ disdb();
 
 
 
+function delDB() {
+    const password = prompt("Enter Password to delete everything:");
+    if (!password) {
+    alert("Password is required.");
+     return;
+    }
 
-        function delDB() {
-            const name = "black";
-            const msg = document.getElementById("msg");
+    const request = indexedDB.open("black");
 
-            if (!name) {
-                alert("Please enter a database name.");
-                return;
+    request.onerror = function (event) {
+     console.error("Database error:", event.target.error);
+     alert("Failed to open the database.");
+    };
+
+        request.onsuccess = function () {
+        const db = request.result;
+        const transaction = db.transaction("sst", "readonly");
+        const store = transaction.objectStore("sst");
+        const getRequest = store.get("user");
+
+        getRequest.onerror = function (event) {
+      console.error("Error retrieving data:", event.target.error);
+     alert("Error retrieving user data.");
+        };
+
+        getRequest.onsuccess = function () {
+   const userData = getRequest.result;
+
+     if (userData && userData["u"] === password) {
+     const deleteRequest = indexedDB.deleteDatabase("black");
+     alert("Factory Reset Successful!");
+      localStorage.removeItem("blackuser");
+     location.href = "login.html";
+    deleteRequest.onsuccess = function () {
+     
+             };
+
+     deleteRequest.onerror = function () {
+   alert("Failed to delete the database.");
+                };
+            } else {
+                alert("Incorrect password or user not found.");
             }
+        };
+    };
+}
 
-            const req = indexedDB.deleteDatabase(name);
-
-            req.onsuccess = () => {
-                msg.style.color = "green";
-                alert("Factory Reset Successfull");
-                location.href="login.html";
-                // msg.textContent = `"${name}" deleted successfully.`;
-            };
-
-            alert("Factory Reset Successfull");
-                location.href="login.html";
-
-            
-        }
 
         
     function chkSize() {

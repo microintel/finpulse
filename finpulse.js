@@ -773,8 +773,8 @@ function alve(){
               let inc = parseFloat(c.querySelector('.incomeColumn').textContent.trim()) || 0;
               let exp = parseFloat(c.querySelector('.exep').textContent.trim()) || 0;
               let bal = parseFloat(c.querySelector('.Abal').textContent.trim()) || 0;
-              let src = c.querySelector('.fromm').textContent.trim();
-      
+              let src = c.querySelector('.fromm').textContent.trim().toLocaleLowerCase();
+                  
               if (!sum[src]) sum[src] = { inc: 0, exp: 0, bal: 0 };
       
               sum[src].inc += inc;
@@ -787,7 +787,7 @@ function alve(){
       
       function disp(sum) {
           let tbl = `<table border='1'>
-              <thead><tr><th>Src</th><th>Inc</th><th>Exp</th><th>Bal</th></tr></thead><tbody>`;
+              <thead><tr><th> Sources </th><th>Income</th><th>Expence</th><th>Balance</th></tr></thead><tbody>`;
       
           for (let src in sum) {
               tbl +=` <tr><td>${src}</td><td>${sum[src].inc}</td><td>${sum[src].exp}</td><td>${sum[src].bal}</td></tr>`;

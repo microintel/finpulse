@@ -28,11 +28,9 @@
     <button onclick="del()"> LOGOUT</button>
     <script>
         function del() {
-            const cks = document.cookie.split(";");
-            for (let ck of cks) {
-                const name = ck.split("=")[0].trim();
-                document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-            }
+            
+    localStorage.removeItem("blackuser");
+
             alert("logout successsfully");
             location.href="login.html";
         }

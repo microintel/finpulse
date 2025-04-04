@@ -240,6 +240,10 @@ padding: 10px;
     columns: var(--b);
     }
 
+    #sumTbl table tbody tr td:hover, .expcate tbody tr td:hover{
+      background-color: #3b2f60; 
+    }
+
 
 </style>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -452,6 +456,21 @@ padding: 10px;
        </script>
        <br><br>
           <script>
+
+
+
+function chkR(k, u) {
+    if (localStorage.getItem(k)) {
+      
+    }else{
+      location.href="login.html";
+    }
+
+}
+
+   chkR("blackuser","login.html");  
+    
+    
 
 function addclontr() {
     document.querySelectorAll(".trans").forEach(x => 

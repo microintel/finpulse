@@ -58,140 +58,151 @@
       text-decoration: none;
       color: purple;
     }
+
+    fieldset {
+    border: 2px solid wheat;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    margin: 20px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  legend {
+    text-align: left;
+    font-size: 20px;
+    color: wheat;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+
   </style>
 </head>
 <body>
+
+  <center><h3 style="text-align: center;">Black Road Login</h3></center>
   <form id="f">
-    <h3>Black Road Login</h3>
+    <fieldset>
+      <legend> Backup Login</legend>
     <input type="text" id="u" placeholder="Username" required><br>
     <input type="password" id="p" placeholder="Password" required><br>
     <input onchange="importData()" type="file" id="fileInput" required><br>
     
     <button type="submit">Login</button>
+
+    </fieldset>
 <br><br>
     
   </form>
-  <button style="border-radius: 0px;" onclick="credb()"> New to BlackRoad or Aleredy have an account ? clike here</button>
-<script>
+  <button style="border-radius: 0px;" onclick="location.href='log.html'"> Aleredy have an account ? clike here</button>
+
+
+  <button style="border-radius: 0px;" onclick="location.href='reg.html'"> New to BlackRoad ? clike here</button>
+
+
+  <script>
 
 
 
-
-
-  (function() {
-    const cookieName = "blackroadC";
-    if (document.cookie.split('; ').find(row => row.startsWith(cookieName + '='))) {
-      //window.location.href = "finpulse.html";
-    }
-  })();
-
-  document.getElementById('f').addEventListener('submit', e => {
-    e.preventDefault();
-    const u = document.getElementById('u').value;
-    const p = document.getElementById('p').value;
-
+    
     
 
     
-      const cookieName = "blackroadC";
-      const expires = new Date();
-      expires.setMonth(expires.getMonth() + 1);
-      document.cookie = `${cookieName}=1; expires=${expires.toUTCString()}; path=/`;
-      window.location.href = "finpulse.html";
-  
-
-  });
-
-
-
-
-  function importData() {
-            const file = document.getElementById('fileInput').files[0];
-            if (!file) {
-                alert('Please select a blackroad file.');
-                return;
-            }
-
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                try {
-                    const data = JSON.parse(e.target.result);
-                  //  alert(JSON.stringify(data));
-                    if (typeof data !== 'object' || Array.isArray(data)) throw new Error();
-
-                        const dbName = 'black';
-                    const storeName = 'sst';
-                       const dbReq = indexedDB.open(dbName,2);
-
-                    dbReq.onupgradeneeded = (event) => {
-                        const db = event.target.result;
-                        if (!db.objectStoreNames.contains(storeName)) {
-                                 db.createObjectStore(storeName);
-                                 }
-                    };
-
-         dbReq.onsuccess = (event) => {
-              const db = event.target.result;
-     const tx = db.transaction(storeName, 'readwrite');
-     const os = tx.objectStore(storeName);
-
-    for (const key in data) {
-                           console.log("nkn chakli");
-         os.put(data[key],key); 
-                                        }
-
-                        tx.oncomplete = () => {
-                            alert('Data imported successfully!');
-              db.close();
-                        };
-
-tx.onerror = () => alert('Error import.');
-                    };
-
-                    dbReq.onerror = () => alert('Error database.');
-                } catch (err) {
-                    alert('Invalid blackroad file');
-                }
-            };
-
-            reader.readAsText(file);
-        }
-
-
-
-        function credb() {
-    const dbName = 'black';
-    const store = 'sst';
-
-    const req = indexedDB.open(dbName, 2);
-
-    req.onupgradeneeded = function(e) {
-        const db = e.target.result;
-        if (!db.objectStoreNames.contains(store)) {
-            db.createObjectStore(store);
-        }
-        console.log('Database upgraded or created.');
-    };
-
-    req.onsuccess = function(e) {
-        const db = e.target.result;
-        console.log('Database opened successfully.');
-
+      document.getElementById('f').addEventListener('submit', e => {
+        e.preventDefault();
+        const ux = document.getElementById('u').value;
+        const px = document.getElementById('p').value;
         
-        if (db.objectStoreNames.contains(store)) {
-            location.href = "finpulse.html";
-        } else {
-            console.error('Store not available.');
-        }
-    };
+        if(ux===nkndata["u"] && px===nkndata["p"]){
+          alert("login successfilll");
+          localStorage.setItem("blackuser", u);
+          location.href="finpulse.html";
 
-    req.onerror = function(e) {
-        console.error('DB Error:', e.target.error);
-    };
+        }else{
+          alert("wrond user name and password");
+        }
+      
+    
+      });
+    
+    
+    
+    let nkndata={};
+      function importData() {
+                const file = document.getElementById('fileInput').files[0];
+                if (!file) {
+                    alert('Please select a blackroad file.');
+                    return;
+                }
+    
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    try {
+                        const data = JSON.parse(e.target.result);
+                      //  alert(JSON.stringify(data));
+                        if (typeof data !== 'object' || Array.isArray(data)) throw new Error();
+    
+                            const dbName = 'black';
+                        const storeName = 'sst';
+                           const dbReq = indexedDB.open(dbName,2);
+    
+                        dbReq.onupgradeneeded = (event) => {
+                            const db = event.target.result;
+                            if (!db.objectStoreNames.contains(storeName)) {
+                                     db.createObjectStore(storeName);
+                                     }
+                        };
+    
+             dbReq.onsuccess = (event) => {
+                  const db = event.target.result;
+         const tx = db.transaction(storeName, 'readwrite');
+         const os = tx.objectStore(storeName);
+    
+        for (const key in data) {
+
+                               console.log("nkn chakli");
+                               if(key==="user"){
+
+                                        nkndata=data[key];
+                                        
+                               }
+            // os.put(data[key],key); 
+                                            }
+    
+                            tx.oncomplete = () => {
+                                alert('Data imported successfully!');
+                  db.close();
+                            };
+    
+    tx.onerror = () => alert('Error import.');
+                        };
+    
+                        dbReq.onerror = () => alert('Error database.');
+                    } catch (err) {
+                        alert('Invalid blackroad file');
+                    }
+                };
+    
+                reader.readAsText(file);
+            }
+    
+    
+  
+    
+    function chkR(k, u) {
+    if (localStorage.getItem(k)) {
+        window.location.href = u;
+    }
 }
 
+   chkR("blackuser","finpulse.html");  
+    
+    
+    
+    
+    </script>
+    
 
-
-</script>
 </body>
 </html>

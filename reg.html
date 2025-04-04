@@ -1,0 +1,42 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+</head>
+<body>
+    <input type="text" id="u" placeholder="Username">
+    <input type="password" id="p" placeholder="Password">
+    <button onclick="r()">Register</button>
+
+    <script>
+        function c(u, p, r) {
+            const d = indexedDB.open("black", 2);
+            d.onupgradeneeded = e => {
+                const db = e.target.result;
+                if (!db.objectStoreNames.contains("sst")) {
+                    db.createObjectStore("sst");
+                }
+            };
+            d.onsuccess = e => {
+                const db = e.target.result;
+                const t = db.transaction("sst", "readwrite");
+                const s = t.objectStore("sst");
+                const o = { u, p };
+                const a = s.put(o,"user");
+               a.onsuccess = function(){ 
+                alert("Black Road Account Created Successfulll");
+                window.location.href = r;
+             };
+                a.onerror = () => console.error("Error:", a.error);
+            };
+            d.onerror = e => console.error("DB Error:", e.target.error);
+        }
+
+        function r() {
+            const u = document.getElementById("u").value;
+            const p = document.getElementById("p").value;
+            c(u, p, "finpulse.html");
+        }
+    </script>
+</body>
+</html>
