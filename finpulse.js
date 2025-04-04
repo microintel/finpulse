@@ -63,11 +63,26 @@ function alve(){
        `<input id="dt" class="swal2-input" placeholder="Date" type="date" style="width:100%;"><br><br>` +
        `<select id="ct" class="swal2-input" style="width:100%;">
        <option value="food">Food</option>
-       <option value="health"> Health </option>
-       <option value="digit"> Digital </option>
-       <option value="transport">Transport</option>
-       <option value="entertainment">Entertainment</option>
-       <option value="other">Other</option>
+  <option value="telephone"> Telephone </option>
+  <option value="shopping"> Shopping </option>
+  <option value="beauty"> Beauty </option>
+  <option value="sport"> Sport </option>
+  <option value="social"> Social </option>
+  <option value="transporation"> Transporation </option>
+  <option value="clothing"> Clothing </option>
+  <option value="car"> Car </option>
+  <option value="wine-cigaratte"> wine/cigaratte.. </option>
+  <option value="eletronics"> Eletronics </option>
+  <option value="travel">  Travel </option>
+  <option value="health"> Health </option>
+  <option value="pet"> Pet </option>
+  <option value="repair">  Repair </option>
+  <option value="housing"> Housing </option>
+  <option value="home"> Home </option>
+  <option value="gift"> Gift </option>
+  <option value="donate"> Donate </option>
+  <option value="other"> Others </option>
+
        </select><br><br>` +
        `<input id="cnt" class="swal2-input" placeholder="Category Name" style="width:100%;">`,
        focusConfirm: false,
