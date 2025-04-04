@@ -191,7 +191,7 @@
       margin: 10px;
       padding: 10px;
     }
-    #catdets .head{
+    .head{
       width: 90%;
       display: flex;
       justify-content: space-between;
@@ -199,17 +199,46 @@
 
     }
 
-    #catdets .head span{
+    .head span{
       font-size: 1.1rem;
+      color: var(--b);
     }
 
-    #catdets .head i{
+    .head i{
       font-size: 1.3rem;
       color: red;
     }
 
-    
+    #sumTbl{
+      margin: 10px;
+      border:0px solid black;
+      width: 95%;
+      display:none;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      
+    }
+  #sumTbl table{
+    border-collapse: collapse;
+    border: 1px solid var(--bor);
+    margin: 10px;
+  }
+    #sumTbl table thead{
+       border: 1px solid var(--bor);
+       background-color: var(--b);
+       color: var(--w);
+       
+    }
 
+    #sumTbl table thead tr th{
+padding: 10px;
+    }
+
+    #sumTbl table tbody tr td{
+    background-color: var(--w);
+    columns: var(--b);
+    }
 
 
 </style>
@@ -239,8 +268,8 @@
       <li class="cnrr" onclick="appendC()">Add Record</li>
       <li onclick="location.href='frotu.html'"> Frotu</li>
       <li onclick="location.href='recbor.html'"> Lend </li>
-      <li onclick=""> FYS Summary</li>
-      <li onclick="disexpp('flex')"> Expence Category </li>
+      <li onclick="disexpppp('flex')"> SRC Summary</li>
+      <li onclick="disexpp('flex')"> Exp Summary </li>
       <li onclick="location.href='export.html'"> Export</li>
       <li><font onclick="printe()">Print</font></li>
       <li onclick="location.href='reset.html'">Factory Reset</li>
@@ -280,7 +309,16 @@
        </div> 
    
 
+
       <center>
+
+        
+
+          <div id="sumTbl">
+            
+          </div>
+
+
        <div id="catdets">
          <div class="head">
           <i></i>
@@ -429,6 +467,11 @@ function addclontr() {
 function disexpp(x){
   // alert(document.getElementById("catdets").style.display);
   document.getElementById("catdets").style.display=x;
+}
+
+function disexpppp(x){
+  // alert(document.getElementById("catdets").style.display);
+  document.getElementById("sumTbl").style.display=x;
 }
 
             

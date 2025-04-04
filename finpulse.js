@@ -453,7 +453,7 @@ function alve(){
     }
     
     sumTxn();
-    
+    calcsmm();
     
     
 
@@ -758,6 +758,51 @@ function alve(){
         }
         
         gleE();
+
+
+
+
+
+
+
+
+        function calcsmm() {
+          let sum = {};
+      
+          document.querySelectorAll('.child').forEach(c => {
+              let inc = parseFloat(c.querySelector('.incomeColumn').textContent.trim()) || 0;
+              let exp = parseFloat(c.querySelector('.exep').textContent.trim()) || 0;
+              let bal = parseFloat(c.querySelector('.Abal').textContent.trim()) || 0;
+              let src = c.querySelector('.fromm').textContent.trim();
+      
+              if (!sum[src]) sum[src] = { inc: 0, exp: 0, bal: 0 };
+      
+              sum[src].inc += inc;
+              sum[src].exp += exp;
+              sum[src].bal += bal;
+          });
+      
+          disp(sum);
+      }
+      
+      function disp(sum) {
+          let tbl = `<table border='1'>
+              <thead><tr><th>Src</th><th>Inc</th><th>Exp</th><th>Bal</th></tr></thead><tbody>`;
+      
+          for (let src in sum) {
+              tbl +=` <tr><td>${src}</td><td>${sum[src].inc}</td><td>${sum[src].exp}</td><td>${sum[src].bal}</td></tr>`;
+          }
+      
+          tbl += `</tbody></table>`;
+      
+          document.getElementById('sumTbl').innerHTML = `<div class="head">
+              <i></i>
+              <span> BlackRoad Summary </span>
+              <i onclick="disexpppp('none')" class="fa fa-times"></i>
+             </div> ${tbl}`;
+      }
+      
+     
         
         
         
