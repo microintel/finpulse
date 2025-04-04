@@ -157,6 +157,61 @@
     align-items: center;
     font-size: 1.3rem;
   }
+
+  #txnTbl{
+    margin: 10px;
+    
+  }
+
+    .expcate{
+      
+      margin:8px;
+      border-collapse: collapse;
+      width: 90%;
+      background-color: var(--w);
+      border-radius: 7px;
+        }
+    .expcate tbody tr td , .expcate thead tr th{
+      border: 1.5px solid var(--b);
+      padding: 10px;
+      margin: 3px;
+      
+    }
+    .expcate thead tr th{
+      background-color: var(--b);
+      color: var(--w);
+    }
+
+    #catdets{
+      display:none;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      color: var(--b);
+      margin: 10px;
+      padding: 10px;
+    }
+    #catdets .head{
+      width: 90%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+    }
+
+    #catdets .head span{
+      font-size: 1.1rem;
+    }
+
+    #catdets .head i{
+      font-size: 1.3rem;
+      color: red;
+    }
+
+    
+
+
+
 </style>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -184,7 +239,8 @@
       <li class="cnrr" onclick="appendC()">Add Record</li>
       <li onclick="location.href='frotu.html'"> Frotu</li>
       <li onclick="location.href='recbor.html'"> Lend </li>
-      <li onclick="location.href='https://microintel.github.io/endgram/file/coding.html'">Statistics</li>
+      <li onclick=""> FYS Summary</li>
+      <li onclick="disexpp('flex')"> Expence Category </li>
       <li onclick="location.href='export.html'"> Export</li>
       <li><font onclick="printe()">Print</font></li>
       <li onclick="location.href='reset.html'">Factory Reset</li>
@@ -223,6 +279,19 @@
         
        </div> 
    
+
+      <center>
+       <div id="catdets">
+         <div class="head">
+          <i></i>
+          <span> Expences Category </span>
+          <i onclick="disexpp('none')" class="fa fa-times"></i>
+         </div>
+       </div>
+       </center>
+
+
+
    
    <div style="display:none;" id="borwi" class="borw">
    <div class="canh">
@@ -353,6 +422,13 @@ function addclontr() {
             if (i >= 0) c.onclick = () => transRem(c);
         })
     );
+}
+
+
+
+function disexpp(x){
+  // alert(document.getElementById("catdets").style.display);
+  document.getElementById("catdets").style.display=x;
 }
 
             

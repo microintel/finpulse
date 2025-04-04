@@ -99,7 +99,7 @@ function alve(){
        }
        
        let stu = `
-       <font>${tA}</font><font>${tD}</font><font>${tDes}</font>
+       <font>${tA}</font><font>${tD}</font><font>${v4}</font>
        `;
        let ppp1=p.parentNode.children[0].innerHTML;
        let ppp2=p.parentNode.children[3].innerHTML;
@@ -109,6 +109,7 @@ function alve(){
        if(parseInt(ppp1) >= epp){
        let diiv = document.createElement('div');
        diiv.className = "trans";
+       diiv.setAttribute('data-category', v3 );
        diiv.innerHTML = stu;
        diiv.ondblclick = function(){
        transRem(this);
@@ -395,7 +396,68 @@ function alve(){
        //drawChart(vvvx,nnnx,mmmx);
        
        gleE();
-       
+       function sumTxn() {
+        const txns = document.querySelectorAll(".trans:not([style*='display: none'])");
+        const sums = {};
+    
+        txns.forEach(txn => {
+            let parent = txn.parentElement;
+            let skipTxn = false;
+    
+            while (parent) {
+                if (parent.classList.contains('child')) {
+                    if (parent.offsetParent === null) {
+                        skipTxn = true;
+                        break;
+                    }
+                }
+                parent = parent.parentElement;
+            }
+    
+            if (skipTxn) return;
+    
+            const cat = txn.getAttribute("data-category") || "Uncategorized";
+            const amt = parseFloat(txn.querySelector(".mony")?.textContent.trim()) || 0;
+    
+            sums[cat] = (sums[cat] || 0) + amt;
+        });
+    
+        updateTbl(sums);
+    }
+    
+    function updateTbl(data) {
+        let tbl = document.getElementById("txnTbl");
+    
+        if (!tbl) {
+            tbl = document.createElement("table");
+            tbl.className = "expcate";
+            tbl.id = "txnTbl";
+            tbl.innerHTML = `<thead><tr><th>Category</th><th>Total</th></tr></thead><tbody></tbody>`;
+    
+            const container = document.getElementById("catdets");
+            if (container) {
+                container.appendChild(tbl);
+            } else {
+                console.error("Container with ID 'catdets' not found.");
+            }
+        }
+    
+        const tbody = tbl.querySelector("tbody");
+        tbody.innerHTML = "";
+    
+        for (const cat in data) {
+            const row = document.createElement("tr");
+            row.innerHTML = `<td>${cat}</td><td>${data[cat].toFixed(2)}</td>`;
+            tbody.appendChild(row);
+        }
+    }
+    
+    sumTxn();
+    
+    
+    
+
+
        }
        
        

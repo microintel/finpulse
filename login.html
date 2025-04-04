@@ -71,7 +71,7 @@
 <br><br>
     
   </form>
-  <button style="border-radius: 0px;" onclick="credb()"> New to BlackRoad ? clike here</button>
+  <button style="border-radius: 0px;" onclick="credb()"> New to BlackRoad or Aleredy have an account ? clike here</button>
 <script>
 
 
@@ -169,16 +169,19 @@ tx.onerror = () => alert('Error import.');
     req.onupgradeneeded = function(e) {
         const db = e.target.result;
         db.createObjectStore(store);
+        location.href="finpulse.html";
     };
 
     req.onsuccess = function(e) {
         const db = e.target.result;
+        db.createObjectStore(store);
+        location.href="finpulse.html";
     };
 
     req.onerror = function(e) {
         console.error('DB Error:', e.target.error);
     };
-          location.href="finpulse.html";
+          
 }
 
 

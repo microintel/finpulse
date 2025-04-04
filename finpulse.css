@@ -453,7 +453,7 @@
         .feed{
         position:absolute;
         width:150px;
-        height:280px;
+        height:300px;
         left:2px;top:2px;
         background-color:var(--w);
         padding:0px;
@@ -482,7 +482,7 @@
         border-bottom:1.5px solid var(--tbor);
         text-align:left;
         }
-        li:nth-child(9){
+        li:nth-child(10){
         border-bottom:none;
         }
         .om:hover .feed{
