@@ -159,7 +159,6 @@ tx.onerror = () => alert('Error import.');
 
 
 
-
         function credb() {
     const dbName = 'black';
     const store = 'sst';
@@ -168,21 +167,29 @@ tx.onerror = () => alert('Error import.');
 
     req.onupgradeneeded = function(e) {
         const db = e.target.result;
-        db.createObjectStore(store);
-        location.href="finpulse.html";
+        if (!db.objectStoreNames.contains(store)) {
+            db.createObjectStore(store);
+        }
+        console.log('Database upgraded or created.');
     };
 
     req.onsuccess = function(e) {
         const db = e.target.result;
-        db.createObjectStore(store);
-        location.href="finpulse.html";
+        console.log('Database opened successfully.');
+
+        
+        if (db.objectStoreNames.contains(store)) {
+            location.href = "finpulse.html";
+        } else {
+            console.error('Store not available.');
+        }
     };
 
     req.onerror = function(e) {
         console.error('DB Error:', e.target.error);
     };
-          
 }
+
 
 
 </script>
