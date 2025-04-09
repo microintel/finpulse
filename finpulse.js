@@ -68,6 +68,8 @@ function alve(){
        <option value="car">Car</option>
        <option value="clothing">Clothing</option>
        <option value="donate">Donate</option>
+       <option value="education">Education</option>
+       
        <option value="electronics">Electronics</option>
        <option value="entertainment">Entertainment</option>
        <option value="family">Family</option>
@@ -81,7 +83,7 @@ function alve(){
        <option value="mom-dad">Mother / Dad</option>
        <option value="movie">Movie</option>
        <option value="official-docs">Official Documents</option>
-       <option value="other">Others</option>
+       
        <option value="party">Party</option>
        <option value="personal-care">Personal Care</option>
        <option value="pet">Pet</option>
@@ -98,6 +100,7 @@ function alve(){
        <option value="travel">Travel</option>
        <option value="vehicle">Vehicle</option>
        <option value="wine-cigarette">Wine / Cigarette</option>
+       <option value="other">Others</option>
        </select><br><br>` +
        `<input id="cnt" class="swal2-input" placeholder="Category Name" style="width:100%;">`,
        focusConfirm: false,
