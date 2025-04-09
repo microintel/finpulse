@@ -64,6 +64,7 @@ function alve(){
        `<select id="ct" class="swal2-input" style="width:100%;">
        <option value="food">Food</option>
   <option value="telephone"> Telephone </option>
+  <option value="education">Education</option>
   <option value="shopping"> Shopping </option>
   <option value="beauty"> Beauty </option>
   <option value="sport"> Sport </option>
