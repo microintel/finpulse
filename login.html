@@ -9,46 +9,43 @@
       background-color: black;
       color: white;
       font-family: Arial, Helvetica, sans-serif, sans-serif;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
+      margin: 0px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      width:100vw;
+      height:95vh;
     }
     form {
       background-color:black;
-      padding: 30px;
+      padding:10px;
       border-radius: 12px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
       text-align: center;
-      width: 300px;
+      width: 94vw;
     }
     h3 {
-      color: wheat;
-      margin-bottom: 20px;
+    margin-top:10px;
+      color: skyblue;
+      margin-bottom: 10px;
     }
     input, button {
-      width: 100%;
+      width: 90%;
       padding: 15px;
-      margin: 10px 0;
+      margin: 10px;
       border: 1.5px solid grey;
       border-radius: 8px;
       background-color:black;
       color: #fff;
       transition: background 0.3s, color 0.3s;
     }
-    input:focus, button:hover {
-      background-color: #444;
-      color: #ff5722;
-      outline: none;
-    }
     button {
-      background-color:wheat;
+      background-color:white;
       color: black;
     }
     button:active {
-      background-color: wheat;
+      background-color: white;
+      color:black;
     }
     input[type="file"] {
       padding: 8px;
@@ -60,20 +57,25 @@
     }
 
     fieldset {
-    border: 2px solid wheat;
-    padding: 20px;
+    border: 2px solid white;
+    padding: 10px;
     border-radius: 10px;
-    width: 300px;
-    margin: 20px auto;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin:5px;
   }
 
   legend {
-    text-align: left;
-    font-size: 20px;
-    color: wheat;
+    font-size: 16px;
+    color: white;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+  }
+  
+  .bt{
+  
+  width:90%;
+  background-color:black;
+  color:white;
+  border-radius:10px;
   }
 
 
@@ -92,14 +94,14 @@
     <button type="submit">Login</button>
 
     </fieldset>
-<br><br>
     
   </form>
-  <button style="border-radius: 0px;" onclick="location.href='log.html'"> Aleredy have an account ? clike here</button>
+  <center>
+  <button class="bt" style="border-radius: 10px;" onclick="location.href='log.html'"> Aleredy have an account ? clike here</button>
 
 
-  <button style="border-radius: 0px;" onclick="location.href='reg.html'"> New to BlackRoad ? clike here</button>
-
+  <button class="bt" style="border-radius: 10px;" onclick="location.href='reg.html'"> New to BlackRoad ? clike here</button>
+</center>
 
   <script>
 
