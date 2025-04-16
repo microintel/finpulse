@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="icon" type="image/png" href="black.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Economica' rel='stylesheet'>
+
+<style type="text/css">
+  .swal2-input {
+    width: 93% !important;
+    box-sizing: border-box;
+    margin:0px; 
+  }
+  .recbor{
+  margin:0px;
+  padding:3px;
+  display:flex;
+  flex-direction:column;
+  width:98%;
+  gap:10px;
+  }
+  .reciv{
+ /* background-color:#2E7D32; */
+ border:2px solid #2E7D32;
+ color:#2E7D32;
+ padding:3px;
+ margin:3px;
+ border-radius:7px;
+ 
+  }
+  .borlend{
+  border:2px solid #C62828;
+  color:#C62828;
+  margin:3px;
+  padding:3px;
+  border-radius:7px;
+  }
+  .rechead,.borhead{
+   display:flex;
+   width:98%;
+   justify-content:space-between;
+   border-bottom:1px dashed grey;
+   margin:3px;
+   padding:1px;
+  }
+  .rechead div h4,.borhead div h4{
+  display:flex;
+  width:98%;
+  justify-content:space-evenly;
+  }
+  .rechead button,.borhead button,.rechead font,.borhead font{
+  max-width:24%;
+  height:1.5rem;
+  min-width:20%;
+  
+  }
+  .rechead input,.borhead input{
+  height:0.5rem;
+  max-width:24%;
+  min-width:20%;
+  }
+  
+  .recdata,.bordata{
+  display:flex;
+  width:100%;
+  flex-direction:column;
+  justify-content:space-evenly;
+  padding:5px;
+  gap:7px;
+  font-size:0.8rem;
+  }
+  .recdata div,.bordata div{
+  display:flex;
+  width:100%;
+  justify-content:space-evenly;
+  gap:7px;
+  text-align:center;
+  border-bottom:1px solid grey;
+  }
+  
+  .recdata div:hover ,.bordata div:hover{
+  
+  background-color:#e3e3e3;
+  }
+  
+  .lmode,.lmodes{
+  text-align:center;
+  padding:3px;
+  }
+  .lmo,.bor{
+  
+  font-weight:bold;
+  font-size:1.1rem;
+  }
+  .lmodes{
+  border-right:2px solid black;
+  color: orange;
+  font-weight:bold;
+  }
+  
+  .borhead h4,.rechead h4{
+  margin:4px;
+  padding:4px;
+  display:flex;
+  max-width:98%;
+  min-width:90%;
+  gap:5px;
+  justify-content:space-between;
+  align-items:center;
+  }
+  .lmo.bor{
+  color:red;
+  }
+  
+  .recab,.recinp{
+  background-color:#2E7D32;
+  border:0px solid #2E7D32;
+  color:var(--back);
+  border-radius:7px;
+  }
+  .borab,.borinp{
+  background-color:#C62828;
+  border:0px solid #C62828;
+  color:var(--back);
+  border-radius:7px;
+  }
+  .borinp::placeholder,.recinp::placeholder{
+  color:var(--white);
+  }
+  
+  .addran{
+  
+  background-color:var(--back);
+  border:1.5px solid var(--bor);
+  border-radius:7px;
+  margin:3px;
+  color:brown;
+  }
+  #linebal{
+    margin:10px;
+    padding:5px;
+  }
+
+  #grpsel{
+    background-color: var(--back);
+    color: var(--b);
+    border-radius: 6px;
+    margin: 10px;
+    padding: 10px;
+    max-width: fit-content;
+  }
+
+  .fa-plus{
+    color:red;
+    align-items: center;
+    font-size: 1.3rem;
+  }
+
+  #txnTbl{
+    margin: 10px;
+    
+  }
+
+    .expcate{
+      
+      margin:8px;
+      border-collapse: collapse;
+      width: 90%;
+      background-color: var(--w);
+      border-radius: 7px;
+        }
+    .expcate tbody tr td , .expcate thead tr th{
+      border: 1.5px solid var(--b);
+      padding: 10px;
+      margin: 3px;
+      
+    }
+    .expcate thead tr th{
+      background-color: var(--b);
+      color: var(--w);
+    }
+
+    #catdets{
+      display:none;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      color: var(--b);
+      margin: 10px;
+      padding: 10px;
+    }
+    .head{
+      width: 90%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+    }
+
+    .head span{
+      font-size: 1.1rem;
+      color: var(--b);
+    }
+
+    .head i{
+      font-size: 1.3rem;
+      color: red;
+    }
+
+    #sumTbl{
+      margin: 10px;
+      border:0px solid black;
+      width: 95%;
+      display:none;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      
+    }
+  #sumTbl table{
+    border-collapse: collapse;
+    border: 1px solid var(--bor);
+    margin: 10px;
+  }
+    #sumTbl table thead{
+       border: 1px solid var(--bor);
+       background-color: var(--b);
+       color: var(--w);
+       
+    }
+
+    #sumTbl table thead tr th{
+padding: 10px;
+    }
+
+    #sumTbl table tbody tr td{
+    background-color: var(--w);
+    columns: var(--b);
+    }
+
+    #sumTbl table tbody tr td:hover, .expcate tbody tr td:hover{
+      background-color: #3b2f60; 
+    }
+
+
+</style>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> BlackRoad</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="finpulse.css">
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+<div class="menu" id="mmmm">
+
+<div class="om">
+  <img width="30px" id="mimg" src="https://img.icons8.com/?size=100&id=36389&format=png&color=FFFFFF">
+    <ul class="feed">
+      <li id="acNa">Profile</li>
+      
+      <li class="cnrr" onclick="appendC()">Add Record</li>
+      <li onclick="location.href='frotu.html'"> Frotu</li>
+      <li onclick="location.href='recbor.html'"> Lend </li>
+      <li onclick="disexpppp('flex')"> SRC Summary</li>
+      <li onclick="disexpp('flex')"> Exp Summary </li>
+      <li onclick="location.href='export.html'"> Export</li>
+      <li><font onclick="printe()">Print</font></li>
+      <li onclick="location.href='reset.html'">Factory Reset</li>
+      <li onclick="location.href='logout.html'">Log out</li>
+    </ul>
+  </div>
+  
+  <img id="tttim" width="100px" height="35px" src="https://raw.githubusercontent.com/microintel/endgram/main/photo/blackroadwhite.png">
+
+<div id="yyyy" class="theame">
+  <img onclick="theame(this.id)" id="w" src="https://img.icons8.com/?size=100&id=Ppe22DwOvBTF&format=png&color=FFFFFF">
+  </div>
+
+</div>
+<br>
+<center><h2 style="text-align:left;" id="adapa"> BlackRoad</h2></center>
+
+
+<div style="display:none;" class="bsea">
+<a href="#sinpp">&#x1F50D</a>
+
+</div>
+<!--
+<div onclick="discs('verri')" class="veri">
+<a href="#sinpp">&#x1F50D</a>
+
+</div>
+-->
+
+  <div id="ssinp" class="sinp">
+  
+  <input type="text" id="sinpp" placeholder="Amount &#x1F50D ..." oninput="searTa()" />
+        
+        <input type="text" id="seait" placeholder="Tran &#x1F50D ..." oninput="sea()" />
+        <img style="display:none;" onclick="borww('block')" id="bori" src="https://img.icons8.com/?size=100&id=rRTAE6XGGP2Q&format=png&color=FFFFFF">
+        
+       </div> 
+   
+
+
+      <center>
+
+        
+
+          <div id="sumTbl">
+            
+          </div>
+
+
+       <div id="catdets">
+         <div class="head">
+          <i></i>
+          <span> Expences Category </span>
+          <i onclick="disexpp('none')" class="fa fa-times"></i>
+         </div>
+       </div>
+       </center>
+
+
+
+   
+   <div style="display:none;" id="borwi" class="borw">
+   <div class="canh">
+   <h4 style="margin:0px;padding:0px;color:transparent;">B</h4>
+   <center>
+   <h4 style="margin:0px;padding:0px;color:var(--b)"> Recivables / Borrowing</h4>
+   </center>
+   <p id="canb" style="padding:0px;margin:0px;" onclick="borww('none')"><i class="material-icons" style="padding:0px;margin;0x;font-size:22px;color:red">cancel</i></p>
+   </div>
+   <div class="recbor">
+   <div class="reciv">
+       <div class="rechead"><h4> Recivables <button class="recab" onclick="addLR(this,'lmo')"> Add </button> <input class="recinp" placeholder="recivable.." oninput="searLR(this)"> <font> 0 </font> </h4></div>
+       
+       <div id="recDaId" class="recdata">
+       
+       </div>
+       
+   </div>
+   
+   <div class="borlend">
+   <div class="borhead"> <h4> Borrowning <button class="borab" onclick="addLR(this,'bor')"> Add </button> <input class="borinp" placeholder="borrow.." oninput="searLR(this)"> <font> 0 </font> </h4> </div>
+   <div id="borDaId" class="bordata">
+   
+   
+   </div>
+   </div>
+   </div>
+   </div>
+   
+  
+   <div style="display:none;" id="crai" class="cra">
+   
+   <select onchange="dcc()" id="dccc">
+   <option value="dft">Default</option>
+   <option value="dntc">Donut Chart</option>
+   <option value="clmc">Column Chart</option>
+   <option value="lc">Line Chart</option>
+   </select>
+   
+  <div id="donutchart"></div>
+   <details  id="radiii" class="rad">
+        <summary id="rsumi" class="rsum"></summary>
+        <button class="addran" id="addRan" onclick="rangeNee(this)"> Add Range</button>
+        <div id="rsdi" class="rsd">
+       </div>
+       
+   </details>
+   </div>
+   
+   
+   <select onchange="chgapval(this)" id="grpsel">
+    <option value=""> select graph</option>
+    <option value="bal"> balance graph </option>
+    <option value="exp"> expences graph </option>
+   </select>
+   <canvas id="linebal" width="100px" height="40px"></canvas>
+   
+   
+   
+    <center>
+        <div id="stytt" class="styt">
+        <div id="staa">
+        
+        <p>INCOME</p>
+        <p>EXPENCE</p>
+        <p>BALANCE</p>
+        <p>TRAN EXP</p>
+        </div>
+        <div id="sta">
+       
+        <p id="allin"></p>
+        <p id="exp"></p>
+        <p id="bal"></p>
+        <p id="exex"></p>
+        </div>
+        </div>
+
+        <br>
+        
+        <div style="display:none;" class="alver">
+        <details>
+        <summary style="color:var(--b);">Get clarification</summary>
+        <br>
+        <table>
+        
+        <tr>
+        <th style="padding:10px;border-bottom:1px solid var(--bor);">Lend Amt</th>
+        <th style="padding:10px;border-bottom:1px solid var(--bor);">Bank Bal</th>
+        <th style="padding:10px;border-bottom:1px solid var(--bor);">OTH</th>
+        </tr>
+        
+        <tr >
+           <td><input oninput="alve()" value="0" id="lenI"></td>
+           <td><input oninput="alve()" value="0" id="bnkI"></td>
+           <td><input oninput="alve()" value="0" id="oth"></td>
+        </tr>
+        
+        <tr>
+        <td colspan="3"><textarea oninput="alve()" id="texta">0</textarea></td>
+        
+        <tr>
+           <td style="color:orange;font-size:22px;font-family:'Economica';" id="alvvs">0</td>
+           <td style="color:lightgreen;font-size:26px;font-family:'Economica';" id="evesum">0</td>
+           <td style="color:aqua;font-family:'Economica';font-size:22px;" id="texsum">0</td>
+        </tr>
+        
+        </table>
+        </details>
+        </div>
+        
+        <br>
+        <div id="ppr" class="parnt">
+          
+        </div>
+        
+        
+        <script src="database.js"> </script>
+      <script src="finpulse.js"></script>
+       <script src="black-cha.js" type="text/javascript">
+       </script>
+       <br><br>
+          <script>
+
+
+    
+    
+
+function addclontr() {
+    document.querySelectorAll(".trans").forEach(x => 
+        Array.from(x.children).forEach((c, i) => {
+            c.className = i === 0 ? "mony" : i === 1 ? "tdate" : "tdes";
+            if (i >= 0) c.onclick = () => transRem(c);
+        })
+    );
+}
+
+
+
+function disexpp(x){
+  // alert(document.getElementById("catdets").style.display);
+  document.getElementById("catdets").style.display=x;
+}
+
+function disexpppp(x){
+  // alert(document.getElementById("catdets").style.display);
+  document.getElementById("sumTbl").style.display=x;
+}
+
+            
+
+          </script>
+        <center>
+        <img class="dbimg" id="parr" src="https://raw.githubusercontent.com/microintel/endgram/main/photo/microintel-black-small.png">
+        </center>
+        </body>
+        </html>

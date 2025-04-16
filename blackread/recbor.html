@@ -1,0 +1,600 @@
+<html>
+<head>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Lend </title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+    <style>
+        body { 
+        font-family:"Ubuntu",sans-serif;
+         background:#000;
+        color:white;
+         }
+        .c {
+         width:100%;
+          margin:1px; 
+        border-radius: 10px; 
+         }
+        h2 {
+        font-family:"Ubuntu",sans-serif;
+         text-align: center; 
+         }
+        input, button, select { 
+        width:90%;
+         padding: 10px;
+          margin: 10px 0; 
+        border-radius:10px;
+        border:1px solid black;
+        
+        }
+        input{
+         width:85%;
+        }
+        
+        
+        
+        .d {
+         color: red; cursor: pointer; 
+         }
+         
+         .swal2-input ,.swal2-select{
+         width: 93% !important;
+         box-sizing: border-box;
+         margin:0px; 
+         }
+         
+         .ass{
+         display:flex;
+         width:98%;
+         background-color:#000;
+         justify-content:space-around;
+         align-items:center;
+         }
+         .ass input,.ass select{
+         width:40%;
+         }
+         .ass i{
+         color:white;
+         font-size:2.8rem;
+         background-color:black;
+         border-radius:50px;
+         border:1.5px solid grey;
+         }
+         
+         .recb,.child{
+         width:98%;
+         color:white;
+         display:flex;
+         flex-direction:column;
+         flex-wrap:wrap;
+         overflow:auto;
+         }
+         
+         .recb{
+         gap:10px;
+         justify-content:center;
+         align-items:center;
+        
+         }
+         
+         .recb .child{
+         background-color:#222;
+         border:1.5px solid black;
+         border-radius:10px;
+         }
+         .recb .child .head{
+         border-bottom:1.5px solid grey;
+         width:100%;
+         display:flex;
+         justify-content:space-around;
+         align-items:center;
+         padding:10px;
+         flex-wrap:wrap;
+         }
+         
+         .recb .child .des{
+         width:100%;
+         display:flex;
+         align-items:center;
+         padding:10px;
+         flex-wrap:wrap;
+         text-align:center;
+         }
+         
+         canvas{
+         display:none;
+         }
+         
+         .sumt{
+         width:98%;
+         display:flex;
+         flex-direction:column;
+         justify-content:center;
+         align-items:center;
+         border-radius:20px;
+         padding:3px;
+         
+         background-color:#333;
+         }
+         .sumt div{
+         width:98%;
+         display:flex;
+         justify-content:space-around;
+         align-items:center;
+         border-bottom:2px solid black;
+         gap:6px;
+         
+         padding:5px;
+         }
+         .sumt > div > font{
+         font-size:1.2rem;
+         font-size:bold;
+         }
+         
+         .sumt div:nth-child(1){
+         
+         color:#007bff;
+         }
+         .sumt div:nth-child(2){
+         color:#28a745;
+         }
+         .sumt div:nth-child(3){
+         color:#dc3545;
+         border-bottom:0px solid black;
+         }
+         
+         .bi-house{
+         position:absolute;
+         top:10;
+         right:10;
+         font-size:2rem;
+         }
+         
+         .bi-printer{
+         position:absolute;
+         top:10;
+         left:10;
+         font-size:2rem;
+         }
+         
+         
+         @media print{
+         
+         
+         .bi-plus,#f,.form-check,.bi-trash{
+         
+         display:none !important;
+         
+         }
+         .sumt div:nth-child(1){
+         
+         color:black !important;
+         border-right:1.5px solid black !important;
+         }
+         .sumt div:nth-child(2),h2{
+         color:black !important;
+         border-right:1.5px solid black !important;
+         }
+         .sumt div:nth-child(3){
+         color:black !important;
+         border-bottom:2px solid black !important;
+         }
+         
+         .bi-house , .bi-printer{
+         display:none !important;
+         }
+         
+         .sumt{
+         
+         flex-direction:row !important;
+         
+         }
+         
+         #s{
+         border:none !important;
+         border-bottom:2px solid black !important;
+         border-radius:10px;
+         }
+         
+         
+         .recb .child{
+         background-color:black !important;
+         border:1.5px solid black !important;
+         border-radius:10px;
+         }
+         .recb .child .head{
+         border-bottom:1.5px solid black !important;
+         
+         }
+         
+         font,.des{
+         color:black !important;
+         }
+         
+         
+         
+         
+         
+         
+         }
+         
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    
+</head>
+<body>
+
+    <i onclick="window.print()" class="bi bi-printer"></i>
+    <i onclick="location.href='finpulse.html'" class="bi bi-house"></i>
+    <div class="c">
+    <br>
+        <h2> BlackRoad Lend </h2>
+        <div class="ass">
+        
+        <input type="text" id="s" placeholder="Search..." oninput="srh('rebb',this.value)">
+        <i class="bi bi-plus" onclick="add()"> </i>
+        <select id="f" onchange="srte(this.value)">
+            <option value="all">All</option>
+            <option value="r">Receivable</option>
+            <option value="b">Borrowing</option>
+        </select>
+        
+        </div>
+        
+        <div class="form-check form-switch mt-3">
+        <input class="form-check-input" type="checkbox" id="toggleSwitch">
+        <label class="form-check-label" for="toggleSwitch" id="switchLabel"> Graph </label>
+        </div>
+        <br>
+        
+        
+        <div id="ssuu" class="sumt">
+          <div>
+           <font > Total </font> <font id="fsumT"> 0</font>
+          </div>
+          
+          <div>
+          <font> Recivalbles  </font> <font id="fsumR"> 0</font>
+          </div>
+          
+          <div>
+          <font> Borrowings</font> <font id="fsumB"> 0</font>
+          </div>
+        </div>
+        <br>
+        <canvas id="reboc" width="200" height="150"></canvas>
+        <br>
+        
+        <div id="rebb" class="recb">
+        
+        </div>
+        
+        
+        
+    </div>
+   <script>
+  let grph=true;
+   let rbdada = { rbcon: "", rtot: 0, btot: 0 };
+   
+   function get() {
+   const rb = indexedDB.open("blackread");
+   rb.onsuccess = e => {
+   const db = e.target.result;
+   const tx = db.transaction(["sst"], 'readonly');
+   const store = tx.objectStore("sst");
+   const dad = store.get("nkncc");
+   dad.onsuccess = function () {
+   const res = dad.result;
+  // alert(JSON.stringify(res));
+   if (res) {
+   document.getElementById("rebb").innerHTML=res.rbcon;
+   let rx=getcls("R");
+   let bx=getcls("B");
+   rebocc([rx+bx,rx,bx],grph);
+   
+   
+   }
+   };
+   };
+   rb.onerror = () => alert("Error opening database");
+   }
+   
+   
+   get();
+   
+   function add() {
+   let inel = document.getElementById("rebb");
+   
+   Swal.fire({
+   title: "Add Lend",
+   html: `
+   <input type='number' id='a' class='swal2-input' placeholder='Amount'><br><br>
+   <input type='date' id='dt' class='swal2-input'><br><br>
+   <input type='text' id='desc' class='swal2-input' placeholder='Description'><br><br>
+   <select id='t' class='swal2-select'>
+   <option value='R'>Receivable</option>
+   <option value='B'>Borrowing</option>
+   </select>
+   `,
+   showCancelButton: true,
+   showCloseButton:true,
+   confirmButtonText: "Add Lend",
+   preConfirm: () => {
+   let a = document.getElementById("a").value.trim();
+   let dt = document.getElementById("dt").value;
+   let desc = document.getElementById("desc").value.trim();
+   let t = document.getElementById("t").value;
+   
+   if (!a || !dt || !desc) {
+   Swal.showValidationMessage("All fields are required!");
+   return false;
+   }
+   
+   return { a, dt, desc, t };
+   }
+   }).then(result => {
+   if (result.isConfirmed) {
+   const { a, dt, desc, t } = result.value;
+   const rb = indexedDB.open("blackread");
+   
+   rb.onsuccess = e => {
+   const db = e.target.result;
+   const tx = db.transaction(["sst"], 'readwrite');
+   const store = tx.objectStore("sst");
+   let ccc="";
+   t=="R" ? ccc="#28a745" : ccc="#dc3545";
+   const newDiv = document.createElement("div");
+   newDiv.className = "child";
+   newDiv.style.border=`1.5px solid ${ccc}`;
+   newDiv.innerHTML = `
+   <div class="head">
+   <font class="${t}">${a}</font> <font>${dt}</font> <font>${t}</font>
+   <i style="color:${ccc};" class="bi bi-trash" onclick="remRB(this)"></i>
+   </div>
+   <div class="des">${desc}</div>
+   `;
+   
+   if (inel.firstChild) {
+   inel.insertBefore(newDiv, inel.firstChild);
+   } else {
+   inel.appendChild(newDiv);
+   }
+   
+   let cons = inel.innerHTML.replace(/\s+/g, ' ').trim();
+   let rt = summ("R");
+   let bt = summ("B");
+   
+   const nknco = {
+   rbcon: cons,
+   rtot: rt,
+   btot: bt
+   };
+   
+   store.put(nknco, "nkncc");
+   let rx=getcls("R");
+   let bx=getcls("B");
+   rebocc([rx+bx,rx,bx],grph);
+   tx.oncomplete = () => {
+   display();
+   };
+   };
+   
+   rb.onerror = () => alert("Error opening database");
+   }
+   });
+   }
+   
+   function remRB(x) {
+   const di = x.parentNode.children[0]?.innerHTML || '';
+   const did = x.parentNode.children[1]?.innerHTML || '';
+   const dide = x.parentNode.parentNode.children[1]?.innerHTML || '';
+   const ran = Math.floor(1000 + Math.random() * 9000).toString();
+   
+   Swal.fire({
+   title: `Verify OTP : ${ran}`,
+   html: `
+   <h5>Are you sure you want to delete this record?<br><br>
+   <span style="color:red">Amount:</span> ${di} <br>
+   <span style="color:red">Date:</span> ${did} <br>
+   <span style="color:red">Description:</span> ${dide}</h5>
+   <input id="myInp" 
+   type="number" 
+   inputmode="numeric" 
+   pattern="[0-9]*" 
+   placeholder="OTP" 
+   autocomplete="off" 
+   class="swal2-input" />
+   `,
+   showCancelButton: true,
+   showCloseButton:true,
+   confirmButtonText: '0k',
+   cancelButtonText: 'Cancel',
+   preConfirm: () => {
+   const input = document.getElementById('myInp').value;
+   if (!input) {
+   Swal.showValidationMessage('You must enter an OTP!');
+   return false;
+   } else if (input !== ran) {
+   Swal.showValidationMessage('OTP does not match!');
+   return false;
+   }
+   }
+   }).then((result) => {
+   if (result.isConfirmed) {
+   x.parentNode.parentNode.remove();
+   
+   const rb = indexedDB.open("blackread");
+   rb.onsuccess = e => {
+   const db = e.target.result;
+   const tx = db.transaction(["sst"], 'readwrite');
+   const store = tx.objectStore("sst");
+   
+   const inel = document.getElementById("rebb");
+   const cons = inel?.innerHTML.replace(/\s+/g, ' ').trim() || '';
+   const rt = summ("R");
+   const bt = summ("B");
+   
+   const nknco = {
+   rbcon: cons,
+   rtot: rt,
+   btot: bt
+   };
+   
+   store.put(nknco, "nkncc");
+   let rx=getcls("R");
+   let bx=getcls("B");
+   rebocc([rx+bx,rx,bx],grph);
+   tx.oncomplete = () => {
+   Swal.fire('Deleted!', 'The record removed.', 'success');
+   };
+   
+   tx.onerror = () => {
+   Swal.fire('Error', 'Failed to update the database.', 'error');
+   };
+   };
+   }
+   });
+   }
+   
+   
+   
+   function summ(e) {
+   const el = document.getElementsByClassName(e);
+   let t = 0;
+   
+   Array.from(el).forEach(a => {
+   const v = parseFloat(a.innerHTML || a.value);
+   if (!isNaN(v)) t += v;
+   });
+   
+   return t;
+   }
+   
+   
+   
+   
+   function suvis(e) {
+   const el = document.getElementsByClassName(e);
+   let t = 0;
+   
+   Array.from(el).forEach(a => {
+   if (a.offsetParent !== null) {
+   const v = parseFloat(a.innerHTML || a.value);
+   if (!isNaN(v)) t += v;
+   }
+   });
+   
+   return t;
+   }
+   
+   
+   
+   function srh(con, term) {
+     var cont = document.getElementById(con);
+   var items = cont.getElementsByClassName('child');
+   
+   for (var i = 0; i < items.length; i++) {
+   var conte = items[i].innerHTML.toLowerCase();
+   
+   if (conte.includes(term.toLowerCase())) 
+      {
+   items[i].style.display = "block";
+   }
+   else {
+   items[i].style.display = "none";
+           }
+   }
+   
+   let rx=getcls("R");
+   let bx=getcls("B");
+   rebocc([rx+bx,rx,bx],grph);
+ }
+   
+   
+   
+   function srte(n) {
+   let na = n.toUpperCase();
+   let xa = na === "R" ? "B" : "R";
+   
+   document.querySelectorAll("." + na).forEach((x) => {
+   x.parentNode.parentNode.style.display = "flex";
+          });
+   
+   document.querySelectorAll("." + xa).forEach((x) => {
+        x.parentNode.parentNode.style.display = "none";
+    });
+   
+   
+   
+   if(n==="all"){
+   document.querySelectorAll(".child").forEach((x) => {
+   
+ x.style.display = "flex";
+   });
+   }
+   let rx=getcls("R");
+   let bx=getcls("B");
+   rebocc([rx+bx,rx,bx],grph);
+   
+   }
+   
+   
+   function getcls(cl) {
+   const elems = document.getElementsByClassName(cl);
+   const result = [];
+   
+   for (let i = 0; i < elems.length; i++) {
+   const el = elems[i];
+   
+   // Check if the element itself is visible and if its parent or grandparent has the class 'child'
+   let parent = el.parentElement;
+   let isParentVisible = false;
+   
+   // Check if the parent or grandparent has the class 'child' and is visible
+   while (parent) {
+   if (parent.classList && parent.classList.contains('child')) {
+   isParentVisible = parent.style.display !== 'none' && parent.offsetParent !== null;
+   break;
+   }
+   parent = parent.parentElement;
+   }
+   
+   if (isParentVisible && el.style.display !== 'none' && el.offsetParent !== null) {
+   result.push(el.innerHTML);
+   }
+   }
+   
+   let mn = 0;
+   result.forEach((x) => {
+   mn += parseInt(x);
+   });
+   
+   return mn;
+   }
+   
+   
+   
+   </script>
+   <script type="text/javascript" src="recbor-cha.js"></script>
+   
+   <script>
+   
+   
+   const toggleSwitch = document.getElementById('toggleSwitch');
+   const switchLabel = document.getElementById('switchLabel');
+   toggleSwitch.addEventListener('change', () => {
+   switchLabel.textContent = toggleSwitch.checked ? 'Graph Enabled ' : 'Graph Disbeled';
+   grph==false ? grph = true : grph = false;
+   let rx=getcls("R");
+   let bx=getcls("B");
+  rebocc([rx+bx,rx,bx],grph);
+   
+   });
+   </script>
+</body>
+</html>

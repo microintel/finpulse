@@ -1,1 +1,211 @@
 
+<html>
+<head>
+  <title>Black Road Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: Arial, Helvetica, sans-serif, sans-serif;
+      margin: 0px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      width:100vw;
+      height:95vh;
+    }
+    form {
+      background-color:black;
+      padding:10px;
+      border-radius: 12px;
+      text-align: center;
+      width: 94vw;
+    }
+    h3 {
+    margin-top:10px;
+      color: skyblue;
+      margin-bottom: 10px;
+    }
+    input, button {
+      width: 90%;
+      padding: 15px;
+      margin: 10px;
+      border: 1.5px solid grey;
+      border-radius: 8px;
+      background-color:black;
+      color: #fff;
+      transition: background 0.3s, color 0.3s;
+    }
+    button {
+      background-color:white;
+      color: black;
+    }
+    button:active {
+      background-color: white;
+      color:black;
+    }
+    input[type="file"] {
+      padding: 8px;
+    }
+
+    a{
+      text-decoration: none;
+      color: purple;
+    }
+
+    fieldset {
+    border: 2px solid white;
+    padding: 10px;
+    border-radius: 10px;
+    margin:5px;
+  }
+
+  legend {
+    font-size: 16px;
+    color: white;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .bt{
+  
+  width:90%;
+  background-color:black;
+  color:white;
+  border-radius:10px;
+  }
+
+
+  </style>
+</head>
+<body>
+
+  <center><h3 style="text-align: center;">Black Road Login</h3></center>
+  <form id="f">
+    <fieldset>
+      <legend> Backup Login</legend>
+    <input type="text" id="u" placeholder="Username" required><br>
+    <input type="password" id="p" placeholder="Password" required><br>
+    <input onchange="importData()" type="file" id="fileInput" required><br>
+    
+    <button type="submit">Login</button>
+
+    </fieldset>
+    
+  </form>
+  <center>
+  <button class="bt" style="border-radius: 10px;" onclick="location.href='log.html'"> Aleredy have an account ? clike here</button>
+
+
+  <button class="bt" style="border-radius: 10px;" onclick="location.href='reg.html'"> New to BlackRoad ? clike here</button>
+</center>
+
+  <script>
+
+
+
+    
+    
+
+    
+      document.getElementById('f').addEventListener('submit', e => {
+        e.preventDefault();
+        const ux = document.getElementById('u').value;
+        const px = document.getElementById('p').value;
+        
+       // if(ux===nkndata["u"] && px===nkndata["p"]){
+        if(ux==="1" && px==="1"){
+          alert("login successfilll");
+          localStorage.setItem("blackuser", u);
+          location.href="finpulse.html";
+
+        }else{
+          alert("wrond user name and password");
+        }
+      
+    
+      });
+    
+    
+    
+    let nkndata={};
+      function importData() {
+                const file = document.getElementById('fileInput').files[0];
+                if (!file) {
+                    alert('Please select a blackroad file.');
+                    return;
+                }
+    
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    try {
+                        const data = JSON.parse(e.target.result);
+                      //  alert(JSON.stringify(data));
+                        if (typeof data !== 'object' || Array.isArray(data)) throw new Error();
+    
+                            const dbName = 'blackread';
+                        const storeName = 'sst';
+                           const dbReq = indexedDB.open(dbName,2);
+    
+                        dbReq.onupgradeneeded = (event) => {
+                            const db = event.target.result;
+                            if (!db.objectStoreNames.contains(storeName)) {
+                                     db.createObjectStore(storeName);
+                                     }
+                        };
+    
+             dbReq.onsuccess = (event) => {
+                  const db = event.target.result;
+         const tx = db.transaction(storeName, 'readwrite');
+         const os = tx.objectStore(storeName);
+    
+        for (const key in data) {
+
+                               console.log("nkn chakli");
+                               if(key==="user"){
+
+                                        nkndata=data[key];
+                                        
+                               }
+            os.put(data[key],key); 
+                                            }
+    
+                            tx.oncomplete = () => {
+                                alert('Data imported successfully!');
+                  db.close();
+                            };
+    
+    tx.onerror = () => alert('Error import.');
+                        };
+    
+                        dbReq.onerror = () => alert('Error database.');
+                    } catch (err) {
+                        alert('Invalid blackroad file');
+                    }
+                };
+    
+                reader.readAsText(file);
+            }
+    
+    
+  
+    
+    function chkR(k, u) {
+    if (localStorage.getItem(k)) {
+        window.location.href = u;
+    }
+}
+
+  // chkR("blackuser","finpulse.html");  
+    
+    
+    
+    
+    </script>
+    
+
+</body>
+</html>

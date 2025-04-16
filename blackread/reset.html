@@ -1,0 +1,185 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> factory reset</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #msg {
+            margin-top: 20px;
+            color: green;
+
+
+        }
+
+        table{
+            border: 2px double grey;
+            border-collapse: collapse;
+        }
+        thead,tbody{
+            border: 2px double grey;
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+<body>
+    <h1>Factory Reset </h1>
+
+    
+
+
+    <h3>Permanently Delete Every Think including BlackRoad,Frotu,Lend...</h3>
+
+             
+
+    <button onclick="delDB()"> factory reset</button>
+    <p id="msg"></p>
+       <h3> U R Database Map</h3>
+       <h4 id="used"></h4>
+    <table border="2">
+        <thead>
+        <tr> <th> column </th> <th> data</th></tr>
+        </thead>
+        <tbody id="tbbb">
+            
+        </tbody>
+     </table>
+
+    <script>
+           let tb=document.getElementById("tbbb");
+           function disdb() {
+    let req = indexedDB.open("black");
+    req.onsuccess = function () {
+        let db = req.result;
+                    let tx = db.transaction("sst", "readonly");
+        let store = tx.objectStore("sst");
+        let keysReq = store.getAllKeys();
+  keysReq.onsuccess = function () {
+            let keys = keysReq.result;
+             keys.forEach((key) => {
+                let valReq = store.get(key);
+                valReq.onsuccess = function () {
+                    
+                                    let cxd=`
+                            
+                                        <td>${key}</td><td>${JSON.stringify(valReq.result)}</td>
+                                        
+                                    `;
+                                   let rt= document.createElement("tr");
+                                   rt.innerHTML=cxd;
+                                   tb.appendChild(rt);
+
+
+
+                };
+                         });
+
+        
+        
+        };
+    };
+
+    chkSize();
+}
+
+disdb();
+
+
+
+function delDB() {
+    const password = prompt("Enter Password to delete everything:");
+    if (!password) {
+    alert("Password is required.");
+     return;
+    }
+
+    const request = indexedDB.open("black");
+
+    request.onerror = function (event) {
+     console.error("Database error:", event.target.error);
+     alert("Failed to open the database.");
+    };
+
+        request.onsuccess = function () {
+        const db = request.result;
+        const transaction = db.transaction("sst", "readonly");
+        const store = transaction.objectStore("sst");
+        const getRequest = store.get("user");
+
+        getRequest.onerror = function (event) {
+      console.error("Error retrieving data:", event.target.error);
+     alert("Error retrieving user data.");
+        };
+
+        getRequest.onsuccess = function () {
+   const userData = getRequest.result;
+
+     if (userData && userData["u"] === password) {
+     const deleteRequest = indexedDB.deleteDatabase("black");
+     alert("Factory Reset Successful!");
+      localStorage.removeItem("blackuser");
+     location.href = "login.html";
+    deleteRequest.onsuccess = function () {
+     
+             };
+
+     deleteRequest.onerror = function () {
+   alert("Failed to delete the database.");
+                };
+            } else {
+                alert("Incorrect password or user not found.");
+            }
+        };
+    };
+}
+
+
+        
+    function chkSize() {
+        const dbN = "black";
+        const stN = "sst";
+        if (!dbN || !stN) {
+      alert("Enter both database and store names.");
+    return;
+        }
+
+        const req = indexedDB.open(dbN);
+
+        req.onsuccess = (e) => {
+        const db = e.target.result;
+        if (!db.objectStoreNames.contains(stN)) {
+        //alert(Store "${stN}" not found in "${dbN}".);
+     db.close();
+     return;
+            }
+
+            const txn = db.transaction(stN, "readonly");
+            const store = txn.objectStore(stN);
+            const getAll = store.getAll();
+
+            getAll.onsuccess = () => {
+         const size = new Blob([JSON.stringify(getAll.result)]).size;
+       const usedMB = (size / (1024 * 1024)).toFixed(5);
+         
+     document.getElementById("used").innerHTML = `used soace ${usedMB} MB`;
+     db.close();
+                      };
+        };
+
+        req.onerror = () => alert("Failed to open DB.");
+    }
+
+
+
+        
+    </script>
+</body>
+</html>
