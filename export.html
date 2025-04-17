@@ -122,7 +122,7 @@
 
      function dJSON(data, name) {
      let xc= pccon(data,"e");
-          const b = new Blob([xc], { type: "application/text" });
+          const b = new Blob([xc], { type: "text/plain" });
           const l = document.createElement('a');
           l.href = URL.createObjectURL(b);
           l.download = "Blackroad.json";
