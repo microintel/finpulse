@@ -454,7 +454,7 @@ font-size:10px;
         .feed{
         position:absolute;
         width:150px;
-        height:320px;
+        height:340px;
         left:2px;top:2px;
         background-color:var(--w);
         padding:0px;
