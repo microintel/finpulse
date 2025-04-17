@@ -120,8 +120,8 @@
           });
       }
 
-     function dJSON(data, name) {
-     let xc= pccon(data,"e");
+    async function dJSON(data, name) {
+     let xc= await pccon(data,"e");
           const b = new Blob([xc], { type: "text/plain" });
           const l = document.createElement('a');
           l.href = URL.createObjectURL(b);
