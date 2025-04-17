@@ -27,6 +27,7 @@ function backINCGET(){
         
         
         function backINCADD(){
+        return;
         
         let dataT= document.getElementById("ppr").innerHTML.replace(/\s+/g, ' ').trim();
        
@@ -47,7 +48,7 @@ function backINCGET(){
         
         
         function backRecADD(){
-        
+        return;
         let dataTRD= document.getElementById("recDaId").innerHTML.replace(/\s+/g, ' ').trim();
         let dataTBD= document.getElementById("borDaId").innerHTML.replace(/\s+/g, ' ').trim();
         
@@ -69,7 +70,7 @@ function backINCGET(){
         
         
         function backReDaGET(){
-          return;
+         
       
         const r = indexedDB.open("blackread");
         r.onsuccess = e => {

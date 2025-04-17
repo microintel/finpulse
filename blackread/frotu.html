@@ -79,7 +79,7 @@
     padding:10px;
     display:flex;
     width:94%;
-    justify-content:space-evenly;
+    justify-content:space-around;
     align-items:center;
     background-color:black;
     color:#ff8c42;
@@ -263,7 +263,7 @@
       
       <div class="red">
       
-      <span onclick="location.href='finpulse.html'" class="bi bi-house"> </span><span onclick="addfrotuIS()" class="bi bi-plus">  </span><span onclick="location.href='#sea'" class="bi bi-arrow-up"> </span>
+      <span onclick="location.href='finpulse.html'" class="bi bi-house"> </span><span style="display:none;" onclick="addfrotuIS()" class="bi bi-plus">  </span><span onclick="location.href='#sea'" class="bi bi-arrow-up"> </span>
       
       
       </div>
@@ -362,13 +362,13 @@
       
       <div class="red">
       
-      <span onclick="location.href='finpulse.html'" class="bi bi-house"> </span><span onclick="addFrotuEX()" class="bi bi-plus">  </span><span onclick="location.href='#sea'" class="bi bi-arrow-up"> </span>
+      <span onclick="location.href='finpulse.html'" class="bi bi-house"> </span><span onclick="addFrotuEX()" style="display:none;" class="bi bi-plus">  </span><span onclick="location.href='#sea'" class="bi bi-arrow-up"> </span>
       
       
       </div>
       
       <div class="mivnkn">
-      <button onclick="swiper.slideToLoop(1)"> <i class="fa-solid fa-less-than"></i>  Frotu </button>  <button onclick="swiper.slideToLoop(3)">  Graphs <i class="fa-solid fa-less-than"></i> </button>
+      <button onclick="swiper.slideToLoop(1)"> <i class="fa-solid fa-less-than"></i>  Frotu </button>  <button onclick="swiper.slideToLoop(3)">  Graphs <i class="fa-solid fa-greater-than"></i> </button>
       </div>
             <div id="ttt" class="seaEx">
             <h3 id="frt" style="margin:0;padding:0;padding:5px;font-size:1.5rem;">Frotu </h3>
@@ -536,6 +536,7 @@
   
  
   async function addfrotuIS() {
+  return;
   let extranfIXB = document.getElementById("frodaIXP");
   
   let xd = await addFrotuISTemp();
@@ -596,6 +597,7 @@
   
   
   function remFrotuIS(x) {
+  return;
   let extranfIXB = document.getElementById("frodaIXP");
   
   if ((frotuOBS.froIXB.inc > frotuOBS.froIXB.exp) && (frotuOBS.froIXB.inc==frotuOBS.froIXB.exp+frotuOBS.froIXB.bal)) {
@@ -725,7 +727,7 @@
   
   
   async function addFrotuEX() {
-  
+  return;
   let ii=document.getElementById("froIN");
   let ee=document.getElementById("froEXP");
   let bb=document.getElementById("froBAL");
@@ -843,6 +845,7 @@
   
   
   async function addFrotuISTemp() {
+  return;
   const { value: v } = await Swal.fire({
   title: "Enter Frotu Input",
   html:
@@ -893,6 +896,7 @@
   
   
   function remfroEx(x){
+  return;
   //alert(x.parentNode.children[0].innerHTML);
   let di= parseInt( x.parentNode.children[0].innerHTML);
   let did= parseInt(x.parentNode.children[1].innerHTML);

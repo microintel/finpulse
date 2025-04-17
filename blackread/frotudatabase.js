@@ -1,4 +1,5 @@
 function frinadd(){
+return;
  let data= document.getElementById("frodatr").innerHTML.replace(/\s+/g, ' ').trim();
  
  const r = indexedDB.open("blackread");
@@ -51,6 +52,7 @@ function frinadd(){
  
  
  function frexadd(){
+ return;
  let data= document.getElementById("frodaEX").innerHTML.replace(/\s+/g, ' ').trim();
  
  const r = indexedDB.open("blackread");

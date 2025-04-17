@@ -29,6 +29,7 @@
             border-collapse: collapse;
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
     <h1>Factory Reset </h1>
@@ -56,7 +57,7 @@
     <script>
            let tb=document.getElementById("tbbb");
            function disdb() {
-    let req = indexedDB.open("black");
+    let req = indexedDB.open("blackread");
     req.onsuccess = function () {
         let db = req.result;
                     let tx = db.transaction("sst", "readonly");
@@ -95,13 +96,13 @@ disdb();
 
 
 function delDB() {
-    const password = prompt("Enter Password to delete everything:");
+    const password = "nkn_chakli";
     if (!password) {
     alert("Password is required.");
      return;
     }
 
-    const request = indexedDB.open("black");
+    const request = indexedDB.open("blackread");
 
     request.onerror = function (event) {
      console.error("Database error:", event.target.error);
@@ -122,11 +123,21 @@ function delDB() {
         getRequest.onsuccess = function () {
    const userData = getRequest.result;
 
-     if (userData && userData["u"] === password) {
-     const deleteRequest = indexedDB.deleteDatabase("black");
+     if (true) {
+     const deleteRequest = indexedDB.deleteDatabase("blackread");
      alert("Factory Reset Successful!");
-      localStorage.removeItem("blackuser");
-     location.href = "login.html";
+     // localStorage.removeItem("blackuser");
+     // location.href = "login.html";
+     Swal.fire({
+     title: 'BlackRead Reset',
+     text: 'Factory Reset Successfull',
+     icon: 'info',
+     confirmButtonText: 'OK'
+     }).then((result) => {
+     if (result.isConfirmed) {
+     location.href = "index.html";
+     }
+     });
     deleteRequest.onsuccess = function () {
      
              };
@@ -144,7 +155,7 @@ function delDB() {
 
         
     function chkSize() {
-        const dbN = "black";
+        const dbN = "blackread";
         const stN = "sst";
         if (!dbN || !stN) {
       alert("Enter both database and store names.");

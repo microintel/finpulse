@@ -51,6 +51,7 @@ function alve(){
 
       
        function addTr() {
+       return;
        let tA = "";
        let tD = "";
        let tDes = "";
@@ -179,6 +180,7 @@ function alve(){
        
        
        function transRem(x){
+       return;
        let di= x.parentNode.children[0].innerHTML;
        let did=x.parentNode.children[1].innerHTML;
        let dide= x.parentNode.children[2].innerHTML;

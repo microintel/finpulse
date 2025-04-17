@@ -76,28 +76,30 @@
   background-color:black;
   color:white;
   border-radius:10px;
+  display:none;
   }
 
 
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 
-  <center><h3 style="text-align: center;">Black Road Login</h3></center>
+  <center><h3 style="text-align: center;">Black Road File Viewer</h3></center>
   <form id="f">
     <fieldset>
-      <legend> Backup Login</legend>
-    <input type="text" id="u" placeholder="Username" required><br>
-    <input type="password" id="p" placeholder="Password" required><br>
+      <legend> Reader </legend>
+    <input style="display:none;" type="text" id="u" value="1" placeholder="Username"><br>
+    <input style="display:none;" type="password" id="p" value="1" placeholder="Password"><br>
     <input onchange="importData()" type="file" id="fileInput" required><br>
     
-    <button type="submit">Login</button>
+    <button type="submit"> Read </button>
 
     </fieldset>
     
   </form>
   <center>
-  <button class="bt" style="border-radius: 10px;" onclick="location.href='log.html'"> Aleredy have an account ? clike here</button>
+  <button class="bt" style="border-radius: 10px;display:block;" onclick="location.href='finpulse.html'"> Continue Reading </button>
 
 
   <button class="bt" style="border-radius: 10px;" onclick="location.href='reg.html'"> New to BlackRoad ? clike here</button>
@@ -118,9 +120,17 @@
         
        // if(ux===nkndata["u"] && px===nkndata["p"]){
         if(ux==="1" && px==="1"){
-          alert("login successfilll");
-          localStorage.setItem("blackuser", u);
-          location.href="finpulse.html";
+        //  alert("BlackRoad File Readed successfilly");
+          Swal.fire({
+          title: 'BlackRead Reader',
+          text: 'File Readed Successfully',
+          icon: 'info',
+          confirmButtonText: 'OK'
+          }).then((result) => {
+          if (result.isConfirmed) {
+          location.href = "finpulse.html";
+          }
+          });
 
         }else{
           alert("wrond user name and password");
