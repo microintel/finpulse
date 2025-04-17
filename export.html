@@ -120,8 +120,9 @@
           });
       }
 
-      function dJSON(data, name) {
-          const b = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+     function dJSON(data, name) {
+     let xc= pccon(data,"e");
+          const b = new Blob([xc], { type: "application/text" });
           const l = document.createElement('a');
           l.href = URL.createObjectURL(b);
           l.download = "Blackroad.json";
@@ -190,6 +191,27 @@ document.getElementById("nkn2").style.display="block";
                   }, intv);
               }
           }, intv);
+      }
+      
+      
+      
+      
+      function pccon(t, y) {
+      const c = 1000;
+      let r = '';
+      if (y === 'e') {
+      for (let i = 0; i < t.length; i += c) {
+      r += btoa(t.slice(i, i + c));
+      }
+      return r;
+      } else if (y === 'd') {
+      for (let i = 0; i < t.length; i += c) {
+      r += atob(t.slice(i, i + c));
+      }
+      return r;
+      } else {
+      throw new Error("x");
+      }
       }
   </script>
 </body>
