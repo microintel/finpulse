@@ -120,14 +120,15 @@
           });
       }
 
-    async function dJSON(data, name) {
-     let xc= await pccon(data,"e");
-          const b = new Blob([xc], { type: "text/plain" });
-          const l = document.createElement('a');
-          l.href = URL.createObjectURL(b);
-          l.download = "Blackroad.txt";
-          l.click();
-      }
+    function dJSON(data, name) {
+   const jsonString = JSON.stringify(data, null, 2);
+    const encodedString = pccon(jsonString, 'e');
+        const blob = new Blob([encodedString], { type: "text/plain" });
+    const link = document.createElement('a');
+     link.href = URL.createObjectURL(blob);
+     link.download = name || "Blackroad.txt";
+     link.click();
+          }
 
       function exportData() {
           const db = "black";
