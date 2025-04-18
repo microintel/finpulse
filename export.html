@@ -122,11 +122,11 @@
 
     function dJSON(data, name) {
    const jsonString = JSON.stringify(data, null, 2);
-    const encodedString = pccon(jsonString, 'e');
-        const blob = new Blob([encodedString], { type: "text/plain" });
+   // const encodedString = pccon(jsonString, 'e');
+        const blob = new Blob([jsonString], { type: "text/plain" });
     const link = document.createElement('a');
      link.href = URL.createObjectURL(blob);
-     link.download = name || "Blackroad.txt";
+     link.download = name || "Blackroad.json";
      link.click();
           }
 
