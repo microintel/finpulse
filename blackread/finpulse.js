@@ -720,7 +720,7 @@ function alve(){
         
         
         function recRem(x){
-        
+        return;
         const ran = Math.floor(1000 + Math.random() * 9000);
         
         Swal.fire({
