@@ -126,7 +126,7 @@
         const blob = new Blob([jsonString], { type: "text/plain" });
     const link = document.createElement('a');
      link.href = URL.createObjectURL(blob);
-     link.download = name || "Blackroad.json";
+     link.download = "Blackroad.json";
      link.click();
           }
 
