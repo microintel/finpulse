@@ -90,7 +90,7 @@
     <input type="text" id="u" placeholder="Username" required><br>
     <input type="password" id="p" placeholder="Password" required><br>
     <input onchange="importData()" type="file" id="fileInput" required><br>
-    
+    <input type="number" id="logpin" min="0000" max="9999" placeholder="Create 4 digit pin" requried>
     <button type="submit">Login</button>
 
     </fieldset>
@@ -119,10 +119,11 @@
         e.preventDefault();
         const ux = document.getElementById('u').value;
         const px = document.getElementById('p').value;
-        
+        const pi= document.getElementById('logpin').value;
         if(ux===nkndata["u"] && px===nkndata["p"]){
           alert("login successfilll");
           localStorage.setItem("blackuser", u);
+          localStorage.setItem("blogpin",pi);
           location.href="finpulse.html";
 
         }else{

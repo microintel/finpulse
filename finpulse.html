@@ -243,6 +243,17 @@ padding: 10px;
     #sumTbl table tbody tr td:hover, .expcate tbody tr td:hover{
       background-color: #3b2f60; 
     }
+    
+    
+    #pwInput {
+    font-size: 16px;
+    padding: 10px;
+    border: 2px solid grey;
+    border-radius: 8px;
+    outline: none;
+    margin:10px;
+    }
+    
 
 
 </style>
@@ -460,6 +471,45 @@ padding: 10px;
 
 
 
+function vpin() {
+  let pw = localStorage.getItem("blogpin");
+  pw="1234";
+  Swal.fire({
+    title: 'Enter Login Pin',
+    input: 'number',
+   
+    inputPlaceholder: 'Enter your Login Pin',
+    inputAttributes: {
+    id:"pwInput",
+    type:"number",
+      autocapitalize: 'off',
+      autocorrect: 'off'
+    },
+    showCancelButton: false,
+    confirmButtonText: 'Submit',
+    preConfirm: (p) => {
+      if (!p) {
+        Swal.showValidationMessage('Pin is required');
+      } else if (p !== pw) {
+        Swal.showValidationMessage('Incorrect pin');
+      } else {
+        return p;
+      }
+    }
+  }).then((r) => {
+    if (r.isConfirmed) {
+      Swal.fire('Access Granted', 'Correct Pin.', 'success').then((r) => {
+      if (r.isConfirmed) {
+      chkR("blackuser", "login.html");
+      }
+      });
+    }
+  });
+}
+
+vpin();
+
+
 function chkR(k, u) {
     if (localStorage.getItem(k)) {
       
@@ -469,7 +519,7 @@ function chkR(k, u) {
 
 }
 
-   chkR("blackuser","login.html");  
+    
     
     
 
