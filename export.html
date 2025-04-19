@@ -81,6 +81,7 @@
       </style>
     
 </head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 <body>
   <h1 id="nkn1">Export u r Data</h1>
   
@@ -120,15 +121,15 @@
           });
       }
 
-    function dJSON(data, name) {
-   const jsonString = JSON.stringify(data, null, 2);
-   // const encodedString = pccon(jsonString, 'e');
-        const blob = new Blob([jsonString], { type: "text/plain" });
-    const link = document.createElement('a');
-     link.href = URL.createObjectURL(blob);
-     link.download = "Blackroad.json";
-     link.click();
-          }
+     function dJSON(data, name) {
+        let why= JSON.stringify(data,null,2);
+        let whi= pccon(why,"e");
+          const b = new Blob([whi], { type: "text/plain" });
+          const l = document.createElement('a');
+          l.href = URL.createObjectURL(b);
+          l.download = "Blackroad.txt";
+          l.click();
+      }
 
       function exportData() {
           const db = "black";
@@ -161,7 +162,7 @@ document.getElementById("nkn2").style.display="none";
           let idx = 0;
           let dur = Math.floor(Math.random() * (18000 - 10000 + 1)) + 10000;
           let intv = dur / msgs.length;
-
+           intv=1000;
           pop.style.display = "block";
 
           let int = setInterval(() => {
@@ -198,22 +199,19 @@ document.getElementById("nkn2").style.display="block";
       
       
       function pccon(t, y) {
-      const c = 1000;
-      let r = '';
+      const key = "blackkeymi";
       if (y === 'e') {
-      for (let i = 0; i < t.length; i += c) {
-      r += btoa(t.slice(i, i + c));
-      }
-      return r;
+      return CryptoJS.AES.encrypt(t, key).toString();
       } else if (y === 'd') {
-      for (let i = 0; i < t.length; i += c) {
-      r += atob(t.slice(i, i + c));
-      }
-      return r;
+      const bytes = CryptoJS.AES.decrypt(t.trim(), key);
+      const decrypted = bytes.toString(CryptoJS.enc.Utf8);
+      if (!decrypted) throw new Error("Invalid decryption or wrong key");
+      return decrypted;
       } else {
       throw new Error("x");
       }
       }
+      
   </script>
 </body>
 </html>
