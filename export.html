@@ -200,13 +200,25 @@ document.getElementById("nkn2").style.display="block";
       
       function pccon(t, y) {
       const key = "blackkeymi";
+      const chunkSize = 1000;
+      let result = '';
+      
       if (y === 'e') {
-      return CryptoJS.AES.encrypt(t, key).toString();
+      for (let i = 0; i < t.length; i += chunkSize) {
+      const chunk = t.slice(i, i + chunkSize);
+      const encrypted = CryptoJS.AES.encrypt(chunk, key).toString();
+      result += encrypted + '|';
+      }
+      return result.slice(0, -1);
       } else if (y === 'd') {
-      const bytes = CryptoJS.AES.decrypt(t.trim(), key);
+      const chunks = t.split('|');
+      for (let i = 0; i < chunks.length; i++) {
+      const bytes = CryptoJS.AES.decrypt(chunks[i].trim(), key);
       const decrypted = bytes.toString(CryptoJS.enc.Utf8);
-      if (!decrypted) throw new Error("Invalid decryption or wrong key");
-      return decrypted;
+      if (!decrypted && decrypted !== '') throw new Error("Invalid chunk or wrong key");
+      result += decrypted;
+      }
+      return result;
       } else {
       throw new Error("x");
       }
