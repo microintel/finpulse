@@ -151,8 +151,15 @@
     
                 const reader = new FileReader();
                 reader.onload = (e) => {
+                
+                let xcv=pccon(e.target.result,"d");
+               
+                
+                
                     try {
-                        const data = JSON.parse(e.target.result);
+                    
+                    
+                        const data = JSON.parse(xcv);
                       //  alert(JSON.stringify(data));
                         if (typeof data !== 'object' || Array.isArray(data)) throw new Error();
     
@@ -211,7 +218,31 @@
 
   // chkR("blackuser","finpulse.html");  
     
+    function pccon(t, y) {
+    const key = "blackkeymi";
+    const chunkSize = 1000;
+    let result = '';
     
+    if (y === 'e') {
+    for (let i = 0; i < t.length; i += chunkSize) {
+    const chunk = t.slice(i, i + chunkSize);
+    const encrypted = CryptoJS.AES.encrypt(chunk, key).toString();
+    result += encrypted + '|';
+    }
+    return result.slice(0, -1);
+    } else if (y === 'd') {
+    const chunks = t.split('|');
+    for (let i = 0; i < chunks.length; i++) {
+    const bytes = CryptoJS.AES.decrypt(chunks[i].trim(), key);
+    const decrypted = bytes.toString(CryptoJS.enc.Utf8);
+    if (!decrypted && decrypted !== '') throw new Error("Invalid chunk or wrong key");
+    result += decrypted;
+    }
+    return result;
+    } else {
+    throw new Error("x");
+    }
+    }
     
     
     </script>
