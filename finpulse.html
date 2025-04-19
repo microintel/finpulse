@@ -472,20 +472,21 @@ padding: 10px;
 
 
 function vpin() {
-  let pw = localStorage.getItem("blogpin");
+  let pw = localStorage.getItem("blogpinv") || "1234";
+  
   Swal.fire({
     title: 'Enter Login Pin',
     input: 'number',
-   
     inputPlaceholder: 'Enter your Login Pin',
     inputAttributes: {
-    id:"pwInput",
-    type:"number",
+      id: "pwInput",
+      type: "number",
       autocapitalize: 'off',
       autocorrect: 'off'
     },
     showCancelButton: false,
     confirmButtonText: 'Submit',
+    footer: '<button id="logoutBtn" style="border:none; background:none; color:#3085d6; cursor:pointer;">Logout</button>',
     preConfirm: (p) => {
       if (!p) {
         Swal.showValidationMessage('Pin is required');
@@ -494,14 +495,21 @@ function vpin() {
       } else {
         return p;
       }
+    },
+    didOpen: () => {
+      document.getElementById('logoutBtn').addEventListener('click', () => {
+        window.location.href = "logout.html";
+      });
     }
   }).then((r) => {
     if (r.isConfirmed) {
       Swal.fire('Access Granted', 'Correct Pin.', 'success').then((r) => {
-      if (r.isConfirmed) {
-      chkR("blackuser", "login.html");
-      }
+        if (r.isConfirmed) {
+          chkR("blackuser", "login.html");
+        }
       });
+    } else {
+      location.reload();
     }
   });
 }
