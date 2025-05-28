@@ -856,7 +856,8 @@ const r = indexedDB.open("black");
         a = "#87CEEB";
         }
         
-        document.body.style.borderTop = `10px solid ${a}`;
+       // document.body.style.borderTop = `10px solid ${a}`;
+        
         chthco(a);
         let c = b;
         b = a;
