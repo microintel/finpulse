@@ -99,7 +99,7 @@
       e.preventDefault();
       const ux = document.getElementById('u').value;
       const px = document.getElementById('p').value;
-      const pi = document.getElementById('logpin').value;
+      const pi = "1234";
       const fileInput = document.getElementById('fileInput');
 
       if (fileInput.files.length > 0) {
@@ -158,6 +158,7 @@
               nkndata = data[key];
             }
             os.put(data[key], key);
+            
           }
 
           tx.oncomplete = () => {
