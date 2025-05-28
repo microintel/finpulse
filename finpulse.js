@@ -72,8 +72,8 @@ const r = indexedDB.open("black");
         let xf=`Borrowings : ${lendb.btot} <br>
                 Recivables : ${lendb.rtot}  <br>
                 Bank Bal   : ${bI} <br>
-                Cash Flow  : ${otv} <br><br>
-           final Balance : ${ghy}
+                Cash Flow  : ${otv} <br><br><br>
+           Final Balance : ${ghy}
         
         `;
         document.getElementById("finalAc").innerHTML=xf;
@@ -857,7 +857,7 @@ const r = indexedDB.open("black");
         }
         
         document.body.style.borderTop = `10px solid ${a}`;
-        
+        chthco(a);
         let c = b;
         b = a;
         a = c;
@@ -870,7 +870,16 @@ const r = indexedDB.open("black");
 
 
 
-
+function chthco(c) {
+          let m = document.querySelector('meta[name="theme-color"]');
+          if (!m) {
+          m = document.createElement('meta');
+          m.name = 'theme-color';
+          document.head.appendChild(m);
+          }
+          m.setAttribute('content', c);
+          
+          }
 
 
 
