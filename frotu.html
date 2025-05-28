@@ -244,6 +244,12 @@
     background-color:#222;
     }
     
+    .pieChartEx{
+    width:100%;
+    height:100%;
+    overflow:auto;
+    }
+    
   </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
@@ -253,11 +259,7 @@
  
     <div class="swiper-wrapper">
     
-    <div class="swiper-slide sl sl11">
     
-    we are wirking on wealth feature
-    
-    </div>
     
       <div class="swiper-slide sl sl1">
       
@@ -268,7 +270,7 @@
       
       </div>
       <div class="mivnkn">
-      <button onclick="swiper.slideToLoop(0)"> <i class="fa-solid fa-less-than"></i>  Wealth </button> <button onclick="swiper.slideNext()"> Frotu Expences <i class="fa-solid fa-greater-than"></i></button>
+       <button onclick="swiper.slideNext()"> Frotu Expences <i class="fa-solid fa-greater-than"></i></button>
       </div>
       <div id="ttt" class="seaEx">
       
@@ -304,6 +306,10 @@
       
       <tr onclick="undis('unknown')">
       <td> Unknown </td> <td id="fun"> 0</td>
+      </tr>
+      
+      <tr onclick="undis('borrow')">
+      <td> Borrowing </td> <td id="fbor"> 0</td>
       </tr>
       
       <tr onclick="undis('overtime')">
@@ -368,10 +374,10 @@
       </div>
       
       <div class="mivnkn">
-      <button onclick="swiper.slideToLoop(1)"> <i class="fa-solid fa-less-than"></i>  Frotu </button>  <button onclick="swiper.slideToLoop(3)">  Graphs <i class="fa-solid fa-less-than"></i> </button>
+      <button onclick="swiper.slideToLoop(0)"> <i class="fa-solid fa-less-than"></i>  Frotu </button>  <button onclick="swiper.slideToLoop(2)">  Graphs <i class="fa-solid fa-greater-than"></i> </button>
       </div>
             <div id="ttt" class="seaEx">
-            <h3 id="frt" style="margin:0;padding:0;padding:5px;font-size:1.5rem;">Frotu </h3>
+            <h3 id="frt" style="margin:0;padding:0;padding:5px;font-size:1.5rem;">Frotu Expence </h3>
             <div class="seaEC">
             <input oninput="srh2('#tabtran tbody tr')" id="seaa" type="text" placeholder="&#128269 Search.." > 
             
@@ -420,28 +426,29 @@
       
       <div class="swiper-slide sl sl3">
       <div class="mivnkn">
-      <button onclick="swiper.slideToLoop(2)"> <i class="fa-solid fa-less-than"></i>  Frotu Expence </button> <button onclick="location.href='finpulse.html'"> Black Road <i class="fa-solid fa-greater-than"></i></button>
+      <button onclick="swiper.slideToLoop(1)"> <i class="fa-solid fa-less-than"></i>  Frotu Expence </button> <button onclick="location.href='finpulse.html'"> Black Road <i class="fa-solid fa-greater-than"></i></button>
       </div>
       <center> <h3> Frotu Statistics </h3></center>
      
       <div class="frotuCh">
       <canvas id="pieChart" width="100" height="100"></canvas>
       <canvas id="pieChartCat" width="100" height="50"></canvas>
-      <canvas id="pieChartEx" width="100" height="50"></canvas>
+      <canvas id="pieChartEx" width="300" height="1000"></canvas>
       </div>
       <br>
       </div>
      
     </div>
   </div>
-
+<script src="lastsen.js" type="text/javascript"></script>
+       
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script>
   const swiper = new Swiper('.s', {
   slidesPerView: 'auto',
   centeredSlides: true,
   spaceBetween: 0,
-  initialSlide: 1,
+  initialSlide: 0,
   loop:true
   });
   
@@ -589,6 +596,7 @@
   famtC?.();
   addCats?.();
   shofroPie("CAT");
+  dlastd();
   setTimeout(()=>{
   location.reload();
   },1000);
@@ -664,6 +672,8 @@
   icon:"warning"
   });
   }
+  
+  dlastdrem();
   }
   
   
@@ -691,26 +701,29 @@
   let ffun=0;
   let ffov=0;
   let ffoth=0;
-  
+  let ffbor=0;
   document.querySelectorAll(".free").forEach((x)=>{ ffamt+=parseInt(x.children[0].innerHTML) });
   document.querySelectorAll(".reward").forEach((x)=>{ ffrew+=parseInt(x.children[0].innerHTML) });
   document.querySelectorAll(".passive").forEach((x)=>{ ffpass+=parseInt(x.children[0].innerHTML) });
   document.querySelectorAll(".unknown").forEach((x)=>{ ffun+=parseInt(x.children[0].innerHTML) });
   document.querySelectorAll(".overtime").forEach((x)=>{ ffov+=parseInt(x.children[0].innerHTML) });
   document.querySelectorAll(".other").forEach((x)=>{ ffoth+=parseInt(x.children[0].innerHTML) });
+  document.querySelectorAll(".borrow").forEach((x)=>{ ffbor+=parseInt(x.children[0].innerHTML) });
   document.getElementById("ffr").innerHTML= ffamt;
   document.getElementById("frew").innerHTML= ffrew;
   document.getElementById("fpas").innerHTML= ffpass;
   document.getElementById("fun").innerHTML= ffun;
   document.getElementById("fot").innerHTML= ffov;
   document.getElementById("fo").innerHTML= ffoth;
+  document.getElementById("fbor").innerHTML= ffbor;
   frotuCatOb={
   free:ffamt,
   reward:ffrew,
   passive:ffpass,
   unknown:ffun,
   overtime:ffov,
-  other:ffoth
+  other:ffoth,
+  borrow:ffbor
   };
   }
   
@@ -746,25 +759,61 @@
   <input id="a" type="number" class="swal2-input" placeholder="Amount"><br><br>` +
   `<select id="c" class="swal2-input">
   <option value="">Select Category</option>
-  <option value="food">Food</option>
-  <option value="telephone"> Telephone </option>
-  <option value="shopping"> Shopping </option>
-  <option value="beauty"> Beauty </option>
-  <option value="sport"> Sport </option>
-  <option value="social"> Social </option>
-  <option value="transporation"> Transporation </option>
-  <option value="clothing"> Clothing </option>
-  <option value="car"> Car </option>
-  <option value="wine-cigaratte"> wine/cigaratte.. </option>
+  <option value="apparel">Apparel</option>
+  <option value="baby"> baby </option>
+  <option value="bakery-pups"> bakery/pups/ </option>
+  <option value="beauty">Beauty</option>
+  <option value="bigbasket"> Bigbasket </option>
+  <option value="biscuit"> biscuit/ </option>
+  <option value="blink-it"> blink-it </option>
+  <option value="bro-sis">Brother / Sister</option>
+  <option value="car">Car</option>
+  <option value="clothing">Clothing</option>
+  <option value="donate">Donate</option>
+  <option value="drink-juices"> drink/juices </option>
+  <option value="education">Education</option>
+  <option value="egg"> egg </option>
+  <option value="electronics">Electronics</option>
   <option value="eletronics"> Eletronics </option>
-  <option value="travel">  Travel </option>
-  <option value="health"> Health </option>
-  <option value="pet"> Pet </option>
-  <option value="repair">  Repair </option>
-  <option value="housing"> Housing </option>
-  <option value="home"> Home </option>
-  <option value="gift"> Gift </option>
-  <option value="donate"> Donate </option>
+  <option value="entertainment">Entertainment</option>
+  <option value="family">Family</option>
+  <option value="food">Food</option>
+  <option value="friends">Friends</option>
+  <option value="gift">Gift</option>
+  <option value="health">Health</option>
+  <option value="help"> help </option>
+  <option value="home">Home</option>
+  <option value="housing">Housing</option>
+  <option value="little-heart"> little heart </option>
+  <option value="milk-bread-biscuit-crud"> milk/bread/biscuit/crud </option>
+  <option value="mobile">Mobile</option>
+  <option value="mom-dad">Mother / Dad</option>
+  <option value="movie">Movie</option>
+  <option value="official-docs">Official Documents</option>
+  <option value="other"> Others </option>
+  <option value="party">Party</option>
+  <option value="personal-care">Personal Care</option>
+  <option value="pet">Pet</option>
+  <option value="recharge">Recharges</option>
+  <option value="repair">Repair</option>
+  <option value="samosa-outside"> samosa/outside/ </option>
+  <option value="self"> self </option>
+  <option value="shopping">Shopping</option>
+  <option value="snacks">Snacks</option>
+  <option value="social">Social</option>
+  <option value="sport">Sport</option>
+  <option value="style-fashion">Style / Fashion</option>
+  <option value="swiggy"> Swiggy </option>
+  <option value="telephone">Telephone</option>
+  <option value="tiffen-launch-palou"> tiffen/launch/palou </option>
+  <option value="tour">Tour</option>
+  <option value="transportation">Transportation</option>
+  <option value="travel">Travel</option>
+  <option value="vehicle">Vehicle</option>
+  <option value="wine-cigaratte"> wine/cigaratte.. </option>
+  <option value="wine-cigarette">Wine / Cigarette</option>
+  <option value="zomato"> Zomato </option>
+  <option value="zepto"> Zepto </option>
   <option value="other"> Others </option>
   </select><br><br>` +
   `<input id="d" type="date" class="swal2-input"><br><br>` +
@@ -781,7 +830,9 @@
   if(a>parseInt(bb.innerHTML)){
   
  alert(`Insufficient Balance \n \n Current Balance ${frotuOBS.froIXB.bal}`);
+  
   addFrotuEX();
+  
   let a=0;
   let ds="insufficient balance";
   return { a, c, d, ds };
@@ -827,6 +878,7 @@
   st.put(frotuOBS, "frotuXMMXG");
   addclontrrEx();
   shofroPie("EXP");
+  dlastd();
   
   };
   
@@ -843,8 +895,9 @@
   
   
   async function addFrotuISTemp() {
+  
   const { value: v } = await Swal.fire({
-  title: "Enter Frotu Input",
+  title: "Enter FrotInput",
   html:
   `<input id="a" type="number" class="swal2-input" placeholder="Amount"><br><br>` +
   `<select id="c" class="swal2-input">
@@ -889,6 +942,8 @@
   return xxx;
   };
   }
+  
+
   }
   
   
@@ -951,6 +1006,7 @@
   }
   famtC();
   addCats();
+  dlastdrem();
   shofroPie("EXP");
   Swal.fire('Success', 'Record Deleted from FROTU', 'success');
   //location.reload();

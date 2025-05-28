@@ -25,7 +25,7 @@
       width: 94vw;
     }
     h3 {
-    margin-top:10px;
+      margin-top:10px;
       color: skyblue;
       margin-bottom: 10px;
     }
@@ -50,35 +50,28 @@
     input[type="file"] {
       padding: 8px;
     }
-
-    a{
+    a {
       text-decoration: none;
       color: purple;
     }
-
     fieldset {
-    border: 2px solid white;
-    padding: 10px;
-    border-radius: 10px;
-    margin:5px;
-  }
-
-  legend {
-    font-size: 16px;
-    color: white;
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
-  
-  .bt{
-  
-  width:90%;
-  background-color:black;
-  color:white;
-  border-radius:10px;
-  }
-
-
+      border: 2px solid white;
+      padding: 10px;
+      border-radius: 10px;
+      margin:5px;
+    }
+    legend {
+      font-size: 16px;
+      color: white;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    .bt {
+      width:90%;
+      background-color:black;
+      color:white;
+      border-radius:10px;
+    }
   </style>
 </head>
 <body>
@@ -86,155 +79,157 @@
   <center><h3 style="text-align: center;">Black Road Login</h3></center>
   <form id="f">
     <fieldset>
-      <legend> Backup Login</legend>
-    <input type="text" id="u" placeholder="Username" required><br>
-    <input type="password" id="p" placeholder="Password" required><br>
-    <input onchange="importData()" type="file" id="fileInput" required><br>
-    <input type="number" id="logpin" min="0000" max="9999" placeholder="Create 4 digit pin" requried>
-    <button type="submit">Login</button>
-
+      <legend> &nbsp; Backup Login &nbsp;  </legend>
+      <input style="display:none" type="text" id="u" value="vignesh" placeholder="Username" required><br>
+      <input type="text" id="urlinp" placeholder="Paste BackUp URL(No CORS)" required><br>
+      <input type="file" id="fileInput"><br>
+      <input type="password" id="p" placeholder="Password" required><br>
+      <input type="number" value="1234" style="display:none;" id="logpin" min="0" max="9999" placeholder="Create 4 digit pin">
+      <button type="submit">Login</button>
     </fieldset>
-    
   </form>
   <center>
-  <button class="bt" style="border-radius: 10px;" onclick="location.href='log.html'"> Aleredy have an account ? clike here</button>
-
-
-  <button class="bt" style="border-radius: 10px;" onclick="location.href='reg.html'"> New to BlackRoad ? clike here</button>
-  
-  <button class="bt" style="border-radius: 10px;" onclick="location.href='blackread/index.html'"> BlackRoad File Reader </button>
-  
-  
-</center>
+    <button class="bt" style="border-radius: 10px;" onclick="location.href='log.html'"> Aleredy have an account ? clike here</button>
+    <button class="bt" style="border-radius: 10px;" onclick="location.href='reg.html'"> New to BlackRoad ? clike here</button>
+    <button class="bt" style="border-radius: 10px;display:none;" onclick="location.href='blackread/index.html'"> BlackRoad File Reader </button>
+  </center>
 
   <script>
+    document.getElementById('f').addEventListener('submit', e => {
+      e.preventDefault();
+      const ux = document.getElementById('u').value;
+      const px = document.getElementById('p').value;
+      const pi = document.getElementById('logpin').value;
+      const fileInput = document.getElementById('fileInput');
 
+      if (fileInput.files.length > 0) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          try {
+            const encryptedContent = e.target.result;
+            const decrypted = pccon(encryptedContent, "d");
+            alldata = decrypted;
+            importData();
+            checkLogin(ux, px, pi);
+          } catch (err) {
+            alert("Failed to decrypt file. Wrong password or corrupted file.");
+          }
+        };
+        reader.readAsText(fileInput.files[0]);
+      } else {
+        impor(document.getElementById('urlinp').value, px)
+          .then(() => {
+            checkLogin(ux, px, pi);
+          })
+          .catch(() => {
+            alert("Failed to fetch or decrypt data from URL.");
+          });
+      }
+    });
 
+    let nkndata = {};
+    let alldata = "";
 
-    
-    
-
-    
-      document.getElementById('f').addEventListener('submit', e => {
-        e.preventDefault();
-        const ux = document.getElementById('u').value;
-        const px = document.getElementById('p').value;
-        const pi= document.getElementById('logpin').value;
-        if(ux===nkndata["u"] && px===nkndata["p"]){
-          alert("login successfilll");
-          localStorage.setItem("blackuser", u);
-          localStorage.setItem("blogpin",pi);
-          location.href="finpulse.html";
-
-        }else{
-          //alert("wrond user name and password");
+    function importData() {
+      try {
+        const data = JSON.parse(alldata);
+        if (typeof data !== 'object' || Array.isArray(data)) {
+          throw new Error();
         }
-      
-    
-      });
-    
-    
-    
-    let nkndata={};
-      function importData() {
-                const file = document.getElementById('fileInput').files[0];
-                if (!file) {
-                    alert('Please select a blackroad file.');
-                    return;
-                }
-    
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    try {
-                    let xcv=pccon(e.target.result,"d");
-                        const data = JSON.parse(xcv);
-                      //  alert(JSON.stringify(data));
-                        if (typeof data !== 'object' || Array.isArray(data)) throw new Error();
-    
-                            const dbName = 'black';
-                        const storeName = 'sst';
-                           const dbReq = indexedDB.open(dbName,2);
-    
-                        dbReq.onupgradeneeded = (event) => {
-                            const db = event.target.result;
-                            if (!db.objectStoreNames.contains(storeName)) {
-                                     db.createObjectStore(storeName);
-                                     }
-                        };
-    
-             dbReq.onsuccess = (event) => {
-                  const db = event.target.result;
-         const tx = db.transaction(storeName, 'readwrite');
-         const os = tx.objectStore(storeName);
-    
-        for (const key in data) {
 
-                               console.log("nkn chakli");
-                               if(key==="user"){
+        const dbName = 'black';
+        const storeName = 'sst';
+        const dbReq = indexedDB.open(dbName, 2);
 
-                                        nkndata=data[key];
-                                        
-                               }
-            os.put(data[key],key); 
-                                            }
-    
-                            tx.oncomplete = () => {
-                                alert('Data imported successfully!');
-                  db.close();
-                            };
-    
-    tx.onerror = () => alert('Error import.');
-                        };
-    
-                        dbReq.onerror = () => alert('Error database.');
-                    } catch (err) {
-                        alert('Invalid blackroad file');
-                    }
-                };
-    
-                reader.readAsText(file);
+        dbReq.onupgradeneeded = (event) => {
+          const db = event.target.result;
+          if (!db.objectStoreNames.contains(storeName)) {
+            db.createObjectStore(storeName);
+          }
+        };
+
+        dbReq.onsuccess = (event) => {
+          const db = event.target.result;
+          const tx = db.transaction(storeName, 'readwrite');
+          const os = tx.objectStore(storeName);
+
+          for (const key in data) {
+            if (key === "user") {
+              nkndata = data[key];
             }
-    
-    
-  
-    
-    function chkR(k, u) {
-    if (localStorage.getItem(k)) {
-        window.location.href = u;
-    }
-}
+            os.put(data[key], key);
+          }
 
-  chkR("blackuser","finpulse.html");  
-    
-    
+          tx.oncomplete = () => {
+            db.close();
+          };
+
+          tx.onerror = () => alert('Error during import.');
+        };
+
+        dbReq.onerror = () => alert('Error opening database.');
+      } catch (err) {
+        alert('Invalid blackroad file ' + err);
+      }
+    }
+
+    async function impor(u, pa) {
+      try {
+        let dat = await fetch(u);
+        let cv = await dat.text();
+        let nkn = await pccon(cv, "d");
+        alldata = nkn;
+        importData();
+      } catch {
+        alert("Error fetching or decrypting the URL data");
+      }
+    }
+
     function pccon(t, y) {
-    const key = "blackkeymi";
-    const chunkSize = 1000;
-    let result = '';
-    
-    if (y === 'e') {
-    for (let i = 0; i < t.length; i += chunkSize) {
-    const chunk = t.slice(i, i + chunkSize);
-    const encrypted = CryptoJS.AES.encrypt(chunk, key).toString();
-    result += encrypted + '|';
+      const key = document.getElementById('p').value;
+      const chunkSize = 1000;
+      let result = '';
+
+      if (y === 'e') {
+        for (let i = 0; i < t.length; i += chunkSize) {
+          const chunk = t.slice(i, i + chunkSize);
+          const encrypted = CryptoJS.AES.encrypt(chunk, key).toString();
+          result += encrypted + '|';
+        }
+        return result.slice(0, -1);
+      } else if (y === 'd') {
+        const chunks = t.split('|');
+        for (let i = 0; i < chunks.length; i++) {
+          const bytes = CryptoJS.AES.decrypt(chunks[i].trim(), key);
+          const decrypted = bytes.toString(CryptoJS.enc.Utf8);
+          if (!decrypted && decrypted !== '') throw new Error("Invalid chunk or wrong key");
+          result += decrypted;
+        }
+        return result;
+      } else {
+        throw new Error("x");
+      }
     }
-    return result.slice(0, -1);
-    } else if (y === 'd') {
-    const chunks = t.split('|');
-    for (let i = 0; i < chunks.length; i++) {
-    const bytes = CryptoJS.AES.decrypt(chunks[i].trim(), key);
-    const decrypted = bytes.toString(CryptoJS.enc.Utf8);
-    if (!decrypted && decrypted !== '') throw new Error("Invalid chunk or wrong key");
-    result += decrypted;
+
+    function checkLogin(ux, px, pi) {
+      if (px === nkndata["p"]) {
+        alert("login successful");
+        localStorage.setItem("blackuser", ux);
+        localStorage.setItem("blogpin", pi);
+        location.href = "finpulse.html";
+      } else {
+        alert("Click Once More / wrong username or password");
+      }
     }
-    return result;
-    } else {
-    throw new Error("x");
+
+    function chkR(k, u) {
+      if (localStorage.getItem(k)) {
+        window.location.href = u;
+      }
     }
-    }
-    
-    </script>
-    
+
+    chkR("blackuser", "finpulse.html");
+  </script>
 
 </body>
 </html>

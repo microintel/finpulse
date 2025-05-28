@@ -41,7 +41,9 @@ function backINCGET(){
         t.objectStore("sst").put(dbs, "blackroadINC");
         };
         
+        
         updateTotals();
+        
         }
         
         
@@ -62,7 +64,7 @@ function backINCGET(){
         t.objectStore("sst").put(dbsm, "blackroadReBo");
         };
         updateTotals();
-        
+        dlastd();
         
         }
         

@@ -4,10 +4,15 @@
     <title>Register</title>
 </head>
 <body>
-    <input type="text" id="u" placeholder="Username">
-    <input type="password" id="p" placeholder="Password">
+<center>
+<br><br><br>
+    <h2> BlackRoad </h2>
+    <h3>Registration</h3>
+    <br><br>
+    <input type="text" id="u" placeholder="Username"><br><br>
+    <input type="password" id="p" placeholder="Password"><br><br>
     <button onclick="r()">Register</button>
-
+</center>
     <script>
         function c(u, p, r) {
             const d = indexedDB.open("black", 2);
@@ -35,7 +40,11 @@
         function r() {
             const u = document.getElementById("u").value;
             const p = document.getElementById("p").value;
+            if(u=="" | p==""){
+            alert("Enter Valuese");
+            }else{
             c(u, p, "finpulse.html");
+            }
         }
     </script>
 </body>

@@ -11,6 +11,7 @@ async function addFrotuISTemp() {
     <option value="reward">Rewards / Refunds </option>
     <option value="passive"> Passive Income / Divident </option>
     <option value="unknown"> Unknown </option>
+    <option value="borrow"> Borrowing </option>
     <option value="overtime"> Over Time </option>
     <option value="other"> Others </option>
     </select><br><br>` +
@@ -46,4 +47,6 @@ async function addFrotuISTemp() {
     });
     return xxx;
     };
+    
+    dlastd();
 }

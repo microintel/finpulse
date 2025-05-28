@@ -171,9 +171,10 @@
         
         .trans {
         display: flex;
-        width:95%;
+        width:100%;
         padding-top:5px;
         gap:10px;
+        margin:3px 0px;
         padding-bottom:5px;
         flex-direction: row;
         justify-content:space-around;
@@ -303,7 +304,7 @@ font-size:10px;
         }
         .cra .rad{
         display:flex;
-        margin:15px;
+        margin:0px;
         overflow-y:auto;
         }
         .rsum{
@@ -454,7 +455,7 @@ font-size:10px;
         .feed{
         position:absolute;
         width:150px;
-        height:340px;
+        height:260px;
         left:2px;top:2px;
         background-color:var(--w);
         padding:0px;
@@ -483,7 +484,7 @@ font-size:10px;
         border-bottom:1.5px solid var(--tbor);
         text-align:left;
         }
-        li:nth-child(11){
+        li:nth-child(13){
         border-bottom:none;
         }
         .om:hover .feed{
@@ -604,7 +605,7 @@ font-size:10px;
         .bsea{
            display:none !important;
         }
-        #borwi{
+        #borwi,.dsert{
          display:none !important;
         }
         
@@ -630,9 +631,14 @@ font-size:10px;
         border:3px solid black !important;
         border-bottom:none !important;
         }
-        .cra ,.sinp,#canb,.om,#yyyy,.menu,#tttim,.adimg{
+        .cra ,.sinp,#canb,.om,#yyyy,.menu,#tttim,.adimg,#boxxx,#linebal,#grpsel,.accttab{
         display:none !important;
         }
+        
+        table{
+        color:black !important;
+        }
+        
         #adapa{
         color:black !important;
         text-align:left !important;
@@ -642,7 +648,8 @@ font-size:10px;
         border-bottom:2px solid black !important;
         }
         
-        #adapa{
+        
+        #adapa,#resnk,#catdets,#sumTbl{
         display:block !important;
         }
         }
@@ -677,5 +684,26 @@ font-size:10px;
         }
         
         
+        
+        
+        
+        ul li {
+        opacity: 0;
+        transform: translateY(100px);
+        animation: slideUp 0.4s ease forwards;
+        }
+        
+        ul li:last-child {
+        border-bottom: none;
+        }
+        
+        @keyframes slideUp {
+        to {
+        
+        opacity: 1;
+        transform: translateY(0);
+        }
+        }
+       
         
        

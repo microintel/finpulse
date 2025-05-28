@@ -26,14 +26,14 @@
  border:2px solid #2E7D32;
  color:#2E7D32;
  padding:3px;
- margin:3px;
+ margin:0px;
  border-radius:7px;
  
   }
   .borlend{
   border:2px solid #C62828;
   color:#C62828;
-  margin:3px;
+  margin:0px;
   padding:3px;
   border-radius:7px;
   }
@@ -42,7 +42,7 @@
    width:98%;
    justify-content:space-between;
    border-bottom:1px dashed grey;
-   margin:3px;
+   margin:0px;
    padding:1px;
   }
   .rechead div h4,.borhead div h4{
@@ -101,8 +101,8 @@
   }
   
   .borhead h4,.rechead h4{
-  margin:4px;
-  padding:4px;
+  margin:0px;
+  padding:0px;
   display:flex;
   max-width:98%;
   min-width:90%;
@@ -135,11 +135,11 @@
   background-color:var(--back);
   border:1.5px solid var(--bor);
   border-radius:7px;
-  margin:3px;
+  margin:0px;
   color:brown;
   }
   #linebal{
-    margin:10px;
+    margin:0px;
     padding:5px;
   }
 
@@ -147,9 +147,10 @@
     background-color: var(--back);
     color: var(--b);
     border-radius: 6px;
-    margin: 10px;
+    margin: 5px;
     padding: 10px;
     max-width: fit-content;
+    display:none;
   }
 
   .fa-plus{
@@ -254,20 +255,138 @@ padding: 10px;
     margin:10px;
     }
     
+#cccbo{
+
+color:#C84848;
+}
+
+#cccbo {
+  width: 18px;
+  height: 18px;
+  accent-color: #4caf50;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+#resnk{
+
+margin:3px;
+}
+
+#cascc tr td{
+
+border:0.7px solid grey;
+}
+
+#cascc tr td:first-child{
+border-left:0px solid grey;
+}
+
+#cascc tr td:last-child{
+border-right:0px solid grey;
+}
+
+#nknb h3{
+
+margin:0px;
+}
+
+.fa-times{
+
+color:var(--exp);
+font-size:1.3rem;
+
+}
 
 
+ul ul {
+display:none;
+  position: absolute;
+  width:100%;
+  top:136px;
+  left: 150px;
+  background:var(--w);
+  padding: 10px;
+  border: 1px solid var(--b);
+}
+
+
+ul ul li:last-child{
+border:none;
+}
+
+
+#boxxx {
+      width: 60px;
+      height: 60px;
+      background-color:var(--b);
+      color: var(--w);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position:fixed;
+      bottom: 10px;
+      font-size:2rem;
+      right: 30px;
+      z-index:1000;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    .btnn-group{
+    display:flex;
+    width:90%;
+    flex-wrap:wrap;
+    justify-content:space-evenly;
+    align-items:center;
+    }
+    .btnn-group button {
+    margin: 5px;
+    padding: 10px 15px;
+    font-size: 16px;
+    background-color:var(--w);
+    color:var(--b);
+    border-radius:10px;
+    border:1.5px solid var(--b);
+    }
+    
+    .dsert{
+    display:flex;
+    width:90%;
+    justify-content:space-between;
+    
+    }
+    
+    .dsert input,.dsert button{
+    width:fit-content;
+    background-color:var(--w);
+    color:var(--b);
+    border:2px solid var(--bor);
+    border-radius:7px;
+    }
+    
+    
 </style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tingle.js@0.15.3/dist/tingle.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/tingle.js@0.15.3/dist/tingle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script src="https://unpkg.com/draggabilly@3/dist/draggabilly.pkgd.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> BlackRoad</title>
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="finpulse.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
 
 
 
-
+<i id="boxxx" class="fa-solid fa-arrow-up"></i>
 
 
 
@@ -277,26 +396,30 @@ padding: 10px;
 
 <div class="om">
   <img width="30px" id="mimg" src="https://img.icons8.com/?size=100&id=36389&format=png&color=FFFFFF">
-    <ul class="feed">
-      <li id="acNa">Profile</li>
+    <ul class="feed ani-li">
+      <li onclick="profDis()" id="acNa">Profile</li>
       
       <li class="cnrr" onclick="appendC()">Add Record</li>
       <li onclick="location.href='frotu.html'"> Frotu</li>
       <li onclick="location.href='recbor.html'"> Lend </li>
-      <li onclick="disexpppp('flex')"> SRC Summary</li>
-      <li onclick="disexpp('flex')"> Exp Summary </li>
-      <li onclick="location.href='export.html'"> Export</li>
-      <li><font onclick="printe()">Print</font></li>
-      <li onclick="location.href='reset.html'">Factory Reset</li>
-      <li onclick="location.href='blackread/index.html'"> Read File </li>
-      <li onclick="location.href='logout.html'">Log out</li>
-    </ul>
+       <li onclick="nknsu()"> Summary </li>
+        <ul class="ani-li" id="sumidd">
+          <li onclick="disexpppp('flex')"> SRC Summary</li>
+          <li onclick="nknv()"> Dispersion Exp</li>
+          <li onclick="disexpp('flex')"> Exp Summary </li>
+          <li onclick="grpse('block')">Graph Ex/bal</li>
+        </ul>
+        
+      <li onclick="location.href='#alllvr';document.getElementById('alllvr').style.display='block';Swal.fire({text:'Accounting Feature Enabled',icon:'success'})"> Accounting </li>
+      <li onclick="showTingle()"> Other </li>
+        </ul>
   </div>
   
   <img id="tttim" width="100px" height="35px" src="https://raw.githubusercontent.com/microintel/endgram/main/photo/blackroadwhite.png">
 
 <div id="yyyy" class="theame">
-  <img onclick="theame(this.id)" id="w" src="https://img.icons8.com/?size=100&id=Ppe22DwOvBTF&format=png&color=FFFFFF">
+  <img onclick="theame(this.id)" id="w" class="nknth" src="https://img.icons8.com/?size=100&id=Ppe22DwOvBTF&format=png&color=FFFFFF">
+  
   </div>
 
 </div>
@@ -320,31 +443,71 @@ padding: 10px;
   <input type="text" id="sinpp" placeholder="Amount &#x1F50D ..." oninput="searTa()" />
         
         <input type="text" id="seait" placeholder="Tran &#x1F50D ..." oninput="sea()" />
-        <img style="display:none;" onclick="borww('block')" id="bori" src="https://img.icons8.com/?size=100&id=rRTAE6XGGP2Q&format=png&color=FFFFFF">
         
        </div> 
-   
-
 
       <center>
-
+        <br>
         
+        <div style="display:none;" id="alllvr" class="alver">
+        <details open="true">
+        <summary style="color:var(--b);"> Accounting </summary>
+        <br>
+        <table>
+        
+        <tr>
+        <th class="accttab" style="padding:10px;border-bottom:1px solid var(--bor);">Lend Amt</th>
+        <th class="accttab" style="padding:10px;border-bottom:1px solid var(--bor);">Bank Bal</th>
+        <th class="accttab" style="padding:10px;border-bottom:1px solid var(--bor);">OTH</th>
+        </tr>
+        
+        <tr >
+        <td class="accttab"><input oninput="alve()" value="0" id="lenI"></td>
+        <td class="accttab"><input oninput="alve()" value="0" id="bnkI"></td>
+        <td class="accttab"><input oninput="alve()" value="0" id="oth"></td>
+        </tr>
+        
+        <tr>
+        <td class="accttab" colspan="3"><textarea oninput="alve()" id="texta">0</textarea></td>
+        </tr>
+        <tr>
+        <td class="accttab" style="color:orange;font-size:22px;font-family:'Economica';" id="alvvs">0</td>
+        <td class="accttab" style="color:lightgreen;font-size:26px;font-family:'Economica';" id="evesum">0</td>
+        <td class="accttab" style="color:aqua;font-family:'Economica';font-size:22px;" id="texsum">0</td>
+        </tr>
+        <tr>
+        <td colspan="3"><h4 id="finalAc"> </h4></td>
+        </tr>
+        </table>
+        
+        </details>
+        </div>
+        <div id="resnk"></div>
 
           <div id="sumTbl">
             
           </div>
 
-
+    <div style="display:none;margin:0px;padding:0px;" class="dsert" id="ddsert">
+      <input id="frd" type="date" value="2025-05-01"><input id="tod" type="date" value="2025-05-05"><button onclick="filbydate('frd','tod','dateColumn')"> Filter</div>
+    </div>
        <div id="catdets">
          <div class="head">
-          <i></i>
+          <i onclick="shfei('catdets')" class="fa-solid fa-share njk" style="color:lightgreen;display:none;"></i>
           <span> Expences Category </span>
           <i onclick="disexpp('none')" class="fa fa-times"></i>
+          
+         </div><br>
+         <div class="pretty p-default p-round">
+         <input onchange="hiexpcat(this)" type="checkbox" />
+         <div class="state">
+         <label id="cheklab">hide all Category</label>
+         </div>
          </div>
        </div>
        </center>
 
-
+ 
 
    
    <div style="display:none;" id="borwi" class="borw">
@@ -396,12 +559,14 @@ padding: 10px;
    </div>
    
    
-   <select onchange="chgapval(this)" id="grpsel">
+   <select onchange="chgapval()" id="grpsel">
     <option value=""> select graph</option>
+    <option value="pie"> Income,Expence,Balance graph </option>
     <option value="bal"> balance graph </option>
     <option value="exp"> expences graph </option>
+    <option value="n"> Hide Graph Option</option>
    </select>
-   <canvas id="linebal" width="100px" height="40px"></canvas>
+   <canvas id="linebal" width="100px" height="40px" ></canvas>
    
    
    
@@ -425,38 +590,8 @@ padding: 10px;
 
         <br>
         
-        <div style="display:none;" class="alver">
-        <details>
-        <summary style="color:var(--b);">Get clarification</summary>
-        <br>
-        <table>
+      
         
-        <tr>
-        <th style="padding:10px;border-bottom:1px solid var(--bor);">Lend Amt</th>
-        <th style="padding:10px;border-bottom:1px solid var(--bor);">Bank Bal</th>
-        <th style="padding:10px;border-bottom:1px solid var(--bor);">OTH</th>
-        </tr>
-        
-        <tr >
-           <td><input oninput="alve()" value="0" id="lenI"></td>
-           <td><input oninput="alve()" value="0" id="bnkI"></td>
-           <td><input oninput="alve()" value="0" id="oth"></td>
-        </tr>
-        
-        <tr>
-        <td colspan="3"><textarea oninput="alve()" id="texta">0</textarea></td>
-        
-        <tr>
-           <td style="color:orange;font-size:22px;font-family:'Economica';" id="alvvs">0</td>
-           <td style="color:lightgreen;font-size:26px;font-family:'Economica';" id="evesum">0</td>
-           <td style="color:aqua;font-family:'Economica';font-size:22px;" id="texsum">0</td>
-        </tr>
-        
-        </table>
-        </details>
-        </div>
-        
-        <br>
         <div id="ppr" class="parnt">
           
         </div>
@@ -464,10 +599,135 @@ padding: 10px;
         
         <script src="database.js"> </script>
       <script src="finpulse.js"></script>
-       <script src="black-cha.js" type="text/javascript">
-       </script>
+       <script src="black-cha.js" type="text/javascript"></script>
+       <script src="expcatdis.js" type="text/javascript"></script>
+       <script src="lastsen.js" type="text/javascript"></script>
+      
        <br><br>
           <script>
+          
+          function filbydate(f, t, c) {
+          let from = document.getElementById(f).value;
+          let toda = document.getElementById(t).value;
+          let ddes = document.getElementById("seait").value.toLowerCase().trim();
+          
+          const isSe = ddes.length > 0;
+          
+          document.querySelectorAll(".tdate").forEach((x) => {
+          let da = x.innerHTML.trim();
+          let row = x.parentNode;
+          let des = row.children[2].innerText.toLowerCase();
+          let ppl = row.parentNode.parentNode.style.display;
+          
+          let match = da >= from && da <= toda;
+          let matchS = !isSe || des.includes(ddes);
+          
+          if (match && matchS && ppl !== "none") {
+          row.style.display = "flex";
+          row.style.backgroundColor = "#027aff";
+          } else {
+          row.style.display = "none";
+          row.style.backgroundColor = "var(--b)";
+          }
+          });
+          
+          updateTotals();
+          }
+          
+          let theameC=localStorage.getItem("theme");
+          theame(theameC);
+
+function nknv() {
+
+Swal.fire({
+  text: "Dispersion Of Expences Enabled Successfully",
+  icon: "success"
+});
+
+document.getElementById("resnk").style.display="block";
+location.href="#resnk";
+  let normalize = function(s) { return s.trim().toLowerCase(); };
+  let allItems = document.querySelectorAll('.idfeb');
+  let total = 0, data = [];
+
+  allItems.forEach(function(item) {
+    let source = normalize(item.querySelector('.fromm').textContent);
+    let expense = parseFloat(item.querySelector('.exep').textContent);
+    total += expense;
+
+    let transactions = [];
+    let transElements = item.nextElementSibling?.querySelectorAll('.trans') || [];
+
+    transElements.forEach(function(trans) {
+      let category = normalize(trans.getAttribute('data-category'));
+      let amount = parseFloat(trans.querySelector('.mony').textContent);
+      if (!isNaN(amount)) {
+        transactions.push({ c: category, m: amount });
+      }
+    });
+
+    data.push({ f: source, e: expense, t: transactions });
+  });
+
+  let mapped = {};
+  data.forEach(function(entry) {
+    let f = entry.f, e = entry.e, t = entry.t;
+    if (!mapped[f]) mapped[f] = { e: 0, t: [] };
+    mapped[f].e += e;
+    mapped[f].t.push(...t);
+  });
+
+  let result = [];
+  for (const f in mapped) {
+    let e = mapped[f].e, t = mapped[f].t;
+    let catMap = {};
+    t.forEach(function(trans) {
+      let c = trans.c, m = trans.m;
+      if (!catMap[c]) catMap[c] = 0;
+      catMap[c] += m;
+    });
+
+    let breakdown = [];
+    for (const cat in catMap) {
+      let amt = catMap[cat];
+      breakdown.push({
+        f: f,
+        c: cat,
+        v: amt,
+        sp: ((amt / e) * 100).toFixed(2),
+        op: ((amt / total) * 100).toFixed(2)
+      });
+    }
+
+    result.push({ f: f, x: breakdown });
+  }
+
+  let html = "<div id=\"nknb\" style=\"display:flex;justify-content:space-around;margin:0px;padding:0px;color:var(--b)\"><h3><i class=\"fa-solid fa-share\" onclick=\"shfei('resnk')\" style=\"color:lightgreen;display:none;\" id=\"njk\"></i></h3><h3> Dispersion Of Expences </h3><i onclick=\"disexppA('none')\" class=\"fa fa-times\"></i></div><br><table cellpadding=\"5\" cellspacing=\"0\">" +
+             "<thead><tr><th>Cat</th><th>Amt</th><th>Src %</th><th>All %</th></tr></thead><tbody id=\"cascc\">";
+
+  result.forEach(function(item) {
+    let f = item.f, x = item.x;
+    html += "<tr><td colspan=\"5\" style=\"font-weight:bold; background:var(--b);color:var(--w)\">" + f + "</td></tr>";
+    x.forEach(function(p) {
+      html += "<tr>" +
+             
+              "<td>" + p.c + "</td>" +
+              "<td>" + p.v + "</td>" +
+              "<td>" + p.sp + "</td>" +
+              "<td>" + p.op + "</td>" +
+              "</tr>";
+    });
+  });
+
+  html += "</tbody></table>";
+  document.getElementById('resnk').innerHTML = html;
+}
+
+
+function nknsu(){
+document.getElementById("sumidd").style.display="block";
+
+}
 
 
 
@@ -503,7 +763,7 @@ function vpin() {
     }
   }).then((r) => {
     if (r.isConfirmed) {
-      Swal.fire('Access Granted', 'Correct Pin.', 'success').then((r) => {
+      Swal.fire('Access Granated', 'Correct Pin.', 'success').then((r) => {
         if (r.isConfirmed) {
           chkR("blackuser", "login.html");
         }
@@ -514,7 +774,7 @@ function vpin() {
   });
 }
 
-vpin();
+// vpin();
 
 
 function chkR(k, u) {
@@ -527,7 +787,7 @@ function chkR(k, u) {
 }
 
     
-    
+    chkR("blackuser", "login.html");
     
 
 function addclontr() {
@@ -543,17 +803,235 @@ function addclontr() {
 
 function disexpp(x){
   // alert(document.getElementById("catdets").style.display);
+  if(x!=="none"){
+  
+  Swal.fire({
+  text: "Summary Of Expences Enabled Successfully",
+  icon: "success"
+  });
+  
+  location.href="#catdets";
+  
+  }
   document.getElementById("catdets").style.display=x;
 }
 
 function disexpppp(x){
   // alert(document.getElementById("catdets").style.display);
   document.getElementById("sumTbl").style.display=x;
+  if(x!=="none"){
+  
+  Swal.fire({
+  text: "Summary Of Income Sources Enabled Successfully",
+  icon: "success"
+  });
+  
+  location.href="#sumTbl";
+  
+  }
+}
+
+
+function grpse(x){
+  // alert(document.getElementById("catdets").style.display);
+  document.getElementById("grpsel").style.display=x;
+  if(x!=="none"){
+  
+  Swal.fire({
+  text: "Graph Option Enabled Successfully",
+  icon: "success"
+  });
+  
+  location.href="#grpsel";
+  chgapval();
+  document.getElementById("grpsel").value="bal";
+  }
 }
 
             
+            function disexppA(z){
+            document.getElementById("resnk").style.display=z;
+            document.getElementById("resnk").innerHTML="";
+            }
 
           </script>
+          
+          <script>
+          const box = document.getElementById('boxxx');
+          const draggie = new Draggabilly(box);
+          
+          let wasDragged = false;
+          
+          draggie.on('dragStart', () => {
+          wasDragged = false;
+          });
+          
+          draggie.on('dragMove', () => {
+          wasDragged = true;
+          });
+          
+          draggie.on('dragEnd', () => {
+          setTimeout(() => {
+          wasDragged = false;
+          }, 50);
+          });
+          
+          box.addEventListener('pointerup', () => {
+          if(window.scrollY==0){
+           Toastify({
+           text:"alredy at the top",
+           duration:2000,
+           backgroundColor:"var(--bal)"
+           }).showToast();
+          }
+          if (!wasDragged) {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
+          });
+          
+          
+          
+          
+          </script>
+          
+          <script>
+          const lis = document.querySelectorAll(".ani-li li");
+          lis.forEach((li, index) => {
+          li.style.animationDelay = `${index * 0.02}s`;
+          });
+          
+          
+          function profDis() {
+          let addt="";
+          let delt="";
+          let nak="";
+          const r = indexedDB.open("black");
+          r.onsuccess = e => {
+          const d = e.target.result;
+          const t = d.transaction(["sst"], 'readwrite');
+          const st = t.objectStore("sst");
+          const nkn = st.get("user");
+          let ghg= st.get("alast");
+          let fgh= st.get("alastrem");
+          // let dbs={data:dataT};
+          ghg.onsuccess=function(){
+          addt=ghg.result;
+          }
+          fgh.onsuccess=function(){
+          delt=fgh.result;
+          }
+          nkn.onsuccess=function(){
+          
+          nak= nkn.result;
+          
+          };
+          
+          setTimeout(()=>{
+          
+          Swal.fire({
+          html: `
+          <h6 style="margin:0px;padding:0px;font-size:0.7rem;color:black"> Blackroad</h6>
+          <h1 style="margin:0px;padding:0px;color:black;font-family:Roboto;opacity:0.7;">Profile</h1><br>
+         <div style="display: flex; justify-content: space-between;">
+         <img onclick="chproi(this)" style="border-radius:50%;border:4px solid black;padding:3px" src="https://picsum.photos/500/500" width="140" height="140">
+         <div style="display:flex;flex-direction:column;justify-content:center;gap:15px;align-items:center;">
+          <strong style="font-size:1.5rem;color:black;">${nak.u}</strong>
+          <strong style="font-size:0.9rem;">${nak.p}</strong>
+         </div>
+         </div><br>
+         <hr>
+         <h4> Last Seen </h4>
+         <div style="display: flex; justify-content: space-between;">
+         <strong>Insertion</strong>
+         <strong></strong>
+         <span>${addt}</span>
+         </div><br>
+         <div style="display: flex; justify-content: space-between;">
+         <strong>Deletion</strong>
+         <strong></strong>
+         <span>${delt}</span>
+         </div><br>
+         
+         <button onclick="nknfetEx(this)">View BackUP File Uploaded Time</button>
+         <hr>
+         <div style="display:flex;justify-content:space-evenly;color:red;">
+           <h5 onclick="location.href='logout.html'" style="color:red;margin:0;"> Logout Acount</h5>
+           <h5 style="color:black;margin:0;"> | </h5>
+           <h5 onclick="location.href='reset.html'" style="color:red;margin:0;"> Delete Acount</h5>
+         </div>
+       
+          `,
+          showConfirmButton:false,
+          showCloseButton:true
+          });
+          
+          },1000);
+         
+          
+          };
+          
+          }
+          
+         
+         let xti=500;
+          function chproi(x){
+          
+          xti+=1;
+          let xg = `https://picsum.photos/${xti}/${xti}`;
+          x.src=xg;
+          
+          
+          }
+          
+         async function nknfetEx(x){
+          
+          Swal.fire({title:"Coming Soon"});
+          
+          }
+          </script>
+          
+          <script>
+          let modal;
+          
+          function showTingle() {
+          modal = new tingle.modal({
+          footer: false,
+          closeMethods: ['overlay', 'button', 'escape'],
+          closeLabel: "Close"
+          });
+          
+          modal.setContent(`
+          <h2>Choose an Option</h2>
+          <div class="btnn-group">
+          <button onclick="location.href='devs.html';modal.close()"> Development Resources </button>
+          <button onclick="shfet()"> Share Option </button>
+          <button onclick="location.href='export.html';modal.close()"> Export </button>
+          <button onclick="modal.close();printe()"> Print </button>
+          <button onclick="location.href='reset.html';modal.close()"> Factory Reset </button>
+          <button onclick="sssh()"> Show Date Search </button>
+          <button onclick="location.href='ppm/index.html';modal.close()"> Portfolio Management </button>
+          <button onclick="location.href='https://microintel.github.io/endgram/file/coding.html';modal.close()"> Statements</button>
+          <button onclick="location.href='https://microintel.github.io/endgram/file/coding.html';modal.close()"> Bills </button>
+          
+          </div>
+          `);
+          
+          modal.open();
+          }
+          
+          function sssh(){
+          document.getElementById("ddsert").style.display="flex";
+          modal.close();
+          location.href="#ddsert";
+          
+          }
+          
+          
+          
+          
+          </script>
+          
+          
         <center>
         <img class="dbimg" id="parr" src="https://raw.githubusercontent.com/microintel/endgram/main/photo/microintel-black-small.png">
         </center>

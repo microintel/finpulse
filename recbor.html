@@ -1,5 +1,6 @@
 <html>
 <head>
+<link href="https://fonts.cdnfonts.com/css/fake-receipt" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -12,6 +13,7 @@
     <style>
         body { 
         font-family:"Ubuntu",sans-serif;
+                                            
          background:#000;
         color:white;
          }
@@ -145,6 +147,9 @@
          }
          .sumt div:nth-child(3){
          color:#dc3545;
+         
+         }
+         .sumt div:last-child{
          border-bottom:0px solid black;
          }
          
@@ -165,7 +170,8 @@
          
          @media print{
          
-         
+        *{ font-family: 'Fake Receipt', sans-serif !important;
+         }
          .bi-plus,#f,.form-check,.bi-trash{
          
          display:none !important;
@@ -185,13 +191,13 @@
          border-bottom:2px solid black !important;
          }
          
-         .bi-house , .bi-printer{
+         .bi-house , .bi-printer,#hhh{
          display:none !important;
          }
          
          .sumt{
          
-         flex-direction:row !important;
+         flex-direction:column !important;
          
          }
          
@@ -216,11 +222,78 @@
          color:black !important;
          }
          
+         .hea{
+         display:flex !important;
+         }
+         #sig{
+         display:flex !important;
+         }
+         
+         .bi-pencil-square{
+         display:none !important;
+         }
          
          
+         }
          
+         .hea{
+         display:none;
+         justify-content:space-between;
+         padding:10px 10px;
+         align-items:center;
+         margin:4px 4px;
+         }
+         .hea img{
+         width:30%;
+         height:auto;
          
+         }
          
+         #sig{
+         display:none;
+         width:100%;
+         margin-top:30px;
+         margin-right:10px;
+         text-align:right;
+         }
+         #sig div img{
+         width:17%;
+         height:auto;
+         }
+         #sig div h3{
+         margin:3px;
+         padding:0px;
+         font-size:0.9rem;
+         }
+         
+         #sig div{
+         display:flex;
+         flex-direction:column;
+         width:fit-content;
+         justify-content:center;
+         align-items:center;
+         }
+         
+         .pp{
+           width:95%;
+           text-align:center;
+          
+         }
+         .pp th{
+         border-bottom:1px solid grey;
+         }
+         .pp th,.pp td{
+         border-right:1px solid grey;
+         }
+         .pp th:nth-child(1),.pp th:nth-child(2),.pp td:nth-child(1),.pp td:nth-child(2){
+         color:#28a745;
+         }
+         .pp th:nth-child(3),.pp th:nth-child(4),.pp td:nth-child(3),.pp td:nth-child(4){
+         color:#dc3545;
+         }
+         
+         .pp th:last-child,.pp td:last-child{
+         border-right:0px solid grey;
          }
          
     </style>
@@ -228,12 +301,16 @@
     
 </head>
 <body>
-
+    
     <i onclick="window.print()" class="bi bi-printer"></i>
     <i onclick="location.href='finpulse.html'" class="bi bi-house"></i>
     <div class="c">
     <br>
-        <h2> BlackRoad Lend </h2>
+    <div class="hea">
+    <img src="https://raw.githubusercontent.com/microintel/endgram/main/photo/microintel-black-small.png">
+    <h2> BlackRoad Lend</h2>
+    </div>
+        <h2 id="hhh"> BlackRoad Lend </h2>
         <div class="ass">
         
         <input type="text" id="s" placeholder="Search..." oninput="srh('rebb',this.value)">
@@ -265,6 +342,22 @@
           <div>
           <font> Borrowings</font> <font id="fsumB"> 0</font>
           </div>
+          
+          <div>
+           <table class="pp">
+            <tr>
+            <th> Rec Per</th><th>Rec Prof</th><th>Bor Per</th><th>Bor Prof</th>
+            </tr>
+            <tr id="datrb">
+             <td>0</td><td>0</td><td>0</td><td>0</td>
+            </tr>
+            </table>
+           </div>
+          </div>
+          
+          
+          
+          
         </div>
         <br>
         <canvas id="reboc" width="200" height="150"></canvas>
@@ -277,6 +370,8 @@
         
         
     </div>
+    <script src="lastsen.js" type="text/javascript"></script>
+    
    <script>
   let grph=true;
    let rbdada = { rbcon: "", rtot: 0, btot: 0 };
@@ -296,7 +391,8 @@
    let rx=getcls("R");
    let bx=getcls("B");
    rebocc([rx+bx,rx,bx],grph);
-   
+   vgh();
+   perpro();
    
    }
    };
@@ -378,9 +474,12 @@
    store.put(nknco, "nkncc");
    let rx=getcls("R");
    let bx=getcls("B");
+   dlastd();
+   perpro();
    rebocc([rx+bx,rx,bx],grph);
    tx.oncomplete = () => {
    display();
+   
    };
    };
    
@@ -451,6 +550,8 @@
    rebocc([rx+bx,rx,bx],grph);
    tx.oncomplete = () => {
    Swal.fire('Deleted!', 'The record removed.', 'success');
+   dlastdrem();
+   perpro();
    };
    
    tx.onerror = () => {
@@ -495,25 +596,23 @@
    
    
    function srh(con, term) {
-     var cont = document.getElementById(con);
-   var items = cont.getElementsByClassName('child');
-   
-   for (var i = 0; i < items.length; i++) {
-   var conte = items[i].innerHTML.toLowerCase();
-   
-   if (conte.includes(term.toLowerCase())) 
-      {
-   items[i].style.display = "block";
-   }
-   else {
-   items[i].style.display = "none";
-           }
-   }
-   
-   let rx=getcls("R");
-   let bx=getcls("B");
-   rebocc([rx+bx,rx,bx],grph);
- }
+  const cont = document.getElementById(con);
+  const items = cont.getElementsByClassName('child');
+  const keywords = term.toLowerCase().trim().split(/\s+/);
+
+  for (let i = 0; i < items.length; i++) {
+    const conte = items[i].innerText.toLowerCase();
+    const match = keywords.every(word => conte.includes(word));
+    items[i].style.display = match ? "block" : "none";
+  }
+
+  let rx = getcls("R");
+  let bx = getcls("B");
+  rebocc([rx + bx, rx, bx], grph);
+  
+  
+  perpro();
+}
    
    
    
@@ -540,7 +639,7 @@
    let rx=getcls("R");
    let bx=getcls("B");
    rebocc([rx+bx,rx,bx],grph);
-   
+   perpro();
    }
    
    
@@ -551,11 +650,11 @@
    for (let i = 0; i < elems.length; i++) {
    const el = elems[i];
    
-   // Check if the element itself is visible and if its parent or grandparent has the class 'child'
+ 
    let parent = el.parentElement;
    let isParentVisible = false;
    
-   // Check if the parent or grandparent has the class 'child' and is visible
+  
    while (parent) {
    if (parent.classList && parent.classList.contains('child')) {
    isParentVisible = parent.style.display !== 'none' && parent.offsetParent !== null;
@@ -595,6 +694,156 @@
   rebocc([rx+bx,rx,bx],grph);
    
    });
+   
+   
+   
+   
+   function vgh(){
+   let allh=document.querySelectorAll(".head");
+   allh.forEach((g)=>{
+    if(g.children[0].className!="bi bi-pencil-square"){
+    
+    let c=document.createElement("i");
+    c.style.color="#CDDC39";
+    c.onclick=function(){
+    
+    calLB(this);
+    
+    };
+    c.className="bi bi-pencil-square";
+    g.prepend(c);
+    
+    
+    }else{
+    g.removeChild(g.children[0]);
+    let c=document.createElement("i");
+    c.style.color="grey";
+    c.onclick=function(){
+    
+    calLB(this);
+    
+    };
+    c.className="bi bi-pencil-square";
+    g.prepend(c);
+    
+    }
+   
+   });
+   
+   }
+   
+   
+   
+   
+   
+   function calLB(dt){
+   
+   let g=dt.parentNode;
+  
+  
+   let gamt  = g.children[1].innerText;
+   let gdate  = g.children[2].innerText;
+   let gdes  = g.parentNode.children[1].innerHTML;
+   
+   Swal.fire({
+   title: 'Lend Update',
+   html:
+   `<input id="a" type="number" class="swal2-input" placeholder="${gamt}" value="${gamt}"><br><br>
+   <input type="date" id="b" class="swal2-input" placeholder="${gdate}" value="${gdate}"><br><br>
+   <input id="c" class="swal2-input" placeholder="${gdes}" value="${gdes}"><br><br>`,
+   focusConfirm: false,
+   showCloseButton:true,
+   preConfirm: () => {
+   let a = document.getElementById('a').value;
+   let b = document.getElementById('b').value;
+   let c = document.getElementById('c').value;
+   if (!a || !b || !c) {
+   Swal.showValidationMessage('Fill all fields');
+   return false;
+   }
+   return { a, b, c };
+   }
+   }).then(r => {
+   if (r.isConfirmed) {
+   let { a, b, c } = r.value;
+   
+   g.children[1].innerText=a;
+   g.children[2].innerText=b;
+   g.parentNode.children[1].innerHTML=c;
+   
+   let rb = indexedDB.open("black",2);
+   
+   rb.onsuccess = e => {
+   const db = e.target.result;
+   const tx = db.transaction(["sst"], 'readwrite');
+   const store = tx.objectStore("sst");
+   
+   let inel = document.getElementById("rebb");
+   let cons = inel.innerHTML.replace(/\s+/g, ' ').trim();
+   
+   let rt = summ("R");
+   let bt = summ("B");
+   
+   const nknco = {
+   rbcon: cons,
+   rtot: rt,
+   btot: bt
+   };
+   
+   store.put(nknco, "nkncc");
+   
+   };
+   
+   
+   
+   Swal.fire({
+   title:"Lend Updated",
+   html:`Amt : ${a}<br> Date : ${b} <br> Detail : ${c}`,
+   icon:"success"
+   });
+   let rx=getcls("R");
+   let bx=getcls("B");
+   rebocc([rx+bx,rx,bx],grph);
+   perpro();
+   }
+   });
+   
+   }
+   
+   function perpro(){
+   let dd=document.getElementById("datrb");
+   let pert=0;
+   let prot=0;
+   let bper=0;
+   let bpro=0;
+   document.querySelectorAll(".des").forEach((x)=>{
+   let tex= x.innerHTML;
+   let ppp= x.parentNode.style;
+   let par= x.parentNode.children[0].children[1].innerText;
+   let typ= x.parentNode.children[0].children[3].innerText;
+   if((tex.toLowerCase().includes("per") & typ==="R") && (ppp.display!=="none")){
+   pert+=parseInt(par);
+   
+   }else if((tex.toLowerCase().includes("pro") & typ==="R") && (ppp.display!=="none")){
+   prot+=parseInt(par);
+   }
+   else if((tex.toLowerCase().includes("pro") & typ==="B") && (ppp.display!=="none")){
+   bpro+=parseInt(par);
+   }
+   else if((tex.toLowerCase().includes("per") & typ==="B") && (ppp.display!=="none")){
+   bper+=parseInt(par);
+   }
+   });
+   
+   dd.children[0].innerText=pert;
+   dd.children[1].innerText=prot;
+   dd.children[2].innerText=bper;
+   dd.children[3].innerText=bpro;
+   
+   }
+   
+   
+   
    </script>
 </body>
 </html>

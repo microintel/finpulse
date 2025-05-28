@@ -81,11 +81,12 @@
       </style>
     
 </head>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 <body>
   <h1 id="nkn1">Export u r Data</h1>
   
-  <button id="nkn2" onclick="show()">Download Data</button>
+  <button id="nkn2" onclick="showy()">Download Data</button>
   <div id="pop" style="display:none;">
       <p id="txt">Reading Black Road...</p>
       <img id="img" src="https://raw.githubusercontent.com/microintel/endgram/main/photo/venom-load.gif" alt="Loading">
@@ -94,6 +95,47 @@
 
   <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
   <script>
+  
+  function showy(){
+  
+  Swal.fire({
+  title: 'What To Download',
+  showCancelButton: true,
+  icon:"question",
+  showCloseButton:true,
+  confirmButtonText: 'BlackRoad',
+  cancelButtonText: 'Current Time'
+  }).then((result) => {
+  if (result.isConfirmed) {
+  show();
+  } else if (result.dismiss === Swal.DismissReason.cancel) {
+  dat();
+  }
+  });
+  
+  
+  
+  }
+  
+  function dat() {
+  const now = new Date();
+  const day = now.getDate().toString().padStart(2, '0');
+  const month = (now.getMonth() + 1).toString().padStart(2, '0');
+  const year = now.getFullYear();
+  const hours = now.getHours().toString().padStart(2, '0');
+  const minutes = now.getMinutes().toString().padStart(2, '0');
+  const seconds = now.getSeconds().toString().padStart(2, '0');
+  const content = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+  const blob = new Blob([content], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'lastseen.txt';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  }
       function gDB(db, store, keys) {
           return new Promise((res, rej) => {
               const r = indexedDB.open(db);
@@ -134,7 +176,7 @@
       function exportData() {
           const db = "black";
           const store = "sst";
-          const keys = "blackroadINC,frotuXMMXG,nkncc,user".split(',');
+          const keys = "blackroadINC,frotuXMMXG,nkncc,user,alast,alastrem".split(',');
 
           if (!db || !store || keys.length === 0) {
               alert('Please fill in all fields with valid data.');
@@ -147,7 +189,6 @@
       }
 
       function show() {
-
 document.getElementById("nkn1").style.display="none";
 document.getElementById("nkn2").style.display="none";
 
@@ -196,10 +237,36 @@ document.getElementById("nkn2").style.display="block";
       }
       
       
+      function rdbname(db, st, k) {
+      return new Promise((res, rej) => {
+      const req = indexedDB.open(db);
+      
+      req.onerror = () => rej('DB open error');
+      
+      req.onsuccess = () => {
+      const d = req.result;
+      const tx = d.transaction([st], 'readonly');
+      const s = tx.objectStore(st);
+      const g = s.get(k);
+      
+      g.onerror = () => rej('Get error');
+      g.onsuccess = () => res(g.result);
+      };
+      });
+      }
+      
+      let delus="";
+      rdbname('black', 'sst', 'user')
+      .then((val)=> {
+      
+      delus=val["p"];
+      });
       
       
       function pccon(t, y) {
-      const key = "blackkeymi";
+      const key = delus;
+     
+      
       const chunkSize = 1000;
       let result = '';
       

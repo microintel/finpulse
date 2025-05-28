@@ -6,43 +6,86 @@ let dadatra="";
 let bt="transparent";
 let a="white";
         let b="black";
-let valforgp="";
-function chgapval(x){
-valforgp=x.value;
+
+function chgapval(){
+
 let inca=[];
        let expa=[];
        let bala=[];
-       document.querySelectorAll(".incomeColumn").forEach((x)=>{inca.push(parseInt(x.innerHTML))});
-       document.querySelectorAll(".exep").forEach((x)=>{expa.push(parseInt(x.innerHTML))});
-       document.querySelectorAll(".Abal").forEach((x)=>{bala.push(parseInt(x.innerHTML))});
+       document.querySelectorAll(".incomeColumn").forEach((x) => {
+       
+       if (x.parentNode.parentNode.style.display !== "none") {
+       inca.push(parseInt(x.innerHTML));
+       }
+       });
+       
+       document.querySelectorAll(".exep").forEach((x) => {
+       if (x.parentNode.parentNode.style.display !== "none") {
+       expa.push(parseInt(x.innerHTML));
+       }
+       });
+       
+       document.querySelectorAll(".Abal").forEach((x) => {
+       if (x.parentNode.parentNode.style.display !== "none") {
+       bala.push(parseInt(x.innerHTML));
+       }
+       });
+       
        
       setTimeout(()=>{
+     
         backchhh(inca,expa,bala);
-      },100);
+      },0);
 }
 function alve(){
-      let lenSum=0;
-      let texSu=0;
-      let eveSu=0;
-        let allen=document.getElementsByClassName("lmo");
-      // alert(allen.length);
-       for(let f=0;f<allen.length;f++){
-      // alert(allen[f].innerHTML);
-       lenSum+=parseInt(allen[f].innerHTML);
-       }
-      // alert(lenSum);
-       document.getElementById('lenI').value=lenSum;
-      let otv=parseInt(document.getElementById('oth').value);
-     let bI =parseInt(document.getElementById('bnkI').value);
-       document.getElementById("alvvs").innerHTML=lenSum+otv+bI+"<sub>rs</sub>";
-       
-       
-       let tsu=document.getElementById("texta");
-       texSu=eval(tsu.value);
-       eveSu=lenSum+texSu;
-       document.getElementById("texsum").innerHTML=texSu;
-       document.getElementById("evesum").innerHTML=eveSu;
-       
+
+let lendb=0;
+
+const r = indexedDB.open("black");
+        r.onsuccess = e => {
+        const d = e.target.result;
+        const t = d.transaction(["sst"], 'readwrite');
+        const st = t.objectStore("sst");
+        const nkn = st.get("nkncc");
+       // let dbs={data:dataT};
+        
+        nkn.onsuccess=function(){
+        
+        let hel= nkn.result;
+        lendb=hel;
+        
+        let texSu=0;
+        let eveSu=0;
+        
+        document.getElementById('lenI').value=lendb.rtot;
+        let otv=parseInt(document.getElementById('oth').value);
+        let bI =parseInt(document.getElementById('bnkI').value);
+        document.getElementById("alvvs").innerHTML=lendb.rtot+otv+bI+"<sub>rs</sub>";
+        
+        
+        let tsu=document.getElementById("texta");
+        texSu=eval(tsu.value);
+        eveSu=lendb.rtot+texSu;
+        document.getElementById("texsum").innerHTML=texSu;
+        document.getElementById("evesum").innerHTML=eveSu;
+        let ghy=(lendb.rtot+otv+bI)-lendb.btot;
+        let xf=`Borrowings : ${lendb.btot} <br>
+                Recivables : ${lendb.rtot}  <br>
+                Bank Bal   : ${bI} <br>
+                Cash Flow  : ${otv} <br><br>
+           final Balance : ${ghy}
+        
+        `;
+        document.getElementById("finalAc").innerHTML=xf;
+        
+        
+        };
+        
+        
+        };
+
+   
+      
        
         }
         alve();
@@ -63,43 +106,60 @@ function alve(){
        `<input id="dt" class="swal2-input" placeholder="Date" type="date" style="width:100%;"><br><br>` +
        `<select id="ct" class="swal2-input" style="width:100%;">
        <option value="apparel">Apparel</option>
-       <option value="beauty">Beauty</option>
-       <option value="bro-sis">Brother / Sister</option>
-       <option value="car">Car</option>
-       <option value="clothing">Clothing</option>
-       <option value="donate">Donate</option>
-       <option value="education">Education</option>
-       
-       <option value="electronics">Electronics</option>
-       <option value="entertainment">Entertainment</option>
-       <option value="family">Family</option>
-       <option value="food">Food</option>
-       <option value="friends">Friends</option>
-       <option value="gift">Gift</option>
-       <option value="health">Health</option>
-       <option value="home">Home</option>
-       <option value="housing">Housing</option>
-       <option value="mobile">Mobile</option>
-       <option value="mom-dad">Mother / Dad</option>
-       <option value="movie">Movie</option>
-       <option value="official-docs">Official Documents</option>
-       
-       <option value="party">Party</option>
-       <option value="personal-care">Personal Care</option>
-       <option value="pet">Pet</option>
-       <option value="recharge">Recharges</option>
-       <option value="repair">Repair</option>
-       <option value="shopping">Shopping</option>
-       <option value="snacks">Snacks</option>
-       <option value="social">Social</option>
-       <option value="sport">Sport</option>
-       <option value="style-fashion">Style / Fashion</option>
-       <option value="telephone">Telephone</option>
-       <option value="tour">Tour</option>
-       <option value="transportation">Transportation</option>
-       <option value="travel">Travel</option>
-       <option value="vehicle">Vehicle</option>
-       <option value="wine-cigarette">Wine / Cigarette</option>
+<option value="baby"> baby </option>
+<option value="bakery-pups"> bakery/pups/ </option>
+<option value="beauty">Beauty</option>
+<option value="bigbasket"> Bigbasket </option>
+<option value="biscuit"> biscuit/ </option>
+<option value="blink-it"> blink-it </option>
+<option value="bro-sis">Brother / Sister</option>
+<option value="car">Car</option>
+<option value="clothing">Clothing</option>
+<option value="donate">Donate</option>
+<option value="drink-juices"> drink/juices </option>
+<option value="education">Education</option>
+<option value="egg"> egg </option>
+<option value="electronics">Electronics</option>
+<option value="eletronics"> Eletronics </option>
+<option value="entertainment">Entertainment</option>
+<option value="family">Family</option>
+<option value="food">Food</option>
+<option value="friends">Friends</option>
+<option value="gift">Gift</option>
+<option value="health">Health</option>
+<option value="help"> help </option>
+<option value="home">Home</option>
+<option value="housing">Housing</option>
+<option value="little-heart"> little heart </option>
+<option value="milk-bread-biscuit-crud"> milk/bread/biscuit/crud </option>
+<option value="mobile">Mobile</option>
+<option value="mom-dad">Mother / Dad</option>
+<option value="movie">Movie</option>
+<option value="official-docs">Official Documents</option>
+<option value="other"> Others </option>
+<option value="party">Party</option>
+<option value="personal-care">Personal Care</option>
+<option value="pet">Pet</option>
+<option value="recharge">Recharges</option>
+<option value="repair">Repair</option>
+<option value="samosa-outside"> samosa/outside/ </option>
+<option value="self"> self </option>
+<option value="shopping">Shopping</option>
+<option value="snacks">Snacks</option>
+<option value="social">Social</option>
+<option value="sport">Sport</option>
+<option value="style-fashion">Style / Fashion</option>
+<option value="swiggy"> Swiggy </option>
+<option value="telephone">Telephone</option>
+<option value="tiffen-launch-palou"> tiffen/launch/palou </option>
+<option value="tour">Tour</option>
+<option value="transportation">Transportation</option>
+<option value="travel">Travel</option>
+<option value="vehicle">Vehicle</option>
+<option value="wine-cigaratte"> wine/cigaratte.. </option>
+<option value="wine-cigarette">Wine / Cigarette</option>
+<option value="zomato"> Zomato </option>
+<option value="zepto"> Zepto </option>
        <option value="other">Others</option>
        </select><br><br>` +
        `<input id="cnt" class="swal2-input" placeholder="Category Name" style="width:100%;">`,
@@ -154,9 +214,9 @@ function alve(){
        p.parentNode.children[4].innerHTML=pp2-parseInt(tA);
        pa.appendChild(diiv);
        // drawChart();
-       addclontr(); 
+       addclontr();
+       dlastd(); 
        updateTotals();
-       
        backINCADD();
        Swal.fire({
        title:"Transaction Added..",
@@ -225,6 +285,7 @@ function alve(){
        pbal.innerHTML = bbb + amtt;
        
        x.parentNode.remove();
+       dlastdrem();
        backINCADD();
        famtC();
        addCats();
@@ -278,7 +339,8 @@ function alve(){
         function theame(x){
         if(x=='b'){
         
-        document.getElementById(x).src="https://img.icons8.com/?size=100&id=Ppe22DwOvBTF&format=png&color=FFFFFF";
+        document.getElementsByClassName("nknth")[0].src="https://img.icons8.com/?size=100&id=Ppe22DwOvBTF&format=png&color=FFFFFF";
+      // .src="https://img.icons8.com/?size=100&id=45475&format=png&color=1A1A1A";
         document.getElementById("mimg").src="https://img.icons8.com/?size=100&id=36389&format=png&color=FFFFFF";
         document.getElementById("tttim").src="https://raw.githubusercontent.com/microintel/endgram/main/photo/blackroadwhite.png";
         
@@ -287,22 +349,24 @@ function alve(){
         document.documentElement.style.setProperty('--tbor',"white");
         document.documentElement.style.setProperty('--back',"#1a1a1a");
         //document.documentElement.style.setProperty('--', );
-        document.getElementById("bori").src="https://img.icons8.com/?size=100&id=rRTAE6XGGP2Q&format=png&color=FFFFFF";
+       // document.getElementById("bori").src="https://img.icons8.com/?size=100&id=rRTAE6XGGP2Q&format=png&color=FFFFFF";
         document.getElementById(x).id="w";
         }
         if(x=='w'){
          
         document.getElementById("mimg").src="https://img.icons8.com/?size=100&id=36389&format=png&color=000000";
-        document.getElementById(x).src="https://img.icons8.com/?size=100&id=45475&format=png&color=1A1A1A";
+        document.getElementsByClassName("nknth")[0].src="https://img.icons8.com/?size=100&id=45475&format=png&color=1A1A1A";
         document.getElementById("tttim").src="https://raw.githubusercontent.com/microintel/endgram/main/photo/blackroadred1.png";
         document.documentElement.style.setProperty('--w',"#FFFFFF");
         document.documentElement.style.setProperty('--b',"black");
         document.documentElement.style.setProperty('--tbor',"black");
         document.documentElement.style.setProperty('--back',"#f0f0f0");
         //document.documentElement.style.setProperty('--', );
-        document.getElementById("bori").src="https://img.icons8.com/?size=100&id=rRTAE6XGGP2Q&format=png&color=000000";
+       // document.getElementById("bori").src="https://img.icons8.com/?size=100&id=rRTAE6XGGP2Q&format=png&color=000000";
         document.getElementById(x).id="b";
+        
         }
+        localStorage.setItem("theme",x);
         }
         
         
@@ -343,10 +407,12 @@ function alve(){
         }
         
         
-       parDI.style.display = fouM ? "" : "none";
+       parDI.style.display = fouM ? "flex" : "none";
         }
         
         updateTotals();
+        
+        chgapval();
         }
        
         function updateTotals() {
@@ -388,7 +454,7 @@ function alve(){
        document.querySelectorAll(".Abal").forEach((x)=>{bala.push(parseInt(x.innerHTML))});
        
       setTimeout(()=>{
-        backchhh(inca,expa,bala);
+       // backchhh(inca,expa,bala);
       },1000);
       
         }
@@ -471,7 +537,7 @@ function alve(){
             if (container) {
                 container.appendChild(tbl);
             } else {
-                console.error("Container with ID 'catdets' not found.");
+                console.error("'catdets' not.");
             }
         }
     
@@ -480,6 +546,9 @@ function alve(){
     
         for (const cat in data) {
             const row = document.createElement("tr");
+            row.onclick= function (){
+            expcatvi(cat,this);
+            };
             row.innerHTML = `<td>${cat}</td><td>${data[cat].toFixed(2)}</td>`;
             tbody.appendChild(row);
         }
@@ -683,6 +752,7 @@ function alve(){
         <font class="exep"> 0 </font>
         <font class='Abal'>${i}</font>
         <font onclick="discr('anrdi',this.id)" id="${raa}"><i class="fa fa-plus adimg"></i></font>
+        
         </div>
         <div class="trand">
         
@@ -700,6 +770,7 @@ function alve(){
         let paren = document.getElementById("ppr");
         let refer = paren.firstChild;
         paren.insertBefore(dii, refer);
+        dlastd();
         backINCADD();
         updateTotals();
         dcc();
@@ -713,6 +784,8 @@ function alve(){
         }
         
         function printe(){
+        
+        document.getElementById("alllvr").style.display="block";
         window.print();
         }
         
@@ -757,7 +830,9 @@ function alve(){
         icon: "success"
         });
         backINCADD();
+        dlastdrem();
         updateTotals();
+        dlastdrem();
         }
         });
         
@@ -829,11 +904,127 @@ function alve(){
           tbl += `</tbody></table>`;
       
           document.getElementById('sumTbl').innerHTML = `<div class="head">
-              <i></i>
-              <span> BlackRoad Summary </span>
+              <i onclick="shfei('sumTbl')" class="fa-solid fa-share njk" style="color:lightgreen;display:none;"></i>
+              <span> BlackRoad Summary</span>
               <i onclick="disexpppp('none')" class="fa fa-times"></i>
              </div> ${tbl}`;
       }
+      
+      function shfet(){
+      
+      Swal.fire({
+      title: 'Choose an Share action',
+      text: 'What would you like to do?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'enable Share',
+      cancelButtonText: 'disable Share'
+      }).then((result) => {
+      if (result.isConfirmed) {
+      enbsh();
+      Swal.fire({text:"Share Feature Enabled Successfully ",icon:"success"});
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+      enbshrem();
+      Swal.fire({text:"Share Feature Disabled Successfully ",icon:"success"});
+      }
+      });
+      }
+      
+      
+      function enbsh(){
+      document.querySelectorAll(".idfeb").forEach((c)=>{
+      let xc=document.createElement("i");
+      xc.className="fa-solid fa-share";
+      xc.style.color="lightgreen";
+      xc.style.marginTop="3px";
+      xc.onclick=function (){
+      captur(c.children[6].id);
+      }
+      c.prepend(xc)
+      });
+      
+      document.querySelectorAll(".njk").forEach((h)=>{
+      h.style.display="block";
+      
+      });
+      document.getElementById("njk").style.display="block";
+      
+      
+      }
+      
+      
+      function enbshrem() {
+      document.querySelectorAll(".idfeb").forEach(c => {
+      if (c.firstElementChild?.className === "fa-solid fa-share") {
+      c.firstElementChild.remove();
+      }
+      });
+      
+      document.querySelectorAll(".njk").forEach((h)=>{
+      h.style.display="none";
+      
+      });
+      
+      document.getElementById("njk").style.display="none";
+      
+      }
+      
+      
+      
+      async function captur(x) {
+      const divst = document.getElementById(x);
+      const div= divst.parentNode.parentNode;
+      
+      const canvas = await html2canvas(div);
+      canvas.toBlob(async (blob) => {
+      const file = new File([blob], "capture.png", { type: "image/png" });
+      
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      try {
+      await navigator.share({
+      files: [file],
+      title: "BlackRod",
+      text: "Income Source!"
+      });
+      } catch (error) {
+      console.error("Sharing failed:", error);
+      }
+      } else {
+      alert("Sharing not supported on this browser.");
+      }
+      });
+      }
+      
+      
+      async function shfei(x) {
+      
+      const div= document.getElementById(x);
+    
+      
+      const canvas = await html2canvas(div);
+      canvas.toBlob(async (blob) => {
+      const file = new File([blob], "capture.png", { type: "image/png" });
+      
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      try {
+      await navigator.share({
+      files: [file],
+      title: "BlackRod",
+      text: "Income Source!"
+      });
+      } catch (error) {
+      console.error("Sharing failed:", error);
+      }
+      } else {
+      alert("Sharing not supported on this browser.");
+      }
+      });
+      }
+      
+      
+      
+      
+    
       
      
         

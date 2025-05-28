@@ -133,33 +133,51 @@ function crtPieCat({ elementId, labels, data }) {
 function crtPieEXP({ elementId, labels, data }) {
   const bgcl = clas;
   const ctx = document.getElementById(elementId).getContext('2d');
+
   return new Chart(ctx, {
-    type: 'pie',
+    type: 'bar',
     data: {
       labels: labels,
       datasets: [{
-        label: 'Pie Chart',
+        label: '',
         data: data,
-        borderColor: "black",
+        borderColor: 'black',
         backgroundColor: bgcl.slice(0, labels.length)
       }]
     },
     options: {
-      responsive: true,
+      indexAxis: 'y',
+      responsive: false,
       plugins: {
         legend: {
-          position: 'bottom',
-          labels: {
-            color: 'white'
-          }
+          display: false
         },
         title: {
           display: true,
-          text: 'Expence Categories',
+          text: 'Expense Categories',
           color: 'white',
           font: {
             size: 18,
             weight: 'bold'
+          }
+        }
+      },
+      scales: {
+        x: {
+          beginAtZero: true,
+          ticks: {
+            display: false
+          },
+          grid: {
+            display: false
+          }
+        },
+        y: {
+          ticks: {
+            display: true
+          },
+          grid: {
+            display: false
           }
         }
       }

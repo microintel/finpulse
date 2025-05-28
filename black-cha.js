@@ -1,5 +1,13 @@
 let newlinech = null;
+let valforgp="";
 function backchhh(i, e, b) {
+
+valforgp=document.getElementById("grpsel").value;
+if(valforgp=="n"){
+
+document.getElementById("grpsel").style.display="none";
+window.scrollTo(0, 0);
+}
     if (newlinech) {
         newlinech.destroy();
     }
@@ -8,8 +16,10 @@ function backchhh(i, e, b) {
 balg();
      }else if(valforgp==="exp"){
        expg();
+     }else if(valforgp=="pie"){
+       nknpie();
      }else{
-       return;
+     return;
      }
 
     function balg(){
@@ -31,6 +41,7 @@ balg();
                 data: cv,
                 borderColor: '#007bff',
                 borderWidth: 2,
+                pointRadius:2,
                 fill: false
             }]
         },
@@ -100,6 +111,7 @@ function expg(){
                    data: cv,
                    borderColor: '#dc3545',
                    borderWidth: 2,
+                   pointRadius:2,
                    fill: false
                }]
            },
@@ -151,6 +163,46 @@ function expg(){
 
 }
 
+    }
+    
+    
+    
+    function nknpie(){
+    
+    let ctx= document.getElementById('linebal').getContext('2d');
+   newlinech= new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+    labels: ['Income','Expence', 'Balance'],
+    datasets: [{
+    label: "BlackRoad",
+    data: [cin, cbala, cexp],
+    backgroundColor: [
+    '#28a745',
+    '#dc3545',
+    '#007bff'
+    ],
+    borderColor: [
+   '#28a745',
+   '#dc3545',
+   '#007bff'
+    ],
+    borderWidth: 1
+    }]
+    },
+    options: {
+    cutout:"50%",
+    responsive: true,
+    plugins: {
+    legend: {
+    position: 'right',
+    title:"Income, Ex"
+    }
+    }
+    }
+    });
+    
+    
     }
     
     
