@@ -1,0 +1,78 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+</head>
+<body>
+<center>
+<br><br><br>
+    <h2> BlackRoad </h2>
+    <h3> Account Update</h3>
+    <br><br>
+    <label> User Name</label><br><br>
+    <input type="text" id="ux" placeholder="Username"><br><br>
+    <label>password</label><br><br>
+    <input type="text" id="px" placeholder="Password"><br><br>
+    <button onclick="r()"> Update </button>
+</center>
+    <script>
+    
+    
+    
+    function getVal1() {
+    const r = indexedDB.open('black');
+    r.onerror = () => console.error('oeror');
+    r.onsuccess = () => {
+    const d = r.result;
+    const t = d.transaction('sst', 'readwrite');
+    const s = t.objectStore('sst');
+    const g = s.get('user');
+    g.onerror = () => console.error('geerror');
+    g.onsuccess = () => {
+    let mh=JSON.parse(JSON.stringify(g.result));
+    document.getElementById("ux").value=mh["u"];
+    document.getElementById("px").value=mh["p"];
+    
+    };
+    };
+    }
+    
+    getVal1();
+    
+    
+    
+        function c(u, p, r) {
+            const d = indexedDB.open("black", 2);
+            d.onupgradeneeded = e => {
+                const db = e.target.result;
+                if (!db.objectStoreNames.contains("sst")) {
+                    db.createObjectStore("sst");
+                }
+            };
+            d.onsuccess = e => {
+                const db = e.target.result;
+                const t = db.transaction("sst", "readwrite");
+                const s = t.objectStore("sst");
+                const o = { u, p };
+                const a = s.put(o,"user");
+               a.onsuccess = function(){ 
+                alert("Black Road Account Updated Sucessfulll");
+                window.location.href = r;
+             };
+                a.onerror = () => console.error("Error:", a.error);
+            };
+            d.onerror = e => console.error("DB Error:", e.target.error);
+        }
+
+        function r() {
+            const u = document.getElementById("ux").value;
+            const p = document.getElementById("px").value;
+            if(u=="" | p==""){
+            alert("Enter Valuese");
+            }else{
+            c(u, p, "finpulse.html");
+            }
+        }
+    </script>
+</body>
+</html>
