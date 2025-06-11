@@ -30,7 +30,7 @@
 
                 req.onsuccess = () => {
                     const data = req.result;
-                    if (data && data.p === p) {
+                    if (data && (data.p === p && data.u===u)) {
                         localStorage.setItem("blackuser", u);
                         window.location.href = r;
                     } else {
@@ -50,4 +50,3 @@
     </script>
 </body>
 </html>
-

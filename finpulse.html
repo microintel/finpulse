@@ -936,7 +936,10 @@ function grpse(x){
          <img onclick="chproi(this)" style="border-radius:50%;border:4px solid black;padding:3px" src="https://picsum.photos/500/500" width="140" height="140">
          <div style="display:flex;flex-direction:column;justify-content:center;gap:15px;align-items:center;">
           <strong style="font-size:1.5rem;color:black;">${nak.u}</strong>
-          <strong style="font-size:0.9rem;">${nak.p}</strong>
+          <strong style="display:flex;justify-content:center;align-items:center;font-size:0.9rem;">
+          <input type="password" value="${nak.p}" style="width:100%;background-color:transparent;color:var(--w);text-align:center;" readonly>
+          <i class="fa fa-eye" onclick="const input=this.previousElementSibling; input.type = input.type === 'password' ? 'text' : 'password'; this.classList.toggle('fa-eye-slash'); this.classList.toggle('fa-eye');"></i>
+          </strong>
          </div>
          </div><br>
          <hr>
