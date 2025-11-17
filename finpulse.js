@@ -97,7 +97,7 @@ const r = indexedDB.open("black");
        let tA = "";
        let tD = "";
        let tDes = "";
-       let cvcv = document.getElementById(preNo).parentNode.children[4].innerHTML;
+       let cvcv = document.getElementById(preNo).parentNode.children[3].innerHTML;
        return Swal.fire({
        title: 'Enter Expense',
        html:
