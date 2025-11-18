@@ -94,10 +94,10 @@ const r = indexedDB.open("black");
 
       
        function addTr() {
-       let tA = "";
-       let tD = "";
-       let tDes = "";
-       let cvcv = document.getElementById(preNo).parentNode.children[3].innerHTML;
+       let tA  = "";
+       let tD  = "";
+       let tDes  = "";
+       let cvcv = document.getElementById(preNo).parentNode.children[4].innerHTML;
        return Swal.fire({
        title: 'Enter Expense',
        html:
@@ -173,7 +173,8 @@ const r = indexedDB.open("black");
        if (!v1 || !v2 || !v3 || !v4) {
        Swal.showValidationMessage('Fill all fields');
        return false;
-       }else{
+       }
+       else{
        tA=v1;
        tD=v2;
        tDes=v3;
