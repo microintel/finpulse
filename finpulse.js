@@ -72,8 +72,8 @@ const r = indexedDB.open("black");
         let xf=`Borrowings : ${lendb.btot} <br>
                 Recivables : ${lendb.rtot}  <br>
                 Bank Bal   : ${bI} <br>
-                Cash Flow  : ${otv} <br><br><br>
-           Final Balance : ${ghy}
+                Cash Flow  : ${otv} <br><br>
+           final Balance : ${ghy}
         
         `;
         document.getElementById("finalAc").innerHTML=xf;
@@ -94,9 +94,9 @@ const r = indexedDB.open("black");
 
       
        function addTr() {
-       let tA  = "";
-       let tD  = "";
-       let tDes  = "";
+       let tA = "";
+       let tD = "";
+       let tDes = "";
        let cvcv = document.getElementById(preNo).parentNode.children[4].innerHTML;
        return Swal.fire({
        title: 'Enter Expense',
@@ -173,8 +173,7 @@ const r = indexedDB.open("black");
        if (!v1 || !v2 || !v3 || !v4) {
        Swal.showValidationMessage('Fill all fields');
        return false;
-       }
-       else{
+       }else{
        tA=v1;
        tD=v2;
        tDes=v3;
@@ -340,28 +339,28 @@ const r = indexedDB.open("black");
         function theame(x){
         if(x=='b'){
         
-        document.getElementsByClassName("nknth")[0].src="https://img.icons8.com/?size=100&id=Ppe22DwOvBTF&format=png&color=FFFFFF";
+        document.getElementsByClassName("nknth")[0].src="https://img.icons8.com/?size=100&id=Ppe22DwOvBTF&format=png&color=000000";
       // .src="https://img.icons8.com/?size=100&id=45475&format=png&color=1A1A1A";
-        document.getElementById("mimg").src="https://img.icons8.com/?size=100&id=36389&format=png&color=FFFFFF";
-        document.getElementById("tttim").src="https://raw.githubusercontent.com/microintel/endgram/main/photo/blackroadwhite.png";
+        document.getElementById("mimg").src="https://img.icons8.com/?size=100&id=36389&format=png&color=000000";
+        document.getElementById("tttim").src="blk.gif";
         
-        document.documentElement.style.setProperty('--w',"black");
-        document.documentElement.style.setProperty('--b',"#FFFFFF");
-        document.documentElement.style.setProperty('--tbor',"white");
-        document.documentElement.style.setProperty('--back',"#1a1a1a");
+        document.documentElement.style.setProperty('--w',"#FEFEFA");
+        document.documentElement.style.setProperty('--b',"#301934");
+        document.documentElement.style.setProperty('--tbor',"#F5F5F5");
+        document.documentElement.style.setProperty('--back',"white");
         //document.documentElement.style.setProperty('--', );
        // document.getElementById("bori").src="https://img.icons8.com/?size=100&id=rRTAE6XGGP2Q&format=png&color=FFFFFF";
         document.getElementById(x).id="w";
         }
         if(x=='w'){
          
-        document.getElementById("mimg").src="https://img.icons8.com/?size=100&id=36389&format=png&color=000000";
-        document.getElementsByClassName("nknth")[0].src="https://img.icons8.com/?size=100&id=45475&format=png&color=1A1A1A";
-        document.getElementById("tttim").src="https://raw.githubusercontent.com/microintel/endgram/main/photo/blackroadred1.png";
-        document.documentElement.style.setProperty('--w',"#FFFFFF");
-        document.documentElement.style.setProperty('--b',"black");
-        document.documentElement.style.setProperty('--tbor',"black");
-        document.documentElement.style.setProperty('--back',"#f0f0f0");
+        document.getElementById("mimg").src="https://img.icons8.com/?size=100&id=36389&format=png&color=FFFFFF";
+        document.getElementsByClassName("nknth")[0].src="https://img.icons8.com/?size=100&id=45475&format=png&color=FFFFFF";
+        document.getElementById("tttim").src="blk.gif";
+        document.documentElement.style.setProperty('--w',"black");
+        document.documentElement.style.setProperty('--b',"white");
+        document.documentElement.style.setProperty('--tbor',"#F5F5F5");
+        document.documentElement.style.setProperty('--back',"black");
         //document.documentElement.style.setProperty('--', );
        // document.getElementById("bori").src="https://img.icons8.com/?size=100&id=rRTAE6XGGP2Q&format=png&color=000000";
         document.getElementById(x).id="b";
@@ -857,7 +856,7 @@ const r = indexedDB.open("black");
         a = "#87CEEB";
         }
         
-       // document.body.style.borderTop = `10px solid ${a}`;
+        // document.body.style.borderTop = `10px solid ${a}`;
         
         chthco(a);
         let c = b;
@@ -868,20 +867,25 @@ const r = indexedDB.open("black");
         }
         
         gleE();
+        
+        
+        
+        
+        function chthco(c) {
+        let m = document.querySelector('meta[name="theme-color"]');
+        if (!m) {
+        m = document.createElement('meta');
+        m.name = 'theme-color';
+        document.head.appendChild(m);
+        }
+        m.setAttribute('content', c);
+        
+        }
 
 
 
 
-function chthco(c) {
-          let m = document.querySelector('meta[name="theme-color"]');
-          if (!m) {
-          m = document.createElement('meta');
-          m.name = 'theme-color';
-          document.head.appendChild(m);
-          }
-          m.setAttribute('content', c);
-          
-          }
+
 
 
 

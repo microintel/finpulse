@@ -4,22 +4,29 @@
           --exp: #dc3545;
           --texp: #fd7e14; 
           --o1k:gold;
-          --w:black;
+          --w:584B53;
           --b:#FFFFFF;
           --red:white;
           --gray:white;
           --back:#1a1a1a;
-          --bor:gray;
+          --bor:white;
           --tbor:white;
+          }
+          *{
+          transition: background-color 1s ease;
           }
           
         body {
             color:var(--w);
             background-color:var(--back);
+          //  background-image: url('https://webgradients.com/public/webgradients_png/001%20Warm%20Flame.png');
           font-family: Times New Roman, Times, serif;
             margin:0px;
             padding:8px;
-            
+            transition: background-color 1s ease;
+          //  background-image:url('https://picsum.photos/400/700');
+            background-attachment:fixed;
+            background-repeat:no-repeat;
         }
 
       
@@ -27,10 +34,13 @@
         input{
             color:var(--b);
             padding: 8px;
+            
             border-radius:10px;
             background-color:var(--w);
-            border:2px solid var(--tbor);
+            border:0px solid var(--tbor);
             margin:0px;
+            box-shadow:  var(--back) 0px 0px 0px 1px;
+            box-shadow: rgba(14, 63, 126, 0.06) 0px 0px 0px 1px, rgba(42, 51, 70, 0.03) 0px 1px 1px -0.5px, rgba(42, 51, 70, 0.04) 0px 2px 2px -1px, rgba(42, 51, 70, 0.04) 0px 3px 3px -1.5px, rgba(42, 51, 70, 0.03) 0px 5px 5px -2.5px, rgba(42, 51, 70, 0.03) 0px 10px 10px -5px, rgba(42, 51, 70, 0.03) 0px 24px 24px -8px;
         }
 
         input::placeholder {
@@ -65,16 +75,17 @@
         }
         #sta ,#staa{
             display: flex;
+            transition: background-color 1s ease;
             justify-content: space-around;
             align-items: center;
             background-color:var(--w);
-            border-right:1px solid var(--tbor);
-            
-            border-left:3px solid var(--bor);
+            border-right:0px solid var(--tbor);
+            box-shadow: grey 0px 1px 4px;
+            border-left:0px solid var(--bor);
             padding:3.2px;
         }
         #sta{
-        border-bottom:1px solid var(--tbor);
+        border-bottom:0px solid var(--tbor);
         
         border-bottom-left-radius:5px;
         border-bottom-right-radius:5px;
@@ -85,13 +96,14 @@
         }
         #sta p{
         font-size:16px;
+        
         }
         #staa{
-        border-top:1px solid var(--tbor);
+        border-top:0px solid var(--tbor);
         
         border-top-left-radius:5px;
         border-top-right-radius:5px;
-        border-bottom:1px solid var(--bor);
+        border-bottom:0px solid var(--bor);
         }
         #staa p{
         color:var(--b);
@@ -116,7 +128,8 @@
         width: 100%;
         flex-wrap:wrap;
         gap:20px;
-        background-color:var(--back);
+        transition: background-color 1s ease;
+        background-color:transparent;
         justify-content:center;
         border-radius: 8px;
         }
@@ -125,15 +138,24 @@
         display: flex;
         flex-direction:row;
         flex-wrap:wrap;
-        
+        transition: background-color 1s ease;
         gap:10px;
         width:100%;
-        border: 1px solid var(--tbor);
+        
+        border: 0px solid var(--tbor);
         background-color:var(--w);
-        backdrop-filter: blur(10px);
-
+        
+        box-shadow: grey 0px 1px 4px;
         border-radius: 6px;
-        border-left:3px solid var(--bor);
+        border-left:0px solid var(--bor);
+
+        
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        
+       
+      
+        
         }
         
         .idfeb {
@@ -161,9 +183,9 @@
         .trand {
         display: flex;
         flex-direction: column;
-        
+        box-shadow: grey 0px 0px 3px;
         width: 100%;
-        border-top: 1px solid var(--bor);
+        border-top: 0px solid var(--bor);
         padding-top: 10px;
         font-family: Times New Roman, Times, serif;
         
@@ -236,18 +258,23 @@ font-size:10px;
         display: flex;
         width: 100%;
         gap:4px;
+        transition: background-color 1s ease;
         justify-content:center;
         align-items:center;
         }
         
         #sinpp {
         width: 47%;
-        border-left:4px solid var(--bor);
+        transition: background-color 1s ease;
+        box-shadow: grey 0px 1px 3px;
+        border-left:0px solid var(--bor);
         transition: width 1s ease;
         }
         #seait {
         width: 47%;
-        border-left:4px solid var(--bor);
+        transition: background-color 1s ease;
+        box-shadow: grey 0px 1px 3px;
+        border-left:0px solid var(--bor);
         transition: width 1s ease;
         }
         
@@ -441,12 +468,13 @@ font-size:10px;
         margin:0px;
         top:0;
         height:30px;
-        background-color:var(--back);
+        background-color:transparent;
         justify-content:space-between;
         align-items:center;
         width:100%;
         padding-bottom:5px;
-        border-bottom:1px solid var(--tbor);
+        border-bottom:0px solid var(--tbor);
+        transition: background-color 1s ease;
         z-index:20;
         }
         .om{
@@ -455,7 +483,7 @@ font-size:10px;
         .feed{
         position:absolute;
         width:150px;
-        height:260px;
+        height:280px;
         left:2px;top:2px;
         background-color:var(--w);
         padding:0px;
@@ -465,7 +493,8 @@ font-size:10px;
         border-radius:3px;
         flex-direction:column;
         
-        border:1px solid var(--tbor);
+        border:0px solid var(--tbor);
+        box-shadow: grey 0px 1px 4px;
         justify-content:space-around;
         align-items:center;
         }
