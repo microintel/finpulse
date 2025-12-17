@@ -1042,7 +1042,7 @@ border:none;
         };
         }
         
-        fetDatU();
+        //fetDatU();
 
 function nknv() {
 
@@ -1289,16 +1289,133 @@ function grpse(x){
           }, 50);
           });
           
-          box.addEventListener('pointerup', () => {
-          if(window.scrollY==0){
-           Toastify({
-           text:"alredy at the top",
-           duration:2000,
-           backgroundColor:"var(--bal)"
-           }).showToast();
+          function formatDate(dateStr) {
+            // Convert date from M/D/YY or MM/DD/YY format to YYYY-MM-DD for Excel compatibility
+            if (!dateStr) return '';
+            
+            // Handle various date formats
+            const parts = dateStr.split('/');
+            if (parts.length === 3) {
+              let month = parts[0].padStart(2, '0');
+              let day = parts[1].padStart(2, '0');
+              let year = parts[2];
+              
+              // Convert 2-digit year to 4-digit year (assuming 00-30 is 2000-2030, 31-99 is 1931-1999)
+              if (year.length === 2) {
+                const yearNum = parseInt(year);
+                year = yearNum <= 30 ? `20${year}` : `19${year}`;
+              }
+              
+              return `${year}-${month}-${day}`;
+            }
+            
+            // Return original if format is unrecognized
+            return dateStr;
           }
+          
+          function findParentRecord(transEl) {
+            // Traverse up the DOM to find the parent .child record
+            let parent = transEl.parentElement;
+            while (parent && !parent.classList.contains('child')) {
+              parent = parent.parentElement;
+            }
+            return parent;
+          }
+          
+          function getRecordIdentifier(recordEl) {
+            // Return only the "From" field name (e.g., "tech", "business")
+            const from = recordEl.querySelector('.fromm')?.textContent.trim() || '';
+            return from;
+          }
+          
+          function exportToCSV() {
+            // Collect all records
+            let records = [];
+            document.querySelectorAll('.child').forEach((recordEl) => {
+              const income = recordEl.querySelector('.incomeColumn')?.textContent.trim() || '';
+              const date = recordEl.querySelector('.dateColumn')?.textContent.trim() || '';
+              const from = recordEl.querySelector('.fromm')?.textContent.trim() || '';
+              const expense = recordEl.querySelector('.exep')?.textContent.trim() || '';
+              const balance = recordEl.querySelector('.Abal')?.textContent.trim() || '';
+              
+              records.push({
+                income: income,
+                date: date,
+                from: from,
+                expense: expense,
+                balance: balance,
+                element: recordEl
+              });
+            });
+            
+            // Collect all expenses/transactions with their parent record info
+            let expenses = [];
+            document.querySelectorAll('.trans').forEach((transEl) => {
+              const amount = transEl.querySelector('.mony')?.textContent.trim() || '';
+              const date = transEl.querySelector('.tdate')?.textContent.trim() || '';
+              // Prioritize .tdes (user-entered category name) over data-category (code)
+              const category = transEl.querySelector('.tdes')?.textContent.trim() || transEl.getAttribute('data-category') || '';
+              
+              // Find parent record
+              const parentRecord = findParentRecord(transEl);
+              const recordInfo = parentRecord ? getRecordIdentifier(parentRecord) : 'Unknown Record';
+              
+              expenses.push({
+                date: date,
+                amount: amount,
+                category: category,
+                record: recordInfo
+              });
+            });
+            
+            // Build CSV content - Records first, then Expenses
+            let csvContent = '';
+            
+            // Add Records section header
+            csvContent += 'RECORDS\n';
+            csvContent += 'Income,Date,From,Expense,Balance\n';
+            
+            // Add records
+            records.forEach(record => {
+              const formattedDate = formatDate(record.date);
+              csvContent += `"${record.income}","${formattedDate}","${record.from}","${record.expense}","${record.balance}"\n`;
+            });
+            
+            // Add blank line between sections
+            csvContent += '\n';
+            
+            // Add Expenses section header
+            csvContent += 'EXPENSES\n';
+            csvContent += 'Date,Expense Amount,Category,Record\n';
+            
+            // Add expenses
+            expenses.forEach(expense => {
+              const formattedDate = formatDate(expense.date);
+              csvContent += `"${formattedDate}","${expense.amount}","${expense.category}","${expense.record}"\n`;
+            });
+            
+            // Create and download CSV file
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            
+            link.setAttribute('href', url);
+            link.setAttribute('download', `finpulse_export_${new Date().toISOString().split('T')[0]}.csv`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            Toastify({
+              text: "CSV file downloaded successfully!",
+              duration: 2000,
+              backgroundColor: "var(--bal)"
+            }).showToast();
+          }
+          
+          box.addEventListener('pointerup', () => {
           if (!wasDragged) {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
+          exportToCSV();
           }
           });
           
