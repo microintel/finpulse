@@ -338,7 +338,7 @@ const r = indexedDB.open("black");
         
         function theame(x){
         if(x=='b'){
-        
+        document.getElementById("ttte").className="fa-regular fa-moon";
         document.getElementsByClassName("nknth")[0].src="https://img.icons8.com/?size=100&id=Ppe22DwOvBTF&format=png&color=000000";
       // .src="https://img.icons8.com/?size=100&id=45475&format=png&color=1A1A1A";
         document.getElementById("mimg").src="https://img.icons8.com/?size=100&id=36389&format=png&color=000000";
@@ -353,7 +353,7 @@ const r = indexedDB.open("black");
         document.getElementById(x).id="w";
         }
         if(x=='w'){
-         
+         document.getElementById("ttte").className="fa-regular fa-sun";
         document.getElementById("mimg").src="https://img.icons8.com/?size=100&id=36389&format=png&color=FFFFFF";
         document.getElementsByClassName("nknth")[0].src="https://img.icons8.com/?size=100&id=45475&format=png&color=FFFFFF";
         document.getElementById("tttim").src="blk.gif";

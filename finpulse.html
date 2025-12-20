@@ -542,13 +542,16 @@ border:none;
   <i class="fa fa-eye-slash"></i>
   </button>
   
-  <button class="curve-item" onclick="profDis()">
-  <i class="fa fa-user"></i>
-  </button>
+  
   
   <button class="curve-item" onclick="exportToCSV()">
   <i class="fa fa-file-csv"></i>
   </button>
+  
+  <button class="curve-item" onclick="theame(this.id)" id="w">
+  <i id="ttte" class="fa fa-file-csv"></i>
+  </button>
+  
 </div>
 
 <i id="boxxx" style="display:none;" class="fa-solid fa-file-csv"></i>
@@ -581,8 +584,8 @@ border:none;
   
   <img id="tttim" width="160px" height="35px" src="blk.gif">
 
-<div id="yyyy" class="theame">
-  <img onclick="theame(this.id)" id="w" style="" class="nknth" src="https://img.icons8.com/?size=100&id=Ppe22DwOvBTF&format=png&color=FFFFFF">
+<div id="yyyy" style="display:none;" class="theame">
+  <img onclick="theame(this.id)" id="w" style="display:none;" class="nknth" src="https://img.icons8.com/?size=100&id=Ppe22DwOvBTF&format=png&color=FFFFFF">
   
   </div>
 
@@ -839,9 +842,12 @@ border:none;
           const colors = Array.from({ length: 4 }, randomColor);
           const angle = Math.floor(Math.random()*360);
           
-          document.body.style.background =
+          document.body.style.background = 
           `linear-gradient(${angle}deg, ${colors.map(c => `rgb(${c})`).join(",")})`;
           
+          document.body.style.backgroundRepeat = "no-repeat";
+          document.body.style.backgroundSize = "100% 100%";
+          document.body.style.minHeight = "100vh";
           const avg =
           colors.reduce((s,c)=>s+brightness(c),0) / colors.length;
           
@@ -1608,7 +1614,7 @@ function grpse(x){
           <span>${delt}</span>
           </div>
           <br>
-          <button 
+          <button
           style="background:linear-gradient(135deg,#4facfe,#00f2fe);border:none;color:white;padding:8px 12px;font-size:0.9rem;border-radius:8px;cursor:pointer;box-shadow:0 3px 8px rgba(0,0,0,0.1);transition:0.3s;">
           View BackUP File Uploaded Time
           </button>
