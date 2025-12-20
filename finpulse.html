@@ -458,11 +458,11 @@ border:none;
     #curveMenu {
     position: fixed;
     bottom: 16px;
-    left: 16px;
+    right: 16px;  
+    left: auto;
     width: 60px;
     height: 60px;
     z-index: 5000;
-    
     }
     
     #curveToggle {
@@ -504,19 +504,23 @@ border:none;
     }
     
     #curveMenu.open .curve-item:nth-of-type(1) {
-    transform: translate(0, -75px);
+    transform: translate(20px, -90px);
     }
+    
     #curveMenu.open .curve-item:nth-of-type(2) {
-    transform: translate(65px, -40px);
+    transform: translate(-30px, -70px);
     }
+    
     #curveMenu.open .curve-item:nth-of-type(3) {
-    transform: translate(90px, 20px);
+    transform: translate(-70px, -30px);
     }
+    
     #curveMenu.open .curve-item:nth-of-type(4) {
-    transform: translate(75px, 0);
+    transform: translate(-80px, 20px);
     }
+    
     #curveMenu.open .curve-item:nth-of-type(5) {
-    transform: translate(80px, 35px);
+    transform: translate(-100px, -100px);
     }
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tingle.js@0.15.3/dist/tingle.min.css" />
@@ -532,26 +536,37 @@ border:none;
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="finpulse.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
 </head>
 <body>
 
 <div id="curveMenu">
   <div id="curveToggle">
-    <i class="fa fa-wrench"></i>
+    <i class="bi bi-gear"></i>
   </div>
 
   <button class="curve-item" onclick="togPar()">
-  <i class="fa fa-eye-slash"></i>
+  <i class="bi bi-book"></i>
   </button>
+  
   
   
   
   <button class="curve-item" onclick="exportToCSV()">
-  <i class="fa fa-file-csv"></i>
+  <i class="bi bi-filetype-csv"></i>
   </button>
   
   <button class="curve-item" onclick="theame(this.id)" id="w">
   <i id="ttte" class="fa fa-file-csv"></i>
+  </button>
+  
+  <button class="curve-item" onclick="togSRC()">
+  <i class="bi bi-search"></i>
+  </button>
+  
+  <button class="curve-item" onclick="stTOP()">
+  <i class="bi bi-chevron-double-up"></i>
   </button>
   
 </div>
@@ -592,13 +607,12 @@ border:none;
   </div>
 
 </div>
-<br>
+
 <center><h2 style="text-align:left;" id="adapa"> BlackRoad</h2></center>
 
 
 <div style="display:none;" class="bsea">
 <a href="#sinpp">&#x1F50D</a>
-
 </div>
 
 
@@ -730,9 +744,11 @@ border:none;
     <option value="exp"> expences graph </option>
     <option value="n"> Hide Graph Option</option>
    </select>
-   <canvas id="linebal" width="100px" height="40px" ></canvas>
-   <div id="njkl"> </div>
    
+   <canvas id="linebal" width="100px" height="0px" ></canvas>
+   
+   <div id="njkl"> </div>
+  
    
     <center>
         <div id="stytt" class="styt">
@@ -771,6 +787,13 @@ border:none;
        
        <script>
        
+       function stTOP() {
+       window.scrollTo({
+       top: 0,
+       behavior: "smooth"
+       });
+       }
+       
        function togPar() {
        const parent = document.querySelector('.parnt');
        const isHidden = window.getComputedStyle(parent).display === 'none';
@@ -778,6 +801,15 @@ border:none;
        parent.style.display = isHidden ? 'flex' : 'none';
        
        location.href="#ppr";
+       }
+       
+       function togSRC() {
+       const parent = document.querySelector('#ssinp');
+       const isHidden = window.getComputedStyle(parent).display === 'none';
+       
+       parent.style.display = isHidden ? 'flex' : 'none';
+       
+       location.href="#ssinp";
        }
        
        
@@ -860,7 +892,7 @@ border:none;
           showDenyButton: true,
           confirmButtonText: "Gradient",
           denyButtonText: "Image",
-          cancelButtonText: "Remove"
+          cancelButtonText: "Deafault"
           }).then(result => {
           
           
@@ -1616,7 +1648,7 @@ function grpse(x){
           <span>${delt}</span>
           </div>
           <br>
-          <button
+          <button 
           style="background:linear-gradient(135deg,#4facfe,#00f2fe);border:none;color:white;padding:8px 12px;font-size:0.9rem;border-radius:8px;cursor:pointer;box-shadow:0 3px 8px rgba(0,0,0,0.1);transition:0.3s;">
           View BackUP File Uploaded Time
           </button>
@@ -1710,7 +1742,7 @@ function grpse(x){
           
           
         <center>
-        <img class="dbimg" id="parr" src="https://raw.githubusercontent.com/microintel/endgram/main/photo/microintel-black-small.png">
+        <img class="dbimg" id="parr" style="display:none;" src="https://raw.githubusercontent.com/microintel/endgram/main/photo/microintel-black-small.png">
         </center>
         </body>
         </html>
