@@ -462,6 +462,7 @@ border:none;
     width: 60px;
     height: 60px;
     z-index: 5000;
+    
     }
     
     #curveToggle {
@@ -477,6 +478,7 @@ border:none;
     cursor: pointer;
     user-select: none;
     touch-action: manipulation;
+    box-shadow: grey 0px 1px 4px;
     }
     
     .curve-item {
@@ -535,7 +537,7 @@ border:none;
 
 <div id="curveMenu">
   <div id="curveToggle">
-    <i class="fa fa-tools"></i>
+    <i class="fa fa-wrench"></i>
   </div>
 
   <button class="curve-item" onclick="togPar()">
@@ -811,64 +813,44 @@ border:none;
           <script>
           function themeManager(action = "init") {
           
-          const images = [
-          "https://picsum.photos/id/16/1080/2000",
-          "https://picsum.photos/id/17/1080/2000",
-          "https://picsum.photos/id/18/1080/2000",
-          "https://picsum.photos/id/19/1080/2000",
-          "https://picsum.photos/id/38/1080/2000",
-          "https://picsum.photos/id/41/1080/2000",
-          "https://picsum.photos/id/43/1080/2000",
-          "https://picsum.photos/id/44/1080/2000",
-          "https://picsum.photos/id/46/1080/2000",
-          "https://picsum.photos/id/52/1080/2000",
-          "https://picsum.photos/id/53/1080/2000",
-          "https://picsum.photos/id/56/1080/2000",
-          "https://picsum.photos/id/66/1080/2000",
-          "https://picsum.photos/id/74/1080/2000",
-          "https://picsum.photos/id/80/1080/2000"
-          ];
-          
           const randomColor = () => [
-          Math.floor(Math.random()*256),
-          Math.floor(Math.random()*256),
-          Math.floor(Math.random()*256)
+          Math.floor(Math.random() * 256),
+          Math.floor(Math.random() * 256),
+          Math.floor(Math.random() * 256)
           ];
           
-          const brightness = ([r,g,b]) =>
-          (r*299 + g*587 + b*114) / 1000;
+          const brightness = ([r, g, b]) =>
+          (r * 299 + g * 587 + b * 114) / 1000;
           
           const applyGradient = () => {
           const colors = Array.from({ length: 4 }, randomColor);
-          const angle = Math.floor(Math.random()*360);
+          const angle = Math.floor(Math.random() * 360);
           
-          document.body.style.background = 
+          document.body.style.background =
           `linear-gradient(${angle}deg, ${colors.map(c => `rgb(${c})`).join(",")})`;
           
           document.body.style.backgroundRepeat = "no-repeat";
           document.body.style.backgroundSize = "100% 100%";
           document.body.style.minHeight = "100vh";
-          const avg =
-          colors.reduce((s,c)=>s+brightness(c),0) / colors.length;
           
+          const avg = colors.reduce((s, c) => s + brightness(c), 0) / colors.length;
           document.body.style.color = avg > 140 ? "#000" : "#fff";
           };
           
-          const applyImage = () => {
-          const img = images[Math.floor(Math.random()*images.length)];
+          const applyImage = (img) => {
           document.body.style.background =
           `url(${img}) center/cover no-repeat fixed`;
           document.body.style.color = "#fff";
           };
           
-    
           if (action === "init") {
-          const saved = localStorage.getItem("themeStyle");
-          if (saved === "image") applyImage();
-          if (saved === "gradient") applyGradient();
+          const savedType = localStorage.getItem("themeStyle");
+          const savedImage = localStorage.getItem("userBgImage");
+          
+          if (savedType === "gradient") applyGradient();
+          if (savedType === "image" && savedImage) applyImage(savedImage);
           return;
           }
-          
           
           if (action === "ask") {
           Swal.fire({
@@ -879,24 +861,44 @@ border:none;
           confirmButtonText: "Gradient",
           denyButtonText: "Image",
           cancelButtonText: "Remove"
-          }).then((result) => {
+          }).then(result => {
+          
           
           if (result.isConfirmed) {
           localStorage.setItem("themeStyle", "gradient");
+          localStorage.removeItem("userBgImage");
           applyGradient();
           }
           
+         
           else if (result.isDenied) {
+          const input = document.createElement("input");
+          input.type = "file";
+          input.accept = "image/*";
+          
+          input.onchange = () => {
+          const file = input.files[0];
+          if (!file) return;
+          
+          const reader = new FileReader();
+          reader.onload = () => {
           localStorage.setItem("themeStyle", "image");
-          applyImage();
+          localStorage.setItem("userBgImage", reader.result);
+          applyImage(reader.result);
+          };
+          reader.readAsDataURL(file);
+          };
+          
+          input.click();
           }
           
-          else if (result.dismiss === Swal.DismissReason.cancel) {
+          
+          else {
           localStorage.removeItem("themeStyle");
+          localStorage.removeItem("userBgImage");
           document.body.style.background = "";
           document.body.style.color = "";
           }
-          
           });
           }
           }
