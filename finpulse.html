@@ -455,6 +455,67 @@ border:none;
         animation-range: entry 0% cover 12%;
     }
     
+    #curveMenu {
+    position: fixed;
+    bottom: 16px;
+    left: 16px;
+    width: 60px;
+    height: 60px;
+    z-index: 5000;
+    }
+    
+    #curveToggle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--b);
+    color: var(--w);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    cursor: pointer;
+    user-select: none;
+    touch-action: manipulation;
+    }
+    
+    .curve-item {
+    position: absolute;
+    bottom: 7px;
+    left: 7px;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: none;
+    background: var(--b);
+    color: var(--w);
+    font-size: 1.1rem;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(0,0);
+    transition: transform 0.35s ease, opacity 0.25s ease;
+    }
+    
+    #curveMenu.open .curve-item {
+    opacity: 1;
+    pointer-events: auto;
+    }
+    
+    #curveMenu.open .curve-item:nth-of-type(1) {
+    transform: translate(0, -75px);
+    }
+    #curveMenu.open .curve-item:nth-of-type(2) {
+    transform: translate(65px, -40px);
+    }
+    #curveMenu.open .curve-item:nth-of-type(3) {
+    transform: translate(90px, 20px);
+    }
+    #curveMenu.open .curve-item:nth-of-type(4) {
+    transform: translate(75px, 0);
+    }
+    #curveMenu.open .curve-item:nth-of-type(5) {
+    transform: translate(80px, 35px);
+    }
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tingle.js@0.15.3/dist/tingle.min.css" />
   <script src="https://cdn.jsdelivr.net/npm/tingle.js@0.15.3/dist/tingle.min.js"></script>
@@ -472,12 +533,25 @@ border:none;
 </head>
 <body>
 
+<div id="curveMenu">
+  <div id="curveToggle">
+    <i class="fa fa-tools"></i>
+  </div>
 
+  <button class="curve-item" onclick="togPar()">
+  <i class="fa fa-eye-slash"></i>
+  </button>
+  
+  <button class="curve-item" onclick="profDis()">
+  <i class="fa fa-user"></i>
+  </button>
+  
+  <button class="curve-item" onclick="exportToCSV()">
+  <i class="fa fa-file-csv"></i>
+  </button>
+</div>
 
-<i id="boxxx" class="fa-solid fa-file-csv"></i>
-
-
-
+<i id="boxxx" style="display:none;" class="fa-solid fa-file-csv"></i>
 
 
 <div class="menu" id="mmmm">
@@ -689,6 +763,48 @@ border:none;
        <script src="lastsen.js" type="text/javascript"></script>
       
        <br><br>
+       
+       <script>
+       
+       function togPar() {
+       const parent = document.querySelector('.parnt');
+       const isHidden = window.getComputedStyle(parent).display === 'none';
+       
+       parent.style.display = isHidden ? 'flex' : 'none';
+       
+       location.href="#ppr";
+       }
+       
+       
+       const curveMenu = document.getElementById("curveMenu");
+       const toggle = document.getElementById("curveToggle");
+       
+       
+       toggle.addEventListener("click", (e) => {
+       e.stopPropagation();
+       curveMenu.classList.toggle("open");
+       });
+       
+       
+       curveMenu.addEventListener("click", (e) => {
+       e.stopPropagation();
+       });
+       
+       
+       document.addEventListener("click", () => {
+       curveMenu.classList.remove("open");
+       });
+       
+       
+       curveMenu.querySelectorAll(".curve-item").forEach(btn => {
+       btn.addEventListener("click", (e) => {
+       e.stopPropagation();
+       setTimeout(() => {
+       curveMenu.classList.remove("open");
+       }, 0);
+       });
+       });
+       </script>
           <script>
           function themeManager(action = "init") {
           
@@ -1223,7 +1339,7 @@ function disexpp(x){
   icon: "success"
   });
   
-  location.href="#catdets";
+ // location.href="#catdets";
   
   }
   document.getElementById("catdets").style.display=x;
@@ -1239,7 +1355,7 @@ function disexpppp(x){
   icon: "success"
   });
   
-  location.href="#sumTbl";
+ // location.href="#sumTbl";
   
   }
 }
@@ -1581,7 +1697,7 @@ function grpse(x){
           
           
          
-          
+        //  document.getElementById("ppr").style.display="none";
           </script>
           
           

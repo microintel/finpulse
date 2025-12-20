@@ -552,6 +552,7 @@ const r = indexedDB.open("black");
             row.innerHTML = `<td>${cat}</td><td>${data[cat].toFixed(2)}</td>`;
             tbody.appendChild(row);
         }
+      setTimeout(()=>{document.getElementById("ppr").style.display="none";},1500); 
     }
     
     sumTxn();
