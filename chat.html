@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CHAT</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+<style>
+html,body{
+  height:100%;
+  margin:0;
+  font-family:system-ui,sans-serif;
+  background:#0b1014;
+}
+
+.c-cntr{
+  height:100%;
+  display:flex;
+  flex-direction:column;
+}
+
+.c-hdr{
+  padding:6px;
+  background:#0b1014;
+  color:#0b1014;
+  border-bottom:0.7px solid #353839;
+  text-align:left;
+  text-align:center;
+}
+
+.c-log{
+  flex:1;
+  overflow-y:auto;
+  padding:10px;
+}
+
+.msg{
+  display:flex;
+  margin-bottom:8px;
+}
+
+.msg.bot{ justify-content:flex-start; }
+.msg.usr{ justify-content:flex-end; }
+
+.bbl{
+  max-width:75%;
+  padding:10px 14px;
+  border-radius:16px;
+  white-space:pre-wrap;
+}
+
+.bot .bbl{ background:#1f272a; color:white; }
+.usr .bbl{ background:#075e54; color:white; }
+
+.i-a{
+  padding:8px;
+  background:#111;
+}
+
+.i-f{
+  display:flex;
+  gap:6px;
+}
+
+textarea{
+  flex:1;
+  resize:none;
+  padding:10px;
+  background-color:#1f272a;
+  border-radius:12px;
+  border:none;
+  color:white;
+  outline:none;
+}
+
+button{
+  padding:0 14px;
+  border-radius:360px;
+  border:none;
+  background:#21c063;
+  font-size:18px;
+}
+
+h3{
+width:80%;
+text-align:left;
+padding:10px;
+color:white;
+margin:0px;
+}
+
+button i{
+ transform: rotate(55deg);
+}
+
+#usnnn i{
+font-size:1.6rem;
+}
+
+#im{
+border-radius:360px;
+}
+</style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  </head>
+
+<body>
+
+<div class="c-cntr">
+  <div class="c-hdr">
+  
+  <h3 id="usnnn"><i onclick="location.href='finpulse.html'" class="bi bi-arrow-left-short"></i> <img id="im" width="40px" src="https://cataas.com/cat" height="40px"> <span id="usn"></span></h3></div>
+
+  <div class="c-log" id="c-log">
+    
+  </div>
+
+  <div class="i-a">
+    <form class="i-f" id="i-f">
+      <textarea id="chat-i" rows="1" placeholder="Type a command…"></textarea>
+      <button><i class="bi bi-send-fill"></i></button>
+    </form>
+  </div>
+</div>
+
+<script>
+const log=document.getElementById("c-log");
+const ta=document.getElementById("chat-i");
+let data=[];
+
+function sendU(t){
+  const d=document.createElement("div");
+  d.className="msg usr";
+  d.innerHTML=`<div class="bbl">${t}</div>`;
+  log.appendChild(d);
+  log.scrollTop=log.scrollHeight;
+}
+
+function sendB(t){
+  const d=document.createElement("div");
+  d.className="msg bot";
+  d.innerHTML=`<div class="bbl">${t}</div>`;
+  log.appendChild(d);
+  log.scrollTop=log.scrollHeight;
+}
+
+ta.addEventListener("input",()=>{
+  ta.style.height="auto";
+  ta.style.height=ta.scrollHeight+"px";
+});
+
+document.getElementById("i-f").onsubmit=e=>{
+  e.preventDefault();
+  const q=ta.value.trim();
+  if(!q) return;
+  ta.value="";
+  ta.style.height="auto";
+  sendU(q);
+  reply(q.toLowerCase());
+};
+
+/* ---------------- DATA LOAD ---------------- */
+
+function get(){
+  const r=indexedDB.open("black");
+  r.onsuccess=e=>{
+    const db=e.target.result;
+    const tx=db.transaction("sst","readonly");
+    const st=tx.objectStore("sst");
+    const req=st.get("blackroadINC");
+    req.onsuccess=()=>{
+      if(req.result?.data){
+        data=ext(req.result.data);
+        sendB("Data loaded");
+      }else{
+        sendB("No data found");
+      }
+    };
+  };
+}
+get();
+
+function getName(){
+        
+        const r = indexedDB.open("black");
+        r.onsuccess = e => {
+        const d = e.target.result;
+        const t = d.transaction(["sst"], 'readwrite');
+        const st = t.objectStore("sst");
+        const nkn = st.get("user");
+        nkn.onsuccess=function(){
+        
+        let hel= nkn.result;
+        let x= hel["u"];
+     //  document.getElementById("im").src=`https://avatar.iran.liara.run/username?username=${x}`;
+        document.getElementById("usn").innerText=`${x}`;
+        };
+        
+        
+        };
+        
+        }
+getName();
+
+/* ---------------- HTML PARSER ---------------- */
+
+function ext(html){
+  const doc = new DOMParser().parseFromString(html, "text/html");
+  const out = [];
+
+  doc.querySelectorAll(".child").forEach(c => {
+    const h = c.querySelector(".idfeb");
+
+    const obj = {
+      income: +h?.querySelector(".incomeColumn")?.innerText || 0,
+      date: h?.querySelector(".dateColumn")?.innerText || "",
+      from: h?.querySelector(".fromm")?.innerText || "",
+      expense: +h?.querySelector(".exep")?.innerText || 0,
+      balance: +h?.querySelector(".Abal")?.innerText || 0,
+      transactions: []
+    };
+
+    c.querySelectorAll(".trand .trans").forEach(t => {
+      obj.transactions.push({
+        amount: +t.querySelector(".mony")?.innerText || 0,
+        date: t.querySelector(".tdate")?.innerText || "",
+        category: t.dataset.category || "",
+        description: t.querySelector(".tdes")?.innerText || ""
+      });
+    });
+
+    out.push(obj);
+  });
+
+  return out;
+}
+
+/* ---------------- COMMAND ENGINE ---------------- */
+
+const alias={ tin:"income", te:"expense", tb:"balance"};
+
+function reply(q){
+  Object.keys(alias).forEach(a=>{
+    if(q.startsWith(a)) q=q.replace(a,alias[a]);
+  });
+
+  const t = q.split(/\s+/);
+
+  if(t[0]==="ls" && t[1]==="cmd"){
+    return sendB(
+`Commands:
+1. balance (tb)
+2. income (tin)
+3. expense (te)
+4. expense from category
+5. ls src
+6. ls expense category
+7. income from src date to date
+`
+    );
+  }
+
+  if(t[0]==="ls" && t[1]==="src"){
+    const s = [...new Set(data.map(x => x.from).filter(Boolean))];
+    return sendB(s.join("\n") || "No sources");
+  }
+
+  if(t[0]==="ls" && (t[1]==="expense" || t[1]==="expenses") && t[2]==="category"){
+    const cats = [
+      ...new Set(
+        data.flatMap(x =>
+          x.transactions.map(t => t.category).filter(Boolean)
+        )
+      )
+    ];
+    return sendB(cats.join("\n") || "No categories found");
+  }
+
+ 
+  if(t[0]==="expense" && t[1]==="from" && t[2]){
+    const cat = t.slice(2).join(" ").toLowerCase();
+    let sum = 0;
+
+    data.forEach(x=>{
+      x.transactions.forEach(tr=>{
+        if(tr.category?.toLowerCase() === cat){
+          sum += tr.amount || 0;
+        }
+      });
+    });
+
+    return sendB(
+      sum
+        ? `Total expense for "${cat}": ${sum}`
+        : `No expenses found for "${cat}"`
+    );
+  }
+
+  if(t[0]==="balance") return balance();
+  if(t[0]==="income") return income(t);
+  if(t[0]==="expense") return expense(t);
+
+  sendB("nkn command. Try `ls cmd`");
+}
+
+function balance(){
+  const total=data.reduce((a,b)=>a+b.balance,0);
+  sendB("Balance : "+total);
+}
+
+function income(t){
+  let from=null, fd=null, td=null, sum=0;
+
+  for(let i=0;i<t.length;i++){
+
+    if(t[i]==="from"){
+      let temp=[];
+      for(let j=i+1;j<t.length;j++){
+        if(t[j]==="to") break;
+
+        if(t[j].includes("-")){
+          fd = t[j];      
+          break;
+        }
+
+        temp.push(t[j]);
+      }
+      if(temp.length) from = temp.join(" ").toLowerCase();
+    }
+
+    if(t[i]==="to" && t[i+1]?.includes("-")){
+      td = t[i+1];    
+    }
+  }
+
+  data.forEach(x=>{
+    if(from && x.from.toLowerCase() !== from) return;
+    if(fd && x.date < fd) return;
+    if(td && x.date > td) return;
+    sum += Number(x.income);
+  });
+
+  sendB("Income : " + sum);
+}
+
+function expense(t){
+  let fd=null,td=null,sum=0;
+
+  for(let i=0;i<t.length;i++){
+    if(t[i]==="from" && t[i+1]?.includes("-")) fd=t[i+1];
+    if(t[i]==="to") td=t[i+1];
+  }
+
+  data.forEach(x=>{
+    x.transactions.forEach(tr=>{
+      if(fd && tr.date<fd) return;
+      if(td && tr.date>td) return;
+      sum+=tr.amount;
+    });
+  });
+
+  sendB("Expense : "+sum);
+}
+</script>
+
+</body>
+</html>

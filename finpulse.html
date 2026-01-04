@@ -558,7 +558,7 @@ border:none;
   </button>
   
   <button class="curve-item" onclick="theame(this.id)" id="w">
-  <i id="ttte" class="fa fa-file-csv"></i>
+  <i id="ttte" class="fa-solid fa-palette"></i>
   </button>
   
   <button class="curve-item" onclick="togSRC()">
@@ -601,8 +601,8 @@ border:none;
   
   <img id="tttim" width="160px" height="35px" src="blk.gif">
 
-<div id="yyyy" style="display:none;" class="theame">
-  <img onclick="theame(this.id)" id="w" style="display:none;" class="nknth" src="https://img.icons8.com/?size=100&id=Ppe22DwOvBTF&format=png&color=FFFFFF">
+<div id="yyyy" style="display:block;" class="theame">
+  <img onclick="location.href='chat.html'" id="w" style="display:block;" class="nknth" src="https://img.icons8.com/color/48/chat--v1.png">
   
   </div>
 
@@ -1720,6 +1720,8 @@ function grpse(x){
           <button onclick="location.href='https://microintel.github.io/endgram/file/coding.html';modal.close()"> <i class="fa-solid fa-file-lines"></i> File Reader </button>
           <button onclick="location.href='blackread/index.html';modal.close()"> <i class="fa-solid fa-folder-open"></i> BlacRoad Viewer </button>
           <button onclick="location.href='https://microintel.github.io/endgram/file/coding.html';modal.close()"> <i class="fa-solid fa-file-invoice"></i> Bank Statement </button>
+          <button onclick="extractJSON();modal.close()"> <i class="bi bi-filetype-json"></i> Extract Data </button>
+          
           <button onclick="location.href='logout.html';modal.close()"> <i class="fa-solid fa-right-from-bracket"></i>  LogOut </button>
           
           </div>
@@ -1735,6 +1737,51 @@ function grpse(x){
           
           }
           
+          
+          function extractJSON() {
+          const allData = [];
+          
+          document.querySelectorAll(".child").forEach(child => {
+          const header = child.querySelector(".idfeb");
+          
+          const income = header.querySelector(".incomeColumn")?.innerText.trim();
+          const date = header.querySelector(".dateColumn")?.innerText.trim();
+          const from = header.querySelector(".fromm")?.innerText.trim();
+          const exp = header.querySelector(".exep")?.innerText.trim();
+          const bal = header.querySelector(".Abal")?.innerText.trim();
+          
+          let transactions = [];
+          
+          child.querySelectorAll(".trand .trans").forEach(tr => {
+          transactions.push({
+          amount: tr.querySelector(".mony")?.innerText.trim(),
+          date: tr.querySelector(".tdate")?.innerText.trim(),
+          description: tr.querySelector(".tdes")?.innerText.trim(),
+          category: tr.dataset.category || "",   // ✅ added
+          type: tr.classList[1] || ""
+          });
+          });
+          
+          allData.push({
+          income,
+          date,
+          from,
+          expense: exp,
+          balance: bal,
+          transactions
+          });
+          });
+          
+          const blob = new Blob(
+          [JSON.stringify(allData, null, 4)],
+          { type: "application/json" }
+          );
+          
+          const a = document.createElement("a");
+          a.href = URL.createObjectURL(blob);
+          a.download = "BlackData.json";
+          a.click();
+          }
           
          
         //  document.getElementById("ppr").style.display="none";
