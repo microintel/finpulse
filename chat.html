@@ -42,7 +42,7 @@ html,body{
 .msg.usr{ justify-content:flex-end; }
 
 .bbl{
-  max-width:75%;
+  max-width:95%;
   padding:10px 14px;
   border-radius:16px;
   white-space:pre-wrap;
@@ -121,7 +121,7 @@ border-radius:360px;
     </form>
   </div>
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 const log=document.getElementById("c-log");
 const ta=document.getElementById("chat-i");
@@ -238,69 +238,6 @@ function ext(html){
 
 const alias={ tin:"income", te:"expense", tb:"balance"};
 
-function reply(q){
-  Object.keys(alias).forEach(a=>{
-    if(q.startsWith(a)) q=q.replace(a,alias[a]);
-  });
-
-  const t = q.split(/\s+/);
-
-  if(t[0]==="ls" && t[1]==="cmd"){
-    return sendB(
-`Commands:
-1. balance (tb)
-2. income (tin)
-3. expense (te)
-4. expense from category
-5. ls src
-6. ls expense category
-7. income from src date to date
-`
-    );
-  }
-
-  if(t[0]==="ls" && t[1]==="src"){
-    const s = [...new Set(data.map(x => x.from).filter(Boolean))];
-    return sendB(s.join("\n") || "No sources");
-  }
-
-  if(t[0]==="ls" && (t[1]==="expense" || t[1]==="expenses") && t[2]==="category"){
-    const cats = [
-      ...new Set(
-        data.flatMap(x =>
-          x.transactions.map(t => t.category).filter(Boolean)
-        )
-      )
-    ];
-    return sendB(cats.join("\n") || "No categories found");
-  }
-
- 
-  if(t[0]==="expense" && t[1]==="from" && t[2]){
-    const cat = t.slice(2).join(" ").toLowerCase();
-    let sum = 0;
-
-    data.forEach(x=>{
-      x.transactions.forEach(tr=>{
-        if(tr.category?.toLowerCase() === cat){
-          sum += tr.amount || 0;
-        }
-      });
-    });
-
-    return sendB(
-      sum
-        ? `Total expense for "${cat}": ${sum}`
-        : `No expenses found for "${cat}"`
-    );
-  }
-
-  if(t[0]==="balance") return balance();
-  if(t[0]==="income") return income(t);
-  if(t[0]==="expense") return expense(t);
-
-  sendB("nkn command. Try `ls cmd`");
-}
 
 function balance(){
   const total=data.reduce((a,b)=>a+b.balance,0);
@@ -360,7 +297,11 @@ function expense(t){
 
   sendB("Expense : "+sum);
 }
-</script>
 
+
+
+</script>
+<script type="text/javascript" src="chat.js"></script>
+<script type="text/javascript" src="chatCommand.js"></script>
 </body>
 </html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BlackRoad uodate</title>
+
+<style>
+:root{
+  --bg:#f4f6f8;
+  --card:#ffffff;
+  --accent:#1db954;
+  --text:#111;
+  --muted:#6b7280;
+  --border:#e5e7eb;
+}
+
+*{
+  box-sizing:border-box;
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto;
+}
+
+body{
+  margin:0;
+  height:100vh;
+  background:linear-gradient(180deg,#f9fafb,#eef2f7);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--text);
+}
+
+.card{
+  width:90%;
+  max-width:360px;
+  border-radius:18px;
+  padding:28px 22px;
+}
+
+.logo{
+  text-align:center;
+  margin-bottom:8px;
+}
+
+.logo h2{
+  margin:0;
+  letter-spacing:1px;
+}
+
+
+.subtitle{
+  text-align:center;
+  color:var(--muted);
+  margin-bottom:24px;
+}
+
+input{
+  width:100%;
+  padding:14px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  background:#fff;
+  color:var(--text);
+  font-size:15px;
+  margin-bottom:14px;
+  outline:none;
+}
+
+input::placeholder{
+  color:#9ca3af;
+}
+
+input:focus{
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px rgba(29,185,84,.15);
+}
+
+button{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:14px;
+  background:linear-gradient(135deg,#1db954,#19a44b);
+  color:#fff;
+  background:black;
+  
+  font-size:16px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+button:active{
+  transform:scale(.98);
+}
+
+.footer{
+  text-align:center;
+  margin-top:16px;
+  font-size:12px;
+  color:#9ca3af;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <div class="logo">
+    <h2>Black<span>Road</span></h2>
+  </div>
+
+  <div class="subtitle">Update your account</div>
+
+  <input type="text" id="u" placeholder="Username">
+  <input type="password" id="p" placeholder="Password">
+<button onclick="getName()"> show details </button><br><br>
+  <button onclick="r()">Register</button>
+
+</div>
+
+<script>
+function c(u, p, r) {
+  const d = indexedDB.open("black", 2);
+
+  d.onupgradeneeded = e => {
+    const db = e.target.result;
+    if (!db.objectStoreNames.contains("sst")) {
+      db.createObjectStore("sst");
+    }
+  };
+
+  d.onsuccess = e => {
+    const db = e.target.result;
+    const t = db.transaction("sst", "readwrite");
+    const s = t.objectStore("sst");
+    const o = { u, p };
+    const a = s.put(o,"user");
+
+    a.onsuccess = () => {
+      alert("BlackRoad account created successfully");
+      window.location.href = r;
+    };
+  };
+}
+
+function r(){
+  const u = document.getElementById("u").value.trim();
+  const p = document.getElementById("p").value.trim();
+
+  if(u === "" || p === ""){
+    alert("Enter all values");
+  }else{
+    c(u, p, "finpulse.html");
+  }
+}
+
+
+function getName(){
+        
+        const r = indexedDB.open("black");
+        r.onsuccess = e => {
+        const d = e.target.result;
+        const t = d.transaction(["sst"], 'readwrite');
+        const st = t.objectStore("sst");
+        const nkn = st.get("user");
+        nkn.onsuccess=function(){
+        
+        let hel= nkn.result;
+        let x= hel["u"];
+        let px= hel["p"];
+        document.getElementById("u").value=x;
+        document.getElementById("p").value=px;
+        document.getElementById("p").type="text";
+        };
+        
+        
+        };
+        
+        }
+
+</script>
+
+</body>
+</html>
