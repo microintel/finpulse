@@ -5,11 +5,22 @@
 <title>CHAT</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 <style>
+
+.c-hdr{
+background: rgba(255, 255, 255, 0.2);
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(3px);
+-webkit-backdrop-filter: blur(5px);
+
+}
+
 html,body{
   height:100%;
   margin:0;
   font-family:system-ui,sans-serif;
-  background:#0b1014;
+  background:black;
+  background-repeat:no-repeat;
+  background-size:fixed;
 }
 
 .c-cntr{
@@ -20,9 +31,10 @@ html,body{
 
 .c-hdr{
   padding:6px;
-  background:#0b1014;
+  background:transparent;
   color:#0b1014;
-  border-bottom:0.7px solid #353839;
+  
+ // border-bottom:0.7px solid #353839;
   text-align:left;
   text-align:center;
 }
@@ -31,6 +43,7 @@ html,body{
   flex:1;
   overflow-y:auto;
   padding:10px;
+  background-color:transparent;
 }
 
 .msg{
@@ -53,7 +66,7 @@ html,body{
 
 .i-a{
   padding:8px;
-  background:#111;
+  background:transparent;
 }
 
 .i-f{
@@ -123,6 +136,106 @@ border-radius:360px;
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+
+
+function themeManager(action = "init") {
+    
+    const randomColor = () => [
+    Math.floor(Math.random() * 256),
+    Math.floor(Math.random() * 256),
+    Math.floor(Math.random() * 256)
+    ];
+    
+    const brightness = ([r, g, b]) =>
+    (r * 299 + g * 587 + b * 114) / 1000;
+    
+    const applyGradient = () => {
+    const colors = Array.from({ length: 4 }, randomColor);
+    const angle = Math.floor(Math.random() * 360);
+    
+    document.body.style.background =
+    `linear-gradient(${angle}deg, ${colors.map(c => `rgb(${c})`).join(",")})`;
+    
+    document.body.style.backgroundRepeat = "no-repeat";
+    document.body.style.backgroundSize = "100% 100%";
+    document.body.style.minHeight = "100vh";
+    
+    const avg = colors.reduce((s, c) => s + brightness(c), 0) / colors.length;
+    document.body.style.color = avg > 140 ? "#000" : "#fff";
+    };
+    
+    const applyImage = (img) => {
+    document.body.style.background =
+    `url(${img}) center/cover no-repeat fixed`;
+    document.body.style.color = "#fff";
+    };
+    
+    if (action === "init") {
+    const savedType = localStorage.getItem("themeStyle");
+    const savedImage = localStorage.getItem("userBgImage");
+    
+    if (savedType === "gradient") applyGradient();
+    if (savedType === "image" && savedImage) applyImage(savedImage);
+    return;
+    }
+    
+    if (action === "ask") {
+    Swal.fire({
+    title: "Choose Theme",
+    icon: "question",
+    showCancelButton: true,
+    showDenyButton: true,
+    confirmButtonText: "Gradient",
+    denyButtonText: "Image",
+    cancelButtonText: "Deafault"
+    }).then(result => {
+    
+    
+    if (result.isConfirmed) {
+    localStorage.setItem("themeStyle", "gradient");
+    localStorage.removeItem("userBgImage");
+    applyGradient();
+    }
+    
+    
+    else if (result.isDenied) {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*";
+    
+    input.onchange = () => {
+    const file = input.files[0];
+    if (!file) return;
+    
+    const reader = new FileReader();
+    reader.onload = () => {
+    localStorage.setItem("themeStyle", "image");
+    localStorage.setItem("userBgImage", reader.result);
+    applyImage(reader.result);
+    };
+    reader.readAsDataURL(file);
+    };
+    
+    input.click();
+    }
+    
+    
+    else {
+    localStorage.removeItem("themeStyle");
+    localStorage.removeItem("userBgImage");
+    document.body.style.background = "";
+    document.body.style.color = "";
+    }
+    });
+    }
+    }
+    
+    themeManager();
+    
+
+
+
+
 const log=document.getElementById("c-log");
 const ta=document.getElementById("chat-i");
 let data=[];
