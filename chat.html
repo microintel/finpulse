@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CHAT</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
@@ -112,7 +113,17 @@ font-size:1.6rem;
 #im{
 border-radius:360px;
 }
+
+audio{
+display:none;
+}
+
+a{
+text-decoration:none;
+font-weight:bold;
+}
 </style>
+
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
   </head>
 
@@ -134,9 +145,14 @@ border-radius:360px;
     </form>
   </div>
 </div>
+
+<audio src="netflix.mp3" id="userNot">
+<audio src="luster.mp3" id="botNot">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 
+let userNot = document.getElementById("userNot");
+let botNot = document.getElementById("botNot");
 
 function themeManager(action = "init") {
     
@@ -241,19 +257,26 @@ const ta=document.getElementById("chat-i");
 let data=[];
 
 function sendU(t){
+botNot?.play();
   const d=document.createElement("div");
   d.className="msg usr";
   d.innerHTML=`<div class="bbl">${t}</div>`;
   log.appendChild(d);
   log.scrollTop=log.scrollHeight;
+  
 }
 
 function sendB(t){
+
+setTimeout(()=>{
+userNot?.play();
+  
   const d=document.createElement("div");
   d.className="msg bot";
   d.innerHTML=`<div class="bbl">${t}</div>`;
   log.appendChild(d);
   log.scrollTop=log.scrollHeight;
+  },1500);
 }
 
 ta.addEventListener("input",()=>{
@@ -414,6 +437,7 @@ function expense(t){
 
 
 </script>
+
 <script type="text/javascript" src="chat.js"></script>
 <script type="text/javascript" src="chatCommand.js"></script>
 </body>

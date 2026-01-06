@@ -8,6 +8,44 @@ function reply(q) {
   if (t[0] === "ls" && t[1] === "cmd") {
     return listCommand();
   }
+  
+  if(t[0] === "not" && t[1] === "chng"){
+    userNot.src="yamete.mp3";
+    botNot.src="duck.mp3";
+    return sendB("notification mode changed");
+  }
+  
+  if(t[0] === "not" && t[1] === "off"){
+    userNot=botNot=null;
+    return sendB("notification turend off succefully");
+  }
+  
+  if (t[0] === "ieb") {
+  
+  let inc = 0;
+  let exp = 0;
+  let bal = 0;
+  
+  Object.keys(data).forEach(x => {
+  inc += Number(data[x].income);
+  exp += Number(data[x].expense);
+  bal += Number(data[x].balance);
+  });
+  
+  if (t[1] === undefined) {
+  
+  return sendB(
+  `Income : ${inc}\nExpense : ${exp}\nBalance : ${bal}`
+  );
+  
+  } else if (t[1] === "chart" && (t[2] === "pie")) {
+  
+  return showPieChart(inc, exp, bal);
+  }
+  }
+
+  
+  
 
   if (t[0] === "ls" && t[1] === "src") {
     return listSource();
@@ -164,6 +202,75 @@ function showBarChart(labels, income, expense) {
         scales: {
           y: {
             beginAtZero: true
+          }
+        }
+      }
+    });
+  });
+}
+
+function showPieChart(income, expense, balance) {
+  // alert(income); <-- Remove this line
+
+  const cid = "chart_" + Date.now();
+/*
+  sendB(`
+    <div style="width:100%;max-width:420px;height:320px;margin:auto;">
+      <canvas id="${cid}"></canvas>
+    </div>
+  `);
+  */
+  const d=document.createElement("div");
+  d.className="msg bot";
+  d.innerHTML=`<div class="bbl"><div style="width:100%;max-width:420px;height:420px;margin:auto;">
+  <canvas id="${cid}"></canvas>
+  </div></div>`;
+  log.appendChild(d);
+  log.scrollTop=log.scrollHeight;
+  
+ requestAnimationFrame(() => {
+    const canvas = document.getElementById(cid);
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+
+    new Chart(ctx, {
+      type: "pie",
+      data: {
+        labels: ["Invome", "Expense", "Balance"],
+        datasets: [{
+          data: [income, expense, balance],
+          backgroundColor: [
+            "#4CAF50",
+            "#F44336", 
+            "#2196F3" 
+          ],
+          borderColor: "#ffffff",
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          title: {
+            display: true,
+            text: "Income vs Expense vs Balance",
+            font: {
+              size: 16,
+              weight: "bold"
+            },
+            padding: {
+              top: 0,
+              bottom: 0
+            }
+          },
+          legend: {
+            position: "top",
+            labels: {
+              boxWidth: 14,
+              padding: 12
+            }
           }
         }
       }
