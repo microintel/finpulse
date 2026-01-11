@@ -20,6 +20,40 @@ function reply(q) {
     return sendB("notification turend off succefully");
   }
   
+  if(t[0] === "lend" && t[1] === "tot"){
+  return totalLendByType("nkn");
+  
+  }
+  
+  
+  if (t[0] === "lend" && t[1] === "name") {
+  if (t.length > 2) {
+  const name = t.slice(2).join(" ");
+  lendByName(name);
+  } else {
+  sendB("Enter Lend Person Name");
+  }
+  return;
+  }
+  
+  if(t[0] === "ls" && t[1] === "lend" && t[2] === "name"){
+  return lendNames();
+  }
+  
+  if(t[0] === "ls" && t[1] === "lend"){
+  return listLend();
+  }
+  
+  if(t[0] === "lend" && t[1]==="sum"){
+
+  if((t[2]=== "chart") && (t[3] ==="bar" || t[3] === "pie")){
+  totalLendByType(t[3]);
+  }else{
+ lendsummary();
+ }
+ return;
+  }
+  
   if (t[0] === "ieb") {
   
   let inc = 0;
@@ -256,6 +290,68 @@ function showPieChart(income, expense, balance) {
           title: {
             display: true,
             text: "Income vs Expense vs Balance",
+            font: {
+              size: 16,
+              weight: "bold"
+            },
+            padding: {
+              top: 0,
+              bottom: 0
+            }
+          },
+          legend: {
+            position: "top",
+            labels: {
+              boxWidth: 14,
+              padding: 12
+            }
+          }
+        }
+      }
+    });
+  });
+}
+
+
+function showLendChart(lable,income, expense, balance,type) {
+  const cid = "chart_" + Date.now();
+  const d=document.createElement("div");
+  d.className="msg bot";
+  d.innerHTML=`<div class="bbl"><div style="width:100%;max-width:420px;height:500px;margin:auto;">
+  <canvas id="${cid}"></canvas>
+  </div></div>`;
+  log.appendChild(d);
+  log.scrollTop=log.scrollHeight;
+  
+ requestAnimationFrame(() => {
+    const canvas = document.getElementById(cid);
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+
+    new Chart(ctx, {
+      type: type || "bar",
+      data: {
+        labels: lable,
+        datasets: [{
+          data: [income, expense, balance],
+          backgroundColor: [
+            "#2196F3",
+            "#4CAF50",
+            "#F44336"
+             
+          ],
+          borderColor: "#ffffff",
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          title: {
+            display: true,
+            text: "Lend Chart",
             font: {
               size: 16,
               weight: "bold"

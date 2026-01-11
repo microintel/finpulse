@@ -122,6 +122,15 @@ a{
 text-decoration:none;
 font-weight:bold;
 }
+
+.bi-question-circle{
+
+color:white;
+position:fixed;
+top:20px;
+right:20px;
+font-size:1.3rem;
+}
 </style>
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
@@ -132,7 +141,11 @@ font-weight:bold;
 <div class="c-cntr">
   <div class="c-hdr">
   
-  <h3 id="usnnn"><i onclick="location.href='finpulse.html'" class="bi bi-arrow-left-short"></i> <img id="im" width="40px" src="https://cataas.com/cat" height="40px"> <span id="usn"></span></h3></div>
+  <h3 id="usnnn"><i onclick="location.href='finpulse.html'" class="bi bi-arrow-left-short"></i> <img id="im" width="40px" src="https://cataas.com/cat" height="40px"> <span id="usn"></span></h3>
+  
+  <i onclick="listCommand()" class="bi bi-question-circle"></i>
+  
+  </div>
 
   <div class="c-log" id="c-log">
     
@@ -146,8 +159,8 @@ font-weight:bold;
   </div>
 </div>
 
-<audio src="netflix.mp3" id="userNot">
-<audio src="luster.mp3" id="botNot">
+<audio src="luster.mp3" id="userNot">
+<audio src="ting.mp3" id="botNot">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 
@@ -255,7 +268,7 @@ function themeManager(action = "init") {
 const log=document.getElementById("c-log");
 const ta=document.getElementById("chat-i");
 let data=[];
-
+let lenddata=[];
 function sendU(t){
 botNot?.play();
   const d=document.createElement("div");
@@ -303,14 +316,26 @@ function get(){
     const tx=db.transaction("sst","readonly");
     const st=tx.objectStore("sst");
     const req=st.get("blackroadINC");
+    const lendreq= st.get("nkncc");
     req.onsuccess=()=>{
       if(req.result?.data){
         data=ext(req.result.data);
-        sendB("Data loaded");
+        sendB("BlackRoad Data loaded");
       }else{
         sendB("No data found");
       }
     };
+    
+    lendreq.onsuccess=()=>{
+   // alert(JSON.stringify(lendreq.result.rbcon));
+    if(lendreq.result?.rbcon){
+    lenddata=extlend(lendreq.result.rbcon);
+    sendB("Lend Data loaded");
+    }else{
+    sendB("No data found");
+    }
+    };
+    
   };
 }
 get();
@@ -368,6 +393,32 @@ function ext(html){
   });
 
   return out;
+}
+
+
+function extlend(htmlString) {
+  const temp = document.createElement("div");
+  temp.innerHTML = htmlString;
+
+  const children = temp.querySelectorAll(".child");
+  lenddata = []; // reset global data
+
+  children.forEach(child => {
+    const fonts = child.querySelectorAll(".head font");
+    const spans = child.querySelectorAll(".des span");
+
+    lenddata.push({
+      amount: Number(fonts[0]?.textContent.trim() || 0),
+      date: fonts[1]?.textContent.trim() || "",
+      type: fonts[2]?.textContent.trim() || "",
+      name: spans[0]?.textContent.trim() || "",
+      description: Array.from(spans)
+        .map(s => s.textContent.trim())
+        .join(" ")
+    });
+  });
+
+  return lenddata; // optional return
 }
 
 /* ---------------- COMMAND ENGINE ---------------- */
