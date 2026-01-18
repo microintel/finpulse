@@ -11,11 +11,18 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
     <style>
+    
+    :root{
+    --bb:#000;
+    --bl:black;
+    --box:black;
+    --wh:white;
+    }
         body { 
         font-family:"Ubuntu",sans-serif;
-                                            
-         background:#000;
-        color:white;
+          margin:11px;                                  
+         background:var(--bb);
+        color:var(--wh);
          }
         .c {
          width:100%;
@@ -31,7 +38,7 @@
          padding: 10px;
           margin: 10px 0; 
         border-radius:10px;
-        border:1px solid black;
+        border:1px solid var(--wh);
         
         }
         input{
@@ -51,26 +58,29 @@
          }
          
          .ass{
-         display:flex;
+        // display:flex;
+        display:none;
          width:98%;
-         background-color:#000;
+         background-color:transparent;
          justify-content:space-around;
          align-items:center;
          }
          .ass input,.ass select{
          width:40%;
+         background-color:var(--bh);
+         box-shadow: grey 0px 1px 4px;
          }
          .ass i{
-         color:white;
+         color:var(--wh);
          font-size:2.8rem;
-         background-color:black;
+         background-color:var(--bb);
          border-radius:50px;
-         border:1.5px solid grey;
+         
          }
          
          .recb,.child{
          width:98%;
-         color:white;
+         color:var(--wh);
          display:flex;
          flex-direction:column;
          flex-wrap:wrap;
@@ -81,16 +91,17 @@
          gap:10px;
          justify-content:center;
          align-items:center;
-        
+         
          }
          
          .recb .child{
-         background-color:#222;
-         border:1.5px solid black;
+         background-color:var(--box);
+         border:1.5px solid var(--wh);
          border-radius:10px;
+         box-shadow: grey 0px 1px 4px;
          }
          .recb .child .head{
-         border-bottom:1.5px solid grey;
+         border-bottom:0.6px solid grey;
          width:100%;
          display:flex;
          justify-content:space-around;
@@ -112,6 +123,7 @@
          display:none;
          }
          
+         
          .sumt{
          width:98%;
          display:flex;
@@ -120,16 +132,18 @@
          align-items:center;
          border-radius:20px;
          padding:3px;
-         
-         background-color:#333;
+         border:0px solid var(--wh);
+         background-color:var(--box);
+         box-shadow: grey 0px 1px 4px;
          }
          .sumt div{
          width:98%;
          display:flex;
          justify-content:space-around;
          align-items:center;
-         border-bottom:2px solid black;
+         border-bottom:0.6px solid var(--wh);
          gap:6px;
+         
          
          padding:5px;
          }
@@ -150,9 +164,12 @@
          
          }
          .sumt div:last-child{
-         border-bottom:0px solid black;
+         border-bottom:0px solid var(--bl);
          }
          
+         .bi{
+         font-size:1.5rem;
+         }
          .bi-house{
          position:absolute;
          top:10;
@@ -191,7 +208,7 @@
          border-bottom:2px solid black !important;
          }
          
-         .bi-house , .bi-printer,#hhh{
+         .bi-house , .bi-printer,#hhh,#nknnc{
          display:none !important;
          }
          
@@ -210,8 +227,9 @@
          
          .recb .child{
          background-color:black !important;
-         border:1.5px solid black !important;
+         border:0px solid black !important;
          border-radius:10px;
+         
          }
          .recb .child .head{
          border-bottom:1.5px solid black !important;
@@ -296,25 +314,184 @@
          border-right:0px solid grey;
          }
          
+         .des{
+         display:flex;
+         flex-direction:column;
+         width:100%;
+         }
+         
+         .des span:nth-child(1) {
+         color: brown;
+         width:100%;
+         border-bottom:1px solid grey;
+         }
+         
+         #nknnc{
+         display:flex;
+         width:100%;
+         border-radius:12px;
+         
+         }
+         #nknnc table{
+         border:1px solid red;
+         margin:10px;
+         width:95%;
+         background-color:var(--box);
+         border-radius:10px;
+         
+         }
+         #nknnc th,#nknnc td{
+         border:1px solid grey;
+         
+         }
+         
+         #nknnc th{
+         font-size:1.1rem;
+         border-bottom:1px solid var(--wh);
+         }
+         
+         #nknnc tr:hover{
+           background-color:#00ffcc;
+         }
+         
+         
+         .swit{
+         
+      //   display:flex;
+      display:none;
+         justify-content:space-between;
+         }
+         
+         #curveMenu {
+         position: fixed;
+         bottom: 16px;
+         right: 16px;  
+         left: auto;
+         width: 60px;
+         height: 60px;
+         z-index: 5000;
+         }
+         
+         #curveToggle {
+         width: 60px;
+         height: 60px;
+         border-radius: 50%;
+         background: var(--wh);
+         color: var(--bl);
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         font-size: 1.6rem;
+         cursor: pointer;
+         user-select: none;
+         touch-action: manipulation;
+         box-shadow: grey 0px 1px 4px;
+         }
+         
+         .curve-item {
+         position: absolute;
+         bottom: 7px;
+         left: 7px;
+         width: 46px;
+         height: 46px;
+         border-radius: 50%;
+         border: none;
+         background: var(--wh);
+         color: var(--bl);
+         font-size: 1.1rem;
+         opacity: 0;
+         pointer-events: none;
+         transform: translate(0,0);
+         transition: transform 0.35s ease, opacity 0.25s ease;
+         }
+         
+         #curveMenu.open .curve-item {
+         opacity: 1;
+         pointer-events: auto;
+         }
+         
+         #curveMenu.open .curve-item:nth-of-type(1) {
+         transform: translate(20px, -90px);
+         }
+         
+         #curveMenu.open .curve-item:nth-of-type(2) {
+         transform: translate(-30px, -70px);
+         }
+         
+         #curveMenu.open .curve-item:nth-of-type(3) {
+         transform: translate(-70px, -30px);
+         }
+         
+         #curveMenu.open .curve-item:nth-of-type(4) {
+         transform: translate(-80px, 20px);
+         }
+         
+         #curveMenu.open .curve-item:nth-of-type(5) {
+         transform: translate(-100px, -100px);
+         }
+         
+         #hhh{
+          display:flex;
+          justify-content:right;
+          align-items:right;
+          margin:0px;
+          padding:0px;
+         }
+         
+         #hhh img{
+         width:50%;
+         height:auto;
+         }
     </style>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     
 </head>
 <body>
     
-    <i onclick="window.print()" class="bi bi-printer"></i>
-    <i onclick="location.href='finpulse.html'" class="bi bi-house"></i>
+    <div id="curveMenu">
+    <div id="curveToggle">
+    <i class="bi bi-gear"></i>
+    </div>
+    
+    <button class="curve-item" onclick="togSRC('#rebb')">
+    <i class="bi bi-book"></i>
+    </button>
+    
+    
+    
+    
+    <button class="curve-item" onclick="location.href='finpulse.html'">
+    <i class="bi bi-house-door"></i>
+    </button>
+    
+    <button class="curve-item" onclick="togSRC('.swit')" id="w">
+    <i id="ttte" class="bi bi-bar-chart-steps"></i>
+    </button>
+    
+    <button class="curve-item" onclick="togSRC('.ass')">
+    <i class="bi bi-search"></i>
+    </button>
+    
+    <button class="curve-item" onclick="add()">
+    <i class="bi bi-plus"></i>
+    </button>
+    
+    </div>
+    
+    
+    <i style="" onclick="window.print()" class="bi bi-printer"></i>
+    <i style="display:none;" onclick="location.href='finpulse.html'" class="bi bi-house"></i>
     <div class="c">
-    <br>
+   
     <div class="hea">
     <img src="https://raw.githubusercontent.com/microintel/endgram/main/photo/microintel-black-small.png">
     <h2> BlackRoad Lend</h2>
     </div>
-        <h2 id="hhh"> BlackRoad Lend </h2>
+        <h2 id="hhh"> Lend</h2>
         <div class="ass">
         
         <input type="text" id="s" placeholder="Search..." oninput="srh('rebb',this.value)">
-        <i class="bi bi-plus" onclick="add()"> </i>
+       <!-- <i class="bi bi-plus" onclick="add()"> </i> -->
         <select id="f" onchange="srte(this.value)">
             <option value="all">All</option>
             <option value="r">Receivable</option>
@@ -322,15 +499,23 @@
         </select>
         
         </div>
+        <div class="swit">
         
         <div class="form-check form-switch mt-3">
         <input class="form-check-input" type="checkbox" id="toggleSwitch">
         <label class="form-check-label" for="toggleSwitch" id="switchLabel"> Graph </label>
         </div>
+        
+        <div  class="form-check form-switch mt-3">
+        <label class="form-check-label" for="toggleSwitch" > Sumary </label>
+        <input  onclick="hisu(this)" id="nonen" class="form-check-input" type="checkbox">
+        </div>
+        
+        </div>
         <br>
         
         
-        <div id="ssuu" class="sumt">
+        <div id="ssuu"  class="sumt">
           <div>
            <font > Total </font> <font id="fsumT"> 0</font>
           </div>
@@ -361,8 +546,9 @@
         </div>
         <br>
         <canvas id="reboc" width="200" height="150"></canvas>
-        <br>
-        
+        <br><center>
+        <div id="nknnc" style="display:none;">
+        </div></center>
         <div id="rebb" class="recb">
         
         </div>
@@ -370,9 +556,196 @@
         
         
     </div>
+    <div id="sig">
+    <div >
+    <h3> Owner's Signature</h3>
+    <img id="sig" src="https://forsomething2410.github.io/kanakkuvallakkuda/Agreement/investorSIGN.png">
+    </div>
+    </div>
     <script src="lastsen.js" type="text/javascript"></script>
     
+    <script type="text/javascript">
+    
+    function togSRC(x) {
+    const parent = document.querySelector(x);
+    const isHidden = window.getComputedStyle(parent).display === 'none';
+    
+    parent.style.display = isHidden ? 'flex' : 'none';
+    
+    location.href="#ppr";
+    }
+    
+    
+    const curveMenu = document.getElementById("curveMenu");
+    const toggle = document.getElementById("curveToggle");
+    
+    
+    toggle.addEventListener("click", (e) => {
+    e.stopPropagation();
+    curveMenu.classList.toggle("open");
+    });
+    
+    
+    curveMenu.addEventListener("click", (e) => {
+    e.stopPropagation();
+    });
+    
+    
+    document.addEventListener("click", () => {
+    curveMenu.classList.remove("open");
+    });
+    
+    
+    curveMenu.querySelectorAll(".curve-item").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    setTimeout(() => {
+    curveMenu.classList.remove("open");
+    }, 0);
+    });
+    });
+    
+    
+    
+    function themeManager(action = "init") {
+    
+    const randomColor = () => [
+    Math.floor(Math.random() * 256),
+    Math.floor(Math.random() * 256),
+    Math.floor(Math.random() * 256)
+    ];
+    
+    const brightness = ([r, g, b]) =>
+    (r * 299 + g * 587 + b * 114) / 1000;
+    
+    const applyGradient = () => {
+    const colors = Array.from({ length: 4 }, randomColor);
+    const angle = Math.floor(Math.random() * 360);
+    
+    document.body.style.background =
+    `linear-gradient(${angle}deg, ${colors.map(c => `rgb(${c})`).join(",")})`;
+    
+    document.body.style.backgroundRepeat = "no-repeat";
+    document.body.style.backgroundSize = "100% 100%";
+    document.body.style.minHeight = "100vh";
+    
+    const avg = colors.reduce((s, c) => s + brightness(c), 0) / colors.length;
+    document.body.style.color = avg > 140 ? "#000" : "#fff";
+    };
+    
+    const applyImage = (img) => {
+    document.body.style.background =
+    `url(${img}) center/cover no-repeat fixed`;
+    document.body.style.color = "#fff";
+    };
+    
+    if (action === "init") {
+    const savedType = localStorage.getItem("themeStyle");
+    const savedImage = localStorage.getItem("userBgImage");
+    
+    if (savedType === "gradient") applyGradient();
+    if (savedType === "image" && savedImage) applyImage(savedImage);
+    return;
+    }
+    
+    if (action === "ask") {
+    Swal.fire({
+    title: "Choose Theme",
+    icon: "question",
+    showCancelButton: true,
+    showDenyButton: true,
+    confirmButtonText: "Gradient",
+    denyButtonText: "Image",
+    cancelButtonText: "Deafault"
+    }).then(result => {
+    
+    
+    if (result.isConfirmed) {
+    localStorage.setItem("themeStyle", "gradient");
+    localStorage.removeItem("userBgImage");
+    applyGradient();
+    }
+    
+    
+    else if (result.isDenied) {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*";
+    
+    input.onchange = () => {
+    const file = input.files[0];
+    if (!file) return;
+    
+    const reader = new FileReader();
+    reader.onload = () => {
+    localStorage.setItem("themeStyle", "image");
+    localStorage.setItem("userBgImage", reader.result);
+    applyImage(reader.result);
+    };
+    reader.readAsDataURL(file);
+    };
+    
+    input.click();
+    }
+    
+    
+    else {
+    localStorage.removeItem("themeStyle");
+    localStorage.removeItem("userBgImage");
+    document.body.style.background = "";
+    document.body.style.color = "";
+    }
+    });
+    }
+    }
+    
+    themeManager();
+    
+    
+    
+    </script>
+    
+    
    <script>
+   function theaX(){
+   let x= localStorage.getItem("theme");
+   if(x=='w'){
+   
+   
+   document.documentElement.style.setProperty('--bb',"black");
+   document.documentElement.style.setProperty('--bl',"black");
+   document.documentElement.style.setProperty('--box',"black");
+   document.documentElement.style.setProperty('--wh',"white");
+   
+   }
+   if(x=='b'){
+   
+   
+   document.documentElement.style.setProperty('--bb',"white");
+   document.documentElement.style.setProperty('--bl',"white");
+   document.documentElement.style.setProperty('--box',"white");
+   document.documentElement.style.setProperty('--wh',"black");
+   
+   }
+   
+   }
+   
+   theaX();
+   
+   
+   function hisu(x){
+   document.getElementById("nknnc").style.display="none";
+   if(x.id==="nonen"){
+   document.getElementById("nknnc").style.display="flex";
+   x.id="flexn";
+   }else{
+   document.getElementById("nknnc").style.display="none";
+   x.id="nonen";
+   }
+   location.href=`#${x.id}`;
+   }
+   
+   
   let grph=true;
    let rbdada = { rbcon: "", rtot: 0, btot: 0 };
    
@@ -402,6 +775,8 @@
    
    
    get();
+   setTimeout(()=>{document.getElementById("rebb").style.display="none"},1500);
+   
    
    function add() {
    let inel = document.getElementById("rebb");
@@ -411,6 +786,7 @@
    html: `
    <input type='number' id='a' class='swal2-input' placeholder='Amount'><br><br>
    <input type='date' id='dt' class='swal2-input'><br><br>
+   <input type='text' id='pers' class='swal2-input' placeholder='Person Name'><br><br>
    <input type='text' id='desc' class='swal2-input' placeholder='Description'><br><br>
    <select id='t' class='swal2-select'>
    <option value='R'>Receivable</option>
@@ -425,17 +801,18 @@
    let dt = document.getElementById("dt").value;
    let desc = document.getElementById("desc").value.trim();
    let t = document.getElementById("t").value;
+   let pers= document.getElementById("pers").value.trim();
    
-   if (!a || !dt || !desc) {
+   if (!a || !dt || !desc || !pers) {
    Swal.showValidationMessage("All fields are required!");
    return false;
    }
    
-   return { a, dt, desc, t };
+   return { a, dt, desc, t,pers};
    }
    }).then(result => {
    if (result.isConfirmed) {
-   const { a, dt, desc, t } = result.value;
+   const { a, dt, desc, t,pers } = result.value;
    const rb = indexedDB.open("black");
    
    rb.onsuccess = e => {
@@ -452,7 +829,7 @@
    <font class="${t}">${a}</font> <font>${dt}</font> <font>${t}</font>
    <i style="color:${ccc};" class="bi bi-trash" onclick="remRB(this)"></i>
    </div>
-   <div class="des">${desc}</div>
+   <div class="des"> <span>${pers}</span> <span>${desc}</span></div>
    `;
    
    if (inel.firstChild) {
@@ -743,13 +1120,14 @@
   
    let gamt  = g.children[1].innerText;
    let gdate  = g.children[2].innerText;
-   let gdes  = g.parentNode.children[1].innerHTML;
-   
+   let gdes  = g.parentNode.children[1].children[1].innerText;
+   let gper  = g.parentNode.children[1].children[0].innerText;
    Swal.fire({
    title: 'Lend Update',
    html:
    `<input id="a" type="number" class="swal2-input" placeholder="${gamt}" value="${gamt}"><br><br>
    <input type="date" id="b" class="swal2-input" placeholder="${gdate}" value="${gdate}"><br><br>
+   <input id="cx" class="swal2-input" placeholder="${gper}" value="${gper}"><br><br>
    <input id="c" class="swal2-input" placeholder="${gdes}" value="${gdes}"><br><br>`,
    focusConfirm: false,
    showCloseButton:true,
@@ -757,20 +1135,21 @@
    let a = document.getElementById('a').value;
    let b = document.getElementById('b').value;
    let c = document.getElementById('c').value;
-   if (!a || !b || !c) {
+   let cx = document.getElementById('cx').value;
+   if (!a || !b || !c || !cx) {
    Swal.showValidationMessage('Fill all fields');
    return false;
    }
-   return { a, b, c };
+   return { a, b, c, cx };
    }
    }).then(r => {
    if (r.isConfirmed) {
-   let { a, b, c } = r.value;
+   let { a, b, c, cx } = r.value;
    
    g.children[1].innerText=a;
    g.children[2].innerText=b;
-   g.parentNode.children[1].innerHTML=c;
-   
+   g.parentNode.children[1].children[0].innerHTML=cx;
+   g.parentNode.children[1].children[1].innerHTML=c;
    let rb = indexedDB.open("black",2);
    
    rb.onsuccess = e => {
@@ -833,16 +1212,54 @@
    else if((tex.toLowerCase().includes("per") & typ==="B") && (ppp.display!=="none")){
    bper+=parseInt(par);
    }
-   });
+   }
+   );
    
    dd.children[0].innerText=pert;
    dd.children[1].innerText=prot;
    dd.children[2].innerText=bper;
    dd.children[3].innerText=bpro;
    
+   disnkn();
    }
    
    
+   function disnkn() {
+   const result = {};
+   document.querySelectorAll('.head').forEach((headDiv) => {
+   const desDiv = headDiv.nextElementSibling;
+   const person = desDiv.querySelector('span')?.innerText.trim();
+   const amountFont = headDiv.querySelector('font');
+   const amount = parseFloat(amountFont?.innerText.trim());
+   const type = amountFont?.className.trim();
+   if (person && !isNaN(amount) && (type === 'B' || type === 'R')) {
+   if (!result[person]) result[person] = { B: 0, R: 0 };
+   result[person][type] += amount;
+   }
+   });
+   
+   let html = `
+   <table cellspacing="0" cellpadding="5">
+   <tr>
+   <th>Person</th>
+   <th style="color:red;">B</th>
+   <th style="color:green;"> R </th>
+   </tr>
+   `;
+   
+   for (const [person, { B, R }] of Object.entries(result)) {
+   html += `
+   <tr>
+   <td>${person}</td>
+   <td style="color:red;">${B.toFixed(1)}</td>
+   <td style="color:green;">${R.toFixed(1)}</td>
+   </tr>
+   `;
+   }
+   
+   html += `</table>`;
+   document.getElementById("nknnc").innerHTML = html;
+   }
    
    </script>
 </body>
