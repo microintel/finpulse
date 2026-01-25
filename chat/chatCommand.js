@@ -1,57 +1,11 @@
-function listCommand(){
-sendB(
-`Commands:
+function listCommand() {
+  let html = "Commands:<br><br>";
 
-1. <a href="#" onclick="">balance (tb)</a>
+  COMMANDS.forEach((cmd, i) => {
+    html += `${i + 1}. <a href="#" onclick="cmdinputadd('${cmd}')"> ${cmd}</a><br><br>`;
+  });
 
-2. <a href="#" onclick="cmdinputadd('tin')" >income (tin)</a>
-
-3. <a href="#" onclick="cmdinputadd('te')" >expense (te) </a>
-
-4. <a href="#" onclick="cmdinputadd('te from education')" >expense from category</a>
-
-5. <a href="#" onclick="cmdinputadd('income from example 2025-01-01 to 2026-01-01 sum')" > income from source from-date to to-date sum </a>
-
-6. <a href="#" onclick="cmdinputadd('income from example 2025-01-01 to 2026-01-01 sum chart bar')" > income from source from-date to to-date sum chart bar</a>
-
-7. <a href="#" onclick="cmdinputadd('ls src')" >ls src </a>
-
-8. <a href="#" onclick="cmdinputadd('ls expense category')" > ls expense category  </a>
-
-9. <a href="#" onclick="cmdinputadd('not chng')" > not chng </a>
-
-10. <a href="#" onclick="cmdinputadd('not off')" > not off </a>
-
-11. <a href="#" onclick="cmdinputadd('ieb')" > ieb </a>
-
-12. <a href="#" onclick="cmdinputadd('ieb chart pie')" > ieb chart pie/bar/line </a>
-
-13. <a href="#" onclick="cmdinputadd('lend tot')" > lend tot </a>
-
-14. <a href="#" onclick="cmdinputadd('lend sum')" > lend sum </a>
-
-15. <a href="#" onclick="cmdinputadd('ls lend')" > ls lend </a>
-
-16. <a href="#" onclick="cmdinputadd('lend name person_name')" >lend name person_name</a>
-
-17. <a href="#" onclick="cmdinputadd('ls lend name')" > ls lend name</a>
-
-18. <a href="#" onclick="cmdinputadd('lend sum chart pie')" > lend chart bar/pie</a>
-
-19. <a href="#" onclick="cmdinputadd('backup date')" > backup date</a>
-
-20. <a href="#" onclick="cmdinputadd('factory reset')" > factory reset</a>
-
-21. <a href="#" onclick="cmdinputadd('storage')" > storage</a>
-
-22. <a href="#" onclick="cmdinputadd('storage chart')" > storage chart</a>
-
-23. <a href="#" onclick="cmdinputadd('Account')" > Account</a>
-
-
-
-`
-    );
+  sendB(html);
 }
 
 async function backupDate(url) {
@@ -180,8 +134,10 @@ function lendsummary() {
 
 function listSource(){
 const s = [...new Set(data.map(x => x.from).filter(Boolean))];
- sendB(s.join("\n") || "No sources");
-    
+ //sendB(s.join("\n") || "No sources");
+let out=``;
+s.forEach(el=>out+=`<a href="#" onclick="cmdinputadd('income from ${el}')">${el}</a><br>`);
+sendB(out);
 }
 
 function cmdinputadd(x){
@@ -199,7 +155,15 @@ const cats = [
         )
       )
     ];
-    sendB(cats.join("\n") || "No caloriers found");
+   // sendB(cats.join("\n") || "No catgories found");
+    
+    
+    let out = "Expenses Categories \n Click on anyone of thus to get\n\n";
+    cats.forEach((name, i) => {
+    out += `<a href="#" onclick="cmdinputadd('te from ${name}')">${i + 1}. ${name}</a><br>`;
+    });
+    
+    sendB(out);
 }
 
 

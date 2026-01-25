@@ -121,6 +121,7 @@ display:none;
 a{
 text-decoration:none;
 font-weight:bold;
+color:#21c063;
 }
 
 .bi-question-circle{
@@ -130,6 +131,30 @@ position:fixed;
 top:20px;
 right:20px;
 font-size:1.3rem;
+}
+
+#cmd-suggestions {
+  position: absolute;
+  bottom: 55px;
+  left: 0;
+  right: 0;
+  background: #111;
+  border: none;
+  border-radius: 6px;
+  max-height: 180px;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+.cmd-item {
+  padding: 8px 12px;
+  color: #ddd;
+  font-size: 14px;
+}
+
+.cmd-item:hover {
+  background:#21c063;
+  color: #fff;
 }
 </style>
 
@@ -152,10 +177,14 @@ font-size:1.3rem;
   </div>
 
   <div class="i-a">
-    <form class="i-f" id="i-f">
-      <textarea id="chat-i" rows="1" placeholder="Type a command…"></textarea>
-      <button><i class="bi bi-send-fill"></i></button>
-    </form>
+  <form class="i-f" id="i-f">
+  <textarea id="chat-i" rows="1" placeholder="Type a command…"></textarea>
+  
+  <!-- suggestions -->
+  <div id="cmd-suggestions"></div>
+  
+  <button><i class="bi bi-send-fill"></i></button>
+  </form>
   </div>
 </div>
 
@@ -164,7 +193,60 @@ font-size:1.3rem;
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 
+const COMMANDS = [
+  "balance (tb)",
+  "income (tin)",
+  "expense (te)",
+  "income from example",
+  "expense from education",
+  "income from example 2025-01-01 to 2026-01-01 sum",
+  "income from example 2025-01-01 to 2026-01-01 sum chart bar",
+  "ls src",
+  "ls expense category",
+  "not chng",
+  "not off",
+  "ieb",
+  "ieb chart pie",
+  "lend tot",
+  "lend sum",
+  "ls lend",
+  "lend name person_name",
+  "ls lend name",
+  "lend sum chart pie",
+  "backup date",
+  "factory reset",
+  "storage",
+  "storage chart",
+  "Account"
+];
 
+
+const input = document.getElementById("chat-i");
+const sugBox = document.getElementById("cmd-suggestions");
+
+input.addEventListener("input", () => {
+  const text = input.value.toLowerCase().trim();
+  sugBox.innerHTML = "";
+
+  if (!text) return;
+
+  COMMANDS
+    .filter(cmd => cmd.toLowerCase().includes(text))
+    .slice(0, 6)
+    .forEach(cmd => {
+      const div = document.createElement("div");
+      div.textContent = cmd;
+      div.className = "cmd-item";
+
+      div.onclick = () => {
+        input.value = cmd;
+        sugBox.innerHTML = "";
+        input.focus();
+      };
+
+      sugBox.appendChild(div);
+    });
+});
 
 let userNot = document.getElementById("userNot");
 let botNot = document.getElementById("botNot");
@@ -275,7 +357,7 @@ function sendU(t){
 botNot?.play();
   const d=document.createElement("div");
   d.className="msg usr";
-  d.innerHTML=`<div class="bbl">${t}</div>`;
+  d.innerHTML=`<div class="bbl" onclick="cmdinputadd(this.innerText)">${t}</div>`;
   log.appendChild(d);
   log.scrollTop=log.scrollHeight;
   
@@ -534,7 +616,7 @@ function income(t){
     sum += Number(x.income);
   });
 
-  sendB("Income : " + sum);
+  sendB(`Income from ${t.slice(2).join(" ")} is : ` + sum);
 }
 
 function expense(t){
