@@ -281,7 +281,7 @@ function chkSize() {
 function generateBlackRoadPDF(filters) {
   const normalize = v => (v || "").toLowerCase().trim();
 
-  const nameKeys = filters.from || [];
+  const nameKeys = Array.isArray(filters.from) ? filters.from : [];
   const categoryKeys = filters.categories || [];
   const fromDate = filters.fromDate;
   const toDate = filters.toDate;
@@ -299,13 +299,14 @@ function generateBlackRoadPDF(filters) {
   let categorySummary = {};
 
   records.forEach(record => {
-
     if (fromDate && toDate) {
       const rDate = new Date(record.date).getTime();
       const fDate = new Date(fromDate).getTime();
       const tDate = new Date(toDate).getTime();
       if (isNaN(rDate) || rDate < fDate || rDate > tDate) return;
     }
+
+    summaryIncome += Number(record.income || 0);
 
     let txs = record.transactions || [];
 
@@ -318,8 +319,6 @@ function generateBlackRoadPDF(filters) {
     }
 
     if (!txs.length) return;
-
-    summaryIncome += Number(record.income || 0);
 
     txs.forEach(t => {
       const amt = Number(t.amount || 0);
@@ -338,11 +337,11 @@ function generateBlackRoadPDF(filters) {
   pdf.setFontSize(24);
   pdf.text("BlackRoad Report", 20, y);
   y += 8;
-  
-  pdf.setFontSize(16);
-  pdf.text(`Report for : ${nameKeys}`, 20, y);
-  y += 8;
 
+  pdf.setFontSize(16);
+  const reportForText = nameKeys.length ? nameKeys.join(", ") : "All Sources";
+  pdf.text(`Report for : ${reportForText}`, 20, y);
+  y += 8;
 
   pdf.setFontSize(11);
   pdf.text(`Income : ${summaryIncome}`, 20, y);
@@ -367,60 +366,59 @@ function generateBlackRoadPDF(filters) {
   y += 5;
 
   records.forEach(record => {
-
-    if (fromDate && toDate) {
-      const rDate = new Date(record.date).getTime();
-      const fDate = new Date(fromDate).getTime();
-      const tDate = new Date(toDate).getTime();
-      if (isNaN(rDate) || rDate < fDate || rDate > tDate) return;
-    }
-
-    let transactions = record.transactions || [];
-
-    if (categoryKeys.length) {
-      transactions = transactions.filter(t =>
-        categoryKeys.some(k =>
-          normalize(t.category).includes(normalize(k))
-        )
-      );
-    }
-
-    if (!transactions.length) return;
-
-    if (y > 250) {
-      pdf.addPage();
-      y = 20;
-    }
-
-    pdf.setFontSize(13);
-    pdf.text(`Income Date : ${record.date}`, 20, y);
-    y += 6;
-
-    pdf.setFontSize(11);
-    pdf.text(`From : ${record.from}`, 20, y);
-    y += 6;
-
-    pdf.text(`Income : ${record.income}`, 20, y);
-    pdf.text(`Expense : ${record.expense}`, 80, y);
-    pdf.text(`Balance : ${record.balance}`, 150, y);
-    y += 6;
-
-    const tableBody = transactions.map(t => [
-      t.date,
-      t.category,
-      t.description,
-      `${t.amount}`
-    ]);
-
-    pdf.autoTable({
-      startY: y,
-      head: [["Date", "Category", "Description", "Amount"]],
-      body: tableBody,
-      styles: { fontSize: 9 },
-      headStyles: { fillColor: [40, 40, 40] }
-    });
-
-    y = pdf.lastAutoTable.finalY + 10;
+  if (fromDate && toDate) {
+  const rDate = new Date(record.date).getTime();
+  const fDate = new Date(fromDate).getTime();
+  const tDate = new Date(toDate).getTime();
+  if (isNaN(rDate) || rDate < fDate || rDate > tDate) return;
+  }
+  
+  let transactions = record.transactions || [];
+  
+  if (categoryKeys.length) {
+  transactions = transactions.filter(t =>
+  categoryKeys.some(k =>
+  normalize(t.category).includes(normalize(k))
+  )
+  );
+  }
+  
+  if (y > 250) {
+  pdf.addPage();
+  y = 20;
+  }
+  
+  pdf.setFontSize(13);
+  pdf.text(`Income Date : ${record.date}`, 20, y);
+  y += 6;
+  
+  pdf.setFontSize(11);
+  pdf.text(`From : ${record.from}`, 20, y);
+  y += 6;
+  
+  pdf.text(`Income : ${record.income}`, 20, y);
+  pdf.text(`Expense : ${record.expense || 0}`, 80, y);
+  pdf.text(`Balance : ${record.balance}`, 150, y);
+  y += 6;
+  
+  const tableBody = transactions.length
+  ? transactions.map(t => [
+  t.date,
+  t.category,
+  t.description,
+  `${t.amount}`
+  ])
+  : [["-", "-", "No expense", "0"]];
+  
+  pdf.autoTable({
+  startY: y,
+  head: [["Date", "Category", "Description", "Amount"]],
+  body: tableBody,
+  styles: { fontSize: 9 },
+  headStyles: { fillColor: [40, 40, 40] }
+  });
+  
+  y = pdf.lastAutoTable.finalY + 10;
   });
 
   const pageCount = pdf.getNumberOfPages();
@@ -437,7 +435,9 @@ function generateBlackRoadPDF(filters) {
   const blob = pdf.output("blob");
   const url = URL.createObjectURL(blob);
 
-  sendB(`<b>BlackRoad Report Ready</b><br><br><a href="${url}" download="BlackRoad-Report.pdf">Download</a>`);
+  sendB(
+    `<b>BlackRoad Report Ready</b><br><br><a href="${url}" download="BlackRoad-Report.pdf">Download</a>`
+  );
 }
 
 function parseReportCommand(input) {
