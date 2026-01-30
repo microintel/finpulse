@@ -141,8 +141,10 @@ sendB(out);
 }
 
 function cmdinputadd(x){
-
-document.getElementById("chat-i").value=x;
+let vgh=document.getElementById("chat-i");
+vgh.value=x;
+vgh.style.height="auto";
+vgh.style.height=vgh.scrollHeight+"px";
 }
 
 
@@ -273,4 +275,204 @@ function chkSize() {
       };
     };
   });
+}
+
+
+function generateBlackRoadPDF(filters) {
+  const normalize = v => (v || "").toLowerCase().trim();
+
+  const nameKeys = filters.from || [];
+  const categoryKeys = filters.categories || [];
+  const fromDate = filters.fromDate;
+  const toDate = filters.toDate;
+
+  let records = data;
+
+  if (nameKeys.length) {
+    records = records.filter(r =>
+      nameKeys.some(k => normalize(r.from).includes(normalize(k)))
+    );
+  }
+
+  let summaryIncome = 0;
+  let summaryExpense = 0;
+  let categorySummary = {};
+
+  records.forEach(record => {
+
+    if (fromDate && toDate) {
+      const rDate = new Date(record.date).getTime();
+      const fDate = new Date(fromDate).getTime();
+      const tDate = new Date(toDate).getTime();
+      if (isNaN(rDate) || rDate < fDate || rDate > tDate) return;
+    }
+
+    let txs = record.transactions || [];
+
+    if (categoryKeys.length) {
+      txs = txs.filter(t =>
+        categoryKeys.some(k =>
+          normalize(t.category).includes(normalize(k))
+        )
+      );
+    }
+
+    if (!txs.length) return;
+
+    summaryIncome += Number(record.income || 0);
+
+    txs.forEach(t => {
+      const amt = Number(t.amount || 0);
+      summaryExpense += amt;
+      categorySummary[t.category] =
+        (categorySummary[t.category] || 0) + amt;
+    });
+  });
+
+  const summaryBalance = summaryIncome - summaryExpense;
+
+  const { jsPDF } = window.jspdf;
+  const pdf = new jsPDF("p", "mm", "a4");
+  let y = 20;
+
+  pdf.setFontSize(24);
+  pdf.text("BlackRoad Report", 20, y);
+  y += 8;
+  
+  pdf.setFontSize(16);
+  pdf.text(`Report for : ${nameKeys}`, 20, y);
+  y += 8;
+
+
+  pdf.setFontSize(11);
+  pdf.text(`Income : ${summaryIncome}`, 20, y);
+  pdf.text(`Expense : ${summaryExpense}`, 80, y);
+  pdf.text(`Balance : ${summaryBalance}`, 150, y);
+  y += 8;
+
+  pdf.setFontSize(16);
+  pdf.text("Category Summary", 20, y);
+  y += 6;
+
+  pdf.setFontSize(10);
+  Object.entries(categorySummary).forEach(([cat, amt]) => {
+    if (y > 270) {
+      pdf.addPage();
+      y = 20;
+    }
+    pdf.text(`${cat} : ${amt}`, 25, y);
+    y += 5;
+  });
+
+  y += 5;
+
+  records.forEach(record => {
+
+    if (fromDate && toDate) {
+      const rDate = new Date(record.date).getTime();
+      const fDate = new Date(fromDate).getTime();
+      const tDate = new Date(toDate).getTime();
+      if (isNaN(rDate) || rDate < fDate || rDate > tDate) return;
+    }
+
+    let transactions = record.transactions || [];
+
+    if (categoryKeys.length) {
+      transactions = transactions.filter(t =>
+        categoryKeys.some(k =>
+          normalize(t.category).includes(normalize(k))
+        )
+      );
+    }
+
+    if (!transactions.length) return;
+
+    if (y > 250) {
+      pdf.addPage();
+      y = 20;
+    }
+
+    pdf.setFontSize(13);
+    pdf.text(`Income Date : ${record.date}`, 20, y);
+    y += 6;
+
+    pdf.setFontSize(11);
+    pdf.text(`From : ${record.from}`, 20, y);
+    y += 6;
+
+    pdf.text(`Income : ${record.income}`, 20, y);
+    pdf.text(`Expense : ${record.expense}`, 80, y);
+    pdf.text(`Balance : ${record.balance}`, 150, y);
+    y += 6;
+
+    const tableBody = transactions.map(t => [
+      t.date,
+      t.category,
+      t.description,
+      `${t.amount}`
+    ]);
+
+    pdf.autoTable({
+      startY: y,
+      head: [["Date", "Category", "Description", "Amount"]],
+      body: tableBody,
+      styles: { fontSize: 9 },
+      headStyles: { fillColor: [40, 40, 40] }
+    });
+
+    y = pdf.lastAutoTable.finalY + 10;
+  });
+
+  const pageCount = pdf.getNumberOfPages();
+  pdf.setPage(pageCount);
+
+  pdf.setFontSize(9);
+  pdf.text(
+    `${new Date().toLocaleString()} MicroIntel`,
+    105,
+    290,
+    { align: "center" }
+  );
+
+  const blob = pdf.output("blob");
+  const url = URL.createObjectURL(blob);
+
+  sendB(`<b>BlackRoad Report Ready</b><br><br><a href="${url}" download="BlackRoad-Report.pdf">Download</a>`);
+}
+
+function parseReportCommand(input) {
+  const text = input.toLowerCase();
+
+  let result = {
+    from: [],
+    categories: [],
+    fromDate: null,
+    toDate: null
+  };
+
+  const fromMatch = text.match(/from\s+([a-z0-9 ,]+?)(?=\s+cat|\s+income|$)/);
+  if (fromMatch) {
+    result.from = fromMatch[1].split(",").map(v => v.trim()).filter(Boolean);
+  }
+
+  const catMatch = text.match(/cat\s*=?\s*([a-z0-9 ,]+?)(?=\s+income|$)/);
+  if (catMatch) {
+    result.categories = catMatch[1].split(",").map(v => v.trim()).filter(Boolean);
+  }
+
+  const dateMatch = text.match(
+    /income\s*date\s*(from)?\s*([0-9\/-]+)\s*(to|-)\s*([0-9\/-]+)/i
+  );
+
+  if (dateMatch) {
+    result.fromDate = dateMatch[2];
+    result.toDate = dateMatch[4];
+  }
+
+  return result;
+}
+
+function runReportCommand(commandText) {
+  const filters = parseReportCommand(commandText);
+  generateBlackRoadPDF(filters);
 }

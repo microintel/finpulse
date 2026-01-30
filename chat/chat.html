@@ -157,7 +157,8 @@ font-size:1.3rem;
   color: #fff;
 }
 </style>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
   </head>
 
@@ -193,7 +194,11 @@ font-size:1.3rem;
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 
+
+
+
 const COMMANDS = [
+"ls cmd",
   "balance (tb)",
   "income (tin)",
   "expense (te)",
@@ -217,7 +222,12 @@ const COMMANDS = [
   "factory reset",
   "storage",
   "storage chart",
-  "Account"
+  "Account",
+  "report from income-source",
+  "report from income-source1, income-source2",
+  "report from income-source cat=category1,category2",
+  "report from income-source income date from 2026-01-01 to 2026-01-31",
+  "report from income-source cat=category income date from 2026-01-01 to 2026-01-31"
 ];
 
 
@@ -413,6 +423,7 @@ function sendB(t){
     });
 
   },1500);
+  document.getElementById("cmd-suggestions").innerHTML="";
 }
 
 

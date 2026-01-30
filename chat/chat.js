@@ -9,6 +9,10 @@ function reply(q) {
     return listCommand();
   }
   
+  if(t[0] ==="report"){
+   return runReportCommand(q.trim().toLowerCase());
+  }
+  
   if(t[0] === "factory" && t[1] ==="reset"){
   return deleteDB();
   }
