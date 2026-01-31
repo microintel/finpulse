@@ -443,30 +443,34 @@ function generateBlackRoadPDF(filters) {
 function parseReportCommand(input) {
   const text = input.toLowerCase();
 
-  let result = {
+  const result = {
     from: [],
     categories: [],
     fromDate: null,
     toDate: null
   };
 
-  const fromMatch = text.match(/from\s+([a-z0-9 ,]+?)(?=\s+cat|\s+income|$)/);
-  if (fromMatch) {
-    result.from = fromMatch[1].split(",").map(v => v.trim()).filter(Boolean);
-  }
+  const regex = /(\w+)\((.*?)\)/g;
 
-  const catMatch = text.match(/cat\s*=?\s*([a-z0-9 ,]+?)(?=\s+income|$)/);
-  if (catMatch) {
-    result.categories = catMatch[1].split(",").map(v => v.trim()).filter(Boolean);
-  }
+  for (const match of text.matchAll(regex)) {
+    const key = match[1];
+    const values = match[2]
+      .split(",")
+      .map(v => v.trim())
+      .filter(Boolean);
 
-  const dateMatch = text.match(
-    /income\s*date\s*(from)?\s*([0-9\/-]+)\s*(to|-)\s*([0-9\/-]+)/i
-  );
+    if (key === "income") {
+      result.from = values;
+    }
 
-  if (dateMatch) {
-    result.fromDate = dateMatch[2];
-    result.toDate = dateMatch[4];
+    if (key === "cat") {
+      result.categories = values;
+    }
+
+    if (key === "date") {
+      result.fromDate = values[0] || null;
+      result.toDate = values[1] || null;
+    }
   }
 
   return result;
