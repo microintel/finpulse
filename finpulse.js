@@ -108,7 +108,9 @@ const r = indexedDB.open("black");
        <option value="apparel">Apparel</option>
 <option value="baby"> baby </option>
 <option value="bakery-pups"> bakery/pups/ </option>
+<option value="bank">Bank</option>
 <option value="beauty">Beauty</option>
+<option value="borrow">Borrow</option>
 <option value="bigbasket"> Bigbasket </option>
 <option value="biscuit"> biscuit/ </option>
 <option value="blink-it"> blink-it </option>
@@ -116,6 +118,7 @@ const r = indexedDB.open("black");
 <option value="car">Car</option>
 <option value="clothing">Clothing</option>
 <option value="donate">Donate</option>
+<option value="divident">Divident</option>
 <option value="drink-juices"> drink/juices </option>
 <option value="education">Education</option>
 <option value="egg"> egg </option>
@@ -140,16 +143,20 @@ const r = indexedDB.open("black");
 <option value="party">Party</option>
 <option value="personal-care">Personal Care</option>
 <option value="pet">Pet</option>
+<option value="penalty">Penalty</option>
 <option value="recharge">Recharges</option>
+<option value="receivable">recivable</option>
 <option value="repair">Repair</option>
 <option value="samosa-outside"> samosa/outside/ </option>
 <option value="self"> self </option>
+<option value="service">Service</option>
 <option value="shopping">Shopping</option>
 <option value="snacks">Snacks</option>
 <option value="social">Social</option>
 <option value="sport">Sport</option>
 <option value="style-fashion">Style / Fashion</option>
 <option value="swiggy"> Swiggy </option>
+<option value="tax">tax</option>
 <option value="telephone">Telephone</option>
 <option value="tiffen-launch-palou"> tiffen/launch/palou </option>
 <option value="tour">Tour</option>
@@ -552,7 +559,7 @@ const r = indexedDB.open("black");
             row.innerHTML = `<td>${cat}</td><td>${data[cat].toFixed(2)}</td>`;
             tbody.appendChild(row);
         }
-      setTimeout(()=>{document.getElementById("ppr").style.display="none";},1500); 
+      // setTimeout(()=>{document.getElementById("ppr").style.display="none";},1500); 
     }
     
     sumTxn();
