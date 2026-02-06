@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Accounting Summary</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+body{
+  font-family: system-ui;
+  background:black;
+  padding:20px
+}
+.card{
+  max-width:420px;
+  margin:auto;
+  background:white;
+  border-radius:10px;
+  padding:20px;
+  box-shadow:0 8px 24px rgba(0,0,0,.08)
+}
+h2{text-align:center;margin-bottom:14px}
+input,button{
+  width:92%;
+  padding:10px;
+  border-radius:10px;
+  border:1px solid #ddd;
+  margin-bottom:8px
+}
+button{
+  background:#111;
+  color:#fff;
+  width:100%;
+  border:none;
+  cursor:pointer
+}
+.row{
+  display:flex;
+  justify-content:space-between;
+  margin:6px 0
+}
+.net{font-weight:700}
+canvas{margin-top:18px}
+.small{font-size:13px;color:#666}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h2>BlackRoad Accounting</h2>
+
+  <div id="banks"></div>
+  <button onclick="addBank()">+ Add Bank</button>
+
+  <input id="cash" placeholder="Cash">
+  <input id="other" placeholder="Other Assets">
+
+  <button onclick="calculate()">Calculate</button>
+
+  <div id="result"></div>
+  <canvas id="chart"></canvas>
+</div>
+
+<script>
+let receivable=0,borrow=0,chart
+
+function openDB(cb){
+  const r=indexedDB.open("black")
+  r.onupgradeneeded=e=>{
+    const db=e.target.result
+    if(!db.objectStoreNames.contains("sst"))
+      db.createObjectStore("sst")
+  }
+  r.onsuccess=e=>cb(e.target.result)
+}
+
+openDB(db=>{
+  const t=db.transaction("sst","readonly").objectStore("sst").get("nkncc")
+  t.onsuccess=()=>{
+    receivable=t.result?.rtot||0
+    borrow=t.result?.btot||0
+  }
+})
+
+function addBank(){
+  const i=document.createElement("input")
+  i.placeholder="Bank"
+  i.className="bank"
+  document.getElementById("banks").appendChild(i)
+}
+addBank()
+
+function v(x){return Number(x.value)||0}
+
+function calculate(){
+  const banks=[...document.querySelectorAll(".bank")].map(v)
+  const bankTotal=banks.reduce((a,b)=>a+b,0)
+  const cash=v(document.getElementById("cash"))
+  const other=v(document.getElementById("other"))
+
+  const assets=bankTotal+cash+other+receivable
+  const liabilities=borrow
+  const net=assets-liabilities
+
+  document.getElementById("result").innerHTML=`
+    <div class="row"><span>Banks</span><span>₹${bankTotal}</span></div>
+    <div class="row"><span>Cash</span><span>₹${cash}</span></div>
+    <div class="row"><span>Receivable</span><span>₹${receivable}</span></div>
+    <div class="row"><span>Liabilities</span><span>₹${liabilities}</span></div>
+    <hr>
+    <div class="row net"><span>Net</span><span>₹${net}</span></div>
+  `
+
+  draw(assets,liabilities)
+  store({banks,cash,other,receivable,liabilities,assets,net,time:new Date().toISOString()})
+}
+
+function draw(a,l){
+  if(chart)chart.destroy()
+  chart=new Chart(chartEl,{
+    type:"doughnut",
+    data:{labels:["Assets","Liabilities"],datasets:[{data:[a,l]}]},
+    options:{plugins:{legend:{display:false}}}
+  })
+}
+const chartEl=document.getElementById("chart")
+
+function store(data){
+  openDB(db=>{
+    const t=db.transaction("sst","readwrite").objectStore("sst")
+    t.put(data,"accounting")
+  })
+}
+</script>
+
+</body>
+</html>
