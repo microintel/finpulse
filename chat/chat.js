@@ -9,6 +9,10 @@ function reply(q) {
     return listCommand();
   }
   
+  if(t[0] === "balance" && t[1] ==="sheet"){
+  return showAccountingCharts();
+  }
+  
   if(t[0] ==="report"){
    return runReportCommand(q.trim().toLowerCase());
   }
@@ -519,4 +523,93 @@ async function showBlackRoadStorage() {
   const usedMB = parseFloat(await calchkSize());
 
   showStoragePieChart(usedMB, totalMB);
+}
+
+async function showAccountingCharts(){
+  const r=indexedDB.open("black")
+  r.onsuccess=e=>{
+    const db=e.target.result
+    const g=db.transaction("sst","readonly").objectStore("sst").get("accounting")
+    g.onsuccess=()=>{
+      const d=g.result
+      if(!d)return
+
+      const bankTotal=d.banks.reduce((a,b)=>a+b,0)
+      const barId="bar_"+Date.now()
+      const pieId="pie_"+Date.now()
+
+      const box=document.createElement("div")
+      box.className="msg bot"
+      box.innerHTML=`<div class="bbl">
+          <div style="font-size:14px;line-height:0.6";margin-top:0px;padding:0px;>
+          <h4 style="margin-top:0px;text-align:center;"> Blance Sheet</h4>
+          <div><b>Assets : </b> ₹${d.assets}</div>
+          <div><b>Net Balance : </b> ₹${d.net}</div>
+          <hr>
+            <div><b>Banks : </b> ₹${bankTotal}</div>
+            <div><b>Cash : </b> ₹${d.cash}</div>
+            <div><b>Other : </b> ₹${d.other}</div>
+            <div><b>Receivable : </b> ₹${d.receivable}</div>
+            <div><b>Liabilities : </b> ₹${d.liabilities}</div>
+            <hr> 
+          </div>
+          <div style="height:260px;margin-top:6px">
+            <canvas style="margin:0px;" id="${barId}"></canvas>
+          </div>
+          <div style="height:260px;margin-top:6px">
+            <canvas id="${pieId}"></canvas>
+          </div>
+        </div>
+      `
+      log.appendChild(box)
+      log.scrollTop=log.scrollHeight
+
+      requestAnimationFrame(()=>{
+        const bar=document.getElementById(barId)
+        const pie=document.getElementById(pieId)
+        if(!bar||!pie)return
+
+        new Chart(bar.getContext("2d"),{
+          type:"bar",
+          data:{
+            labels:["Banks","Cash","Other","Receivable","Liabilities"],
+            datasets:[{
+              data:[
+                bankTotal,
+                d.cash,
+                d.other,
+                d.receivable,
+                d.liabilities
+              ]
+            }]
+          },
+          options:{
+            responsive:true,
+            maintainAspectRatio:false,
+            plugins:{
+              legend:{display:false},
+              title:{display:true,text:"Accounting"}
+            }
+          }
+        })
+
+        new Chart(pie.getContext("2d"),{
+          type:"doughnut",
+          data:{
+            labels:["Assets","Liabilities"],
+            datasets:[{
+              data:[d.assets,d.liabilities]
+            }]
+          },
+          options:{
+            responsive:true,
+            maintainAspectRatio:false,
+            plugins:{
+              title:{display:true,text:"Assets vs Liabilities"}
+            }
+          }
+        })
+      })
+    }
+  }
 }
