@@ -534,28 +534,37 @@ async function showAccountingCharts(){
       const d=g.result
       if(!d)return
 
-      const bankTotal=d.banks.reduce((a,b)=>a+b,0)
+      const bankTotal=(d.banks||[]).reduce((a,b)=>a+b,0)
+
       const barId="bar_"+Date.now()
       const pieId="pie_"+Date.now()
 
       const box=document.createElement("div")
       box.className="msg bot"
-      box.innerHTML=`<div class="bbl">
-          <div style="font-size:14px;line-height:0.6";margin-top:0px;padding:0px;>
-          <h4 style="margin-top:0px;text-align:center;"> Blance Sheet</h4>
-          <div><b>Assets : </b> ₹${d.assets}</div>
-          <div><b>Net Balance : </b> ₹${d.net}</div>
-          <hr>
-            <div><b>Banks : </b> ₹${bankTotal}</div>
-            <div><b>Cash : </b> ₹${d.cash}</div>
-            <div><b>Other : </b> ₹${d.other}</div>
-            <div><b>Receivable : </b> ₹${d.receivable}</div>
-            <div><b>Liabilities : </b> ₹${d.liabilities}</div>
-            <hr> 
+      box.innerHTML=`
+        <div class="bbl">
+          <div style="font-size:14px;line-height:0.6">
+            <h4 style="margin:4px 0;text-align:center">Balance Sheet</h4>
+
+            <div><b>Total Assets:</b> ${d.assets}</div>
+            <div><b>Net Worth:</b> ${d.net}</div>
+            <hr>
+
+            <div><b>Banks :</b> ${bankTotal}</div>
+            <div><b>Cash :</b> ${d.cash}</div>
+            <div><b>Mutual Fund :</b> ${d.mf}</div>
+            <div><b>FD :</b> ${d.fd}</div>
+            <div><b>Stocks :</b> ${d.stock}</div>
+            <div><b>Other :</b> ${d.other}</div>
+            <div><b>Receivable :</b> ${d.receivable}</div>
+            <div><b>Liabilities :</b> ${d.liabilities}</div>
+            <hr>
           </div>
+
           <div style="height:260px;margin-top:6px">
-            <canvas style="margin:0px;" id="${barId}"></canvas>
+            <canvas id="${barId}"></canvas>
           </div>
+
           <div style="height:260px;margin-top:6px">
             <canvas id="${pieId}"></canvas>
           </div>
@@ -569,14 +578,26 @@ async function showAccountingCharts(){
         const pie=document.getElementById(pieId)
         if(!bar||!pie)return
 
-        new Chart(bar.getContext("2d"),{
+        new Chart(bar,{
           type:"bar",
           data:{
-            labels:["Banks","Cash","Other","Receivable","Liabilities"],
+            labels:[
+              "Banks",
+              "Cash",
+              "Mutual Fund",
+              "FD",
+              "Stocks",
+              "Other",
+              "Receivable",
+              "Liabilities"
+            ],
             datasets:[{
               data:[
                 bankTotal,
                 d.cash,
+                d.mf,
+                d.fd,
+                d.stock,
                 d.other,
                 d.receivable,
                 d.liabilities
@@ -588,12 +609,12 @@ async function showAccountingCharts(){
             maintainAspectRatio:false,
             plugins:{
               legend:{display:false},
-              title:{display:true,text:"Accounting"}
+              title:{display:true,text:"Asset Breakdown"}
             }
           }
         })
 
-        new Chart(pie.getContext("2d"),{
+        new Chart(pie,{
           type:"doughnut",
           data:{
             labels:["Assets","Liabilities"],
