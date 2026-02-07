@@ -132,6 +132,7 @@
         background-color:transparent;
         justify-content:center;
         border-radius: 8px;
+        transition:2s;
         }
         
         .child {
@@ -148,7 +149,6 @@
         box-shadow: grey 0px 1px 4px;
         border-radius: 6px;
         border-left:0px solid var(--bor);
-
         
         backdrop-filter: blur(14px);
         -webkit-backdrop-filter: blur(14px);
@@ -255,12 +255,14 @@ font-size:10px;
         }
         
         .sinp {
-        display: flex;
+        display: none;
         width: 100%;
         gap:4px;
+        margin-top:10px;
+        margin-bottom:10px;
         transition: background-color 1s ease;
-        justify-content:center;
-        align-items:center;
+        justify-content:top;
+        align-items:top;
         }
         
         #sinpp {

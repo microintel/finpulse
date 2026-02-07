@@ -2,56 +2,52 @@
 <html lang="en">
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Accounting Summary</title>
+<title>BlackRoad Accounting</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <style>
-body{
-  font-family: system-ui;
-  background:black;
-  padding:20px
+:root{--bg:black;--accent:white}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:system-ui}
+.card{min-height:100vh;background:var(--bg);padding:18px 16px 90px;border-radius:18px 18px 0 0}
+@media(min-width:700px){.card{max-width:420px;margin:20px auto;border-radius:18px;min-height:auto}}
+h2{text-align:center;margin:10px 0 16px;color:var(--accent)}
+.section{color:var(--accent);margin-top:16px;font-weight:600;font-size:14px}
+input{width:100%;padding:14px;border-radius:12px;border:1px solid #ddd;margin-bottom:10px;font-size:15px;background-color:var(--bg);color:var(--accent)}
+input::placeholder{
+color:grey;
 }
-.card{
-  max-width:420px;
-  margin:auto;
-  background:white;
-  border-radius:10px;
-  padding:20px;
-  box-shadow:0 8px 24px rgba(0,0,0,.08)
+button{width:100%;padding:14px;border-radius:14px;border:none;background:var(--accent);color:var(--bg);font-size:15px;cursor:pointer;margin-bottom:10px}
+.secondary{background:#eee;color:#111}
+.row{display:flex;justify-content:space-between;padding:6px 0}
+.net{font-weight:700;font-size:17px}
+canvas{width:100%!important;margin-top:20px}
+#result{
+color:var(--accent);
 }
-h2{text-align:center;margin-bottom:14px}
-input,button{
-  width:92%;
-  padding:10px;
-  border-radius:10px;
-  border:1px solid #ddd;
-  margin-bottom:8px
-}
-button{
-  background:#111;
-  color:#fff;
-  width:100%;
-  border:none;
-  cursor:pointer
-}
-.row{
-  display:flex;
-  justify-content:space-between;
-  margin:6px 0
-}
-.net{font-weight:700}
-canvas{margin-top:18px}
-.small{font-size:13px;color:#666}
 </style>
 </head>
+
 <body>
 
 <div class="card">
   <h2>BlackRoad Accounting</h2>
 
+  <button class="secondary" onclick="fetchSaved()">Fetch Saved Data</button>
+
+  <div class="section">Banks</div>
   <div id="banks"></div>
   <button onclick="addBank()">+ Add Bank</button>
 
+  <div class="section">Cash</div>
   <input id="cash" placeholder="Cash">
+
+  <div class="section">Investments</div>
+  <input id="mf" placeholder="Mutual Fund">
+  <input id="fd" placeholder="Fixed Deposit">
+  <input id="stock" placeholder="Stocks">
+
+  <div class="section">Other Assets</div>
   <input id="other" placeholder="Other Assets">
 
   <button onclick="calculate()">Calculate</button>
@@ -61,7 +57,25 @@ canvas{margin-top:18px}
 </div>
 
 <script>
-let receivable=0,borrow=0,chart
+let receivable=0,borrow=0,chart;
+
+function theame(x){
+        if(x=='b'){
+        
+        document.documentElement.style.setProperty('--bg',"white");
+        document.documentElement.style.setProperty('--accent',"black");
+        
+        }
+        if(x=='w'){
+         
+        document.documentElement.style.setProperty('--bg',"black");
+        document.documentElement.style.setProperty('--accent',"white");
+        
+        }
+        }
+        
+        let theameC=localStorage.getItem("theme");
+        theame(theameC);
 
 function openDB(cb){
   const r=indexedDB.open("black")
@@ -74,60 +88,88 @@ function openDB(cb){
 }
 
 openDB(db=>{
-  const t=db.transaction("sst","readonly").objectStore("sst").get("nkncc")
-  t.onsuccess=()=>{
-    receivable=t.result?.rtot||0
-    borrow=t.result?.btot||0
+  const g=db.transaction("sst","readonly").objectStore("sst").get("nkncc")
+  g.onsuccess=()=>{
+    receivable=g.result?.rtot||0
+    borrow=g.result?.btot||0
   }
 })
 
-function addBank(){
+function addBank(val=""){
   const i=document.createElement("input")
-  i.placeholder="Bank"
   i.className="bank"
+  i.placeholder="Bank Balance"
+  i.value=val
   document.getElementById("banks").appendChild(i)
 }
 addBank()
 
-function v(x){return Number(x.value)||0}
+const v=id=>Number(document.getElementById(id).value)||0
 
 function calculate(){
-  const banks=[...document.querySelectorAll(".bank")].map(v)
+  const banks=[...document.querySelectorAll(".bank")].map(i=>Number(i.value)||0)
   const bankTotal=banks.reduce((a,b)=>a+b,0)
-  const cash=v(document.getElementById("cash"))
-  const other=v(document.getElementById("other"))
 
-  const assets=bankTotal+cash+other+receivable
+  const cash=v("cash")
+  const mf=v("mf")
+  const fd=v("fd")
+  const stock=v("stock")
+  const other=v("other")
+
+  const assets=bankTotal+cash+mf+fd+stock+other+receivable
   const liabilities=borrow
   const net=assets-liabilities
 
   document.getElementById("result").innerHTML=`
     <div class="row"><span>Banks</span><span>₹${bankTotal}</span></div>
     <div class="row"><span>Cash</span><span>₹${cash}</span></div>
+    <div class="row"><span>Mutual Fund</span><span>₹${mf}</span></div>
+    <div class="row"><span>FD</span><span>₹${fd}</span></div>
+    <div class="row"><span>Stocks</span><span>₹${stock}</span></div>
+    <div class="row"><span>Other</span><span>₹${other}</span></div>
     <div class="row"><span>Receivable</span><span>₹${receivable}</span></div>
     <div class="row"><span>Liabilities</span><span>₹${liabilities}</span></div>
     <hr>
-    <div class="row net"><span>Net</span><span>₹${net}</span></div>
+    <div class="row net"><span>Net Worth</span><span>₹${net}</span></div>
   `
 
   draw(assets,liabilities)
-  store({banks,cash,other,receivable,liabilities,assets,net,time:new Date().toISOString()})
+  store({banks,cash,mf,fd,stock,other,receivable,liabilities,assets,net,time:new Date().toISOString()})
 }
 
 function draw(a,l){
   if(chart)chart.destroy()
-  chart=new Chart(chartEl,{
+  chart=new Chart(document.getElementById("chart"),{
     type:"doughnut",
     data:{labels:["Assets","Liabilities"],datasets:[{data:[a,l]}]},
     options:{plugins:{legend:{display:false}}}
   })
 }
-const chartEl=document.getElementById("chart")
 
 function store(data){
   openDB(db=>{
-    const t=db.transaction("sst","readwrite").objectStore("sst")
-    t.put(data,"accounting")
+    db.transaction("sst","readwrite").objectStore("sst").put(data,"accounting")
+  })
+}
+
+function fetchSaved(){
+  openDB(db=>{
+    const g=db.transaction("sst","readonly").objectStore("sst").get("accounting")
+    g.onsuccess=()=>{
+      const d=g.result
+      if(!d)return alert("No saved data")
+
+      document.getElementById("banks").innerHTML=""
+      ;(d.banks||[0]).forEach(v=>addBank(v))
+
+      cash.value=d.cash||""
+      mf.value=d.mf||""
+      fd.value=d.fd||""
+      stock.value=d.stock||""
+      other.value=d.other||""
+
+      calculate()
+    }
   })
 }
 </script>
