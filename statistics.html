@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BlackRoad Statistics</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+:root{
+  --bg:#000;
+  --card:#121212;
+  --text:#fff;
+  --muted:#888;
+  --accent:#FFF;
+}
+*{box-sizing:border-box;font-family: 'Inter', sans-serif;}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+ font-family: 'Inter', sans-serif;
+}
+
+/* HEADER */
+.header{
+  position:sticky;
+  top:0;
+  background:#000;
+  padding:12px;
+  font-size:18px;
+  font-weight:bold;
+  border-bottom:1px solid #222;
+  font-family: 'Inter', sans-serif;
+  z-index:10;
+  box-shadow: grey 0px 0px 3px;
+}
+
+/* MESSAGE */
+.msg{
+  margin:10px;
+  padding:10px;
+  background:var(--bg);
+  border-radius:10px;
+  font-size:13px;
+  border:1.3px solid grey;
+  color:var(--accent);
+  font-family: 'Inter', sans-serif;
+  box-shadow: grey 0px 0px 3px;
+}
+
+/* CARDS */
+.grid{
+  display:flex;
+  gap:10px;
+  overflow-x:auto;
+  padding:10px;
+  
+}
+.card{
+  min-width:120px;
+  background:var(--bg);
+  padding:12px;
+  border-radius:12px;
+  border:1.3px solid grey;
+  box-shadow: grey 0px 0px 3px;
+}
+.label{
+  font-size:12px;
+  color:var(--accent);
+}
+.value{
+  font-size:18px;
+  margin-top:5px;
+  font-weight:bold;
+  color:var(--accent);
+}
+
+/* SECTION */
+.section{
+  margin:15px 10px;
+  
+}
+.section h3{
+  margin-bottom:8px;
+  font-size:14px;
+  color:var(--accent);
+  
+}
+
+/* CHART */
+.chart-box{
+  background:var(--bg);
+  padding:10px;
+  border-radius:12px;
+  overflow-x:auto;
+  box-shadow: grey 0px 0px 3px;
+}
+
+canvas{
+  height:260px !important;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header"> BlackRoad Statistics</div>
+<!--
+<div id="msg" class="msg">Loading data...</div>
+-->
+<!-- 1. MAIN SUMMARY -->
+<div class="grid">
+  <div class="card"><div class="label">Income</div><div id="income" class="value">0</div></div>
+  <div class="card"><div class="label">Expense</div><div id="expense" class="value">0</div></div>
+  <div class="card"><div class="label">Balance</div><div id="balance" class="value">0</div></div>
+</div>
+
+<div class="section">
+  <h3>Financial Summary</h3>
+  <div class="chart-box">
+    <canvas id="summaryChart"></canvas>
+  </div>
+</div>
+
+<!-- 2. CASH FLOW (MOST IMPORTANT TREND FIRST) -->
+<div class="section">
+  <h3>Cash Flow Trend</h3>
+  <div class="chart-box"><canvas id="trendChart"></canvas></div>
+</div>
+
+<!-- 3. MONTHLY PERFORMANCE -->
+<div class="section">
+  <h3>Monthly Overview</h3>
+  <div class="chart-box"><canvas id="monthChart"></canvas></div>
+</div>
+
+<!-- 4. SPENDING BREAKDOWN -->
+<div class="section">
+  <h3>Category Spending</h3>
+  <div class="chart-box"><canvas id="catChart"></canvas></div>
+</div>
+
+<!-- 5. CATEGORY BEHAVIOR -->
+<div class="section">
+  <h3>Category Trend</h3>
+  <div class="chart-box"><canvas id="catTrendChart"></canvas></div>
+</div>
+
+<!-- 6. INSIGHTS (QUICK UNDERSTANDING) -->
+<div class="section">
+  <h3>Insights</h3>
+
+  <div class="grid">
+    <div class="card">
+      <div class="label">Highest Spend</div>
+      <div id="highDay" class="value">-</div>
+    </div>
+
+    <div class="card">
+      <div class="label">Avg Daily Spend</div>
+      <div id="avgSpend" class="value">-</div>
+    </div>
+  </div>
+
+  <div class="chart-box">
+    <canvas id="topDaysChart"></canvas>
+  </div>
+</div>
+
+<!-- 7. EFFICIENCY (HOW WELL YOU MANAGE MONEY) -->
+<div class="section">
+  <h3>Financial Efficiency</h3>
+
+  <div class="grid">
+    <div class="card">
+      <div class="label">Savings</div>
+      <div id="savingsVal" class="value">-</div>
+    </div>
+
+    <div class="card">
+      <div class="label">Savings Rate</div>
+      <div id="savingsRate" class="value">-</div>
+    </div>
+  </div>
+
+  <div class="msg" id="effMsg">Analyzing...</div>
+</div>
+
+<!-- 8. RATIOS (ADVANCED ANALYSIS) -->
+<div class="section">
+  <h3>Financial Ratios</h3>
+
+  <div class="grid">
+    <div class="card">
+      <div class="label">Expense Ratio</div>
+      <div id="expRatio" class="value">-</div>
+    </div>
+
+    <div class="card">
+      <div class="label">Savings Ratio</div>
+      <div id="savRatio" class="value">-</div>
+    </div>
+
+    <div class="card">
+      <div class="label">Burn Rate</div>
+      <div id="burnRate" class="value">-</div>
+    </div>
+
+    <div class="card">
+      <div class="label">Income Dependency</div>
+      <div id="depRatio" class="value">-</div>
+    </div>
+  </div>
+
+  <div class="msg" id="ratioMsg">Analyzing...</div>
+</div>
+
+<!-- 9. GROWTH (LONG TERM) -->
+<div class="section">
+  <h3>Wealth Growth</h3>
+
+  <div class="grid">
+    <div class="card">
+      <div class="label">Growth %</div>
+      <div id="growthRate" class="value">-</div>
+    </div>
+
+    <div class="card">
+      <div class="label">Trend</div>
+      <div id="growthTrend" class="value">-</div>
+    </div>
+  </div>
+
+  <div class="msg" id="growthMsg">Analyzing...</div>
+
+  <div class="chart-box">
+    <canvas id="growthChart"></canvas>
+  </div>
+</div>
+
+<!-- 10. FINAL SCORE (SUMMARY OF EVERYTHING) -->
+<div class="section">
+  <h3>Financial Health Score</h3>
+
+  <div class="grid">
+    <div class="card">
+      <div class="label">Score</div>
+      <div id="finScore" class="value">-</div>
+    </div>
+
+    <div class="card">
+      <div class="label">Health</div>
+      <div id="finHealth" class="value">-</div>
+    </div>
+  </div>
+
+  <div class="msg" id="finMsg">Analyzing...</div>
+
+  <div class="chart-box">
+    <canvas id="scoreChart"></canvas>
+  </div>
+</div>
+
+<script>
+
+let data = [];
+
+/* MESSAGE */
+function sendB(t){
+  document.getElementById("msg").innerHTML = t;
+}
+
+/* EXTRACT */
+function ext(html){
+  const doc = new DOMParser().parseFromString(html, "text/html");
+  const out = [];
+
+  doc.querySelectorAll(".child").forEach(c => {
+    const h = c.querySelector(".idfeb");
+
+    const obj = {
+      income: +h?.querySelector(".incomeColumn")?.innerText || 0,
+      date: h?.querySelector(".dateColumn")?.innerText || "",
+      from: h?.querySelector(".fromm")?.innerText || "",
+      expense: +h?.querySelector(".exep")?.innerText || 0,
+      balance: +h?.querySelector(".Abal")?.innerText || 0,
+      transactions: []
+    };
+
+    c.querySelectorAll(".trand .trans").forEach(t => {
+      obj.transactions.push({
+        amount: +t.querySelector(".mony")?.innerText || 0,
+        date: t.querySelector(".tdate")?.innerText || "",
+        category: t.dataset.category || "",
+        description: t.querySelector(".tdes")?.innerText || ""
+      });
+    });
+
+    out.push(obj);
+  });
+
+  return out;
+}
+
+/* GET DATA */
+function get(){
+  const r = indexedDB.open("black");
+
+  r.onsuccess = e => {
+    const db = e.target.result;
+
+    let tx = db.transaction("sst","readonly");
+    let st = tx.objectStore("sst");
+
+    let req = st.get("blackroadINC");
+
+    req.onsuccess = ()=>{
+      if(req.result?.data){
+        data = ext(req.result.data);
+        //sendB("✅ Data Loaded");
+        analyze();
+      }else{
+        sendB("❌ No Data Found");
+      }
+    };
+  };
+
+  r.onerror = ()=>{
+    sendB("❌ Failed to open DB");
+  };
+}
+
+/* FORMAT */
+function formatMonth(d){
+  if(!d) return "Unknown";
+  let p = d.split(/[.,]/);
+  if(p.length<3) return "Unknown";
+  return "20"+p[2]+"-"+p[1].padStart(2,'0');
+}
+
+function getCategory(t){
+  if(t.category) return t.category;
+
+  let d = t.description.toLowerCase();
+  if(d.includes("food")) return "Food";
+  if(d.includes("phone")) return "Phone";
+  if(d.includes("home")) return "Home";
+  if(d.includes("travel")) return "Travel";
+
+  return "Other";
+}
+
+function formatMoney(n){
+  return "₹ " + n.toLocaleString();
+}
+
+/* CANVAS WIDTH FIX */
+function setCanvasWidth(id, count){
+  const c = document.getElementById(id);
+  c.style.width = Math.max(320, count * 40) + "px";
+}
+
+/* ANALYZE */
+function analyze(){
+
+  let totalIncome=0;
+  let totalExpense=0;
+
+  let monthly={};
+  let category={};
+  let trend={};
+
+  data.forEach(d=>{
+
+    let m = formatMonth(d.date);
+
+    totalIncome += d.income;
+
+    if(!monthly[m]) monthly[m]={income:0,expense:0};
+    monthly[m].income += d.income;
+
+    if(!trend[d.date]) trend[d.date]=0;
+    trend[d.date]+=d.income;
+
+    d.transactions.forEach(t=>{
+
+      let cat = getCategory(t);
+
+      totalExpense += t.amount;
+      monthly[m].expense += t.amount;
+
+      if(!category[cat]) category[cat]=0;
+      category[cat]+=t.amount;
+
+      if(!trend[t.date]) trend[t.date]=0;
+      trend[t.date]-=t.amount;
+
+    });
+
+  });
+
+  document.getElementById("income").innerText = formatMoney(totalIncome);
+  document.getElementById("expense").innerText = formatMoney(totalExpense);
+  document.getElementById("balance").innerText = formatMoney(totalIncome-totalExpense);
+  
+  drawSummary(totalIncome, totalExpense);
+  drawMonthly(monthly);
+  drawCategory(category);
+  drawTrend(trend);
+  drawInsights(data);
+  drawCategoryTrend(data);
+  drawEfficiency(totalIncome, totalExpense);
+  drawFinancialScore(totalIncome, totalExpense, category);
+  drawGrowth(data);
+  drawRatios(data, totalIncome, totalExpense);
+}
+
+/* CHARTS */
+
+function drawMonthly(m){
+
+  let entries = Object.entries(m);
+
+  // ✅ Sort months (important)
+  entries.sort((a,b)=> new Date(a[0]) - new Date(b[0]));
+
+  // ✅ Show only last 8 months (mobile friendly)
+  let last = entries.slice(-8);
+
+  let labels = last.map(x=>x[0]);
+  let income = last.map(x=>x[1].income);
+  let expense = last.map(x=>x[1].expense);
+
+  setCanvasWidth("monthChart", labels.length);
+
+  new Chart(document.getElementById("monthChart"),{
+    type:'bar',
+    data:{
+      labels:labels,
+      datasets:[
+        {
+          label:"Income",
+          data:income,
+          borderRadius:6,
+          barPercentage:0.6
+        },
+        {
+          label:"Expense",
+          data:expense,
+          borderRadius:6,
+          barPercentage:0.6
+        }
+      ]
+    },
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      plugins:{
+        legend:{
+          position:"bottom",
+          labels:{color:accent}
+        }
+      },
+      scales:{
+        x:{
+          ticks:{
+            color:"#aaa",
+            maxRotation:0,
+            minRotation:0
+          }
+        },
+        y:{
+          ticks:{color:"#aaa"}
+        }
+      }
+    }
+  });
+}
+
+function drawCategory(c){
+
+  let entries = Object.entries(c);
+  entries.sort((a,b)=>b[1]-a[1]);
+
+  let top = entries.slice(0,8);
+  let others = entries.slice(8);
+
+  let otherSum = others.reduce((s,x)=>s+x[1],0);
+
+  if(otherSum > 0){
+    top.push(["Others", otherSum]);
+  }
+
+  let labels = top.map(x=>x[0]);
+  let values = top.map(x=>x[1]);
+
+  new Chart(document.getElementById("catChart"),{
+    type:'doughnut',
+    data:{
+      labels:labels,
+      datasets:[{data:values}]
+    },
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      plugins:{
+        legend:{
+          position:"bottom",
+          labels:{color:accent, boxWidth:10}
+        }
+      }
+    }
+  });
+}
+
+function drawTrend(t){
+
+  let entries = Object.entries(t);
+
+  // ✅ Sort dates properly
+  entries.sort((a,b)=> new Date(a[0]) - new Date(b[0]));
+
+  // ✅ If too many points → compress (important)
+  if(entries.length > 40){
+
+    let grouped = {};
+
+    entries.forEach(([date,val])=>{
+      let d = new Date(date);
+      let key = d.getFullYear() + "-" + (d.getMonth()+1); // group by month
+
+      if(!grouped[key]) grouped[key]=0;
+      grouped[key]+=val;
+    });
+
+    entries = Object.entries(grouped);
+  }
+
+  // ✅ Show last 20 points (mobile friendly)
+  let last = entries.slice(-20);
+
+  let labels = last.map(x=>x[0]);
+  let values = last.map(x=>x[1]);
+
+  setCanvasWidth("trendChart", labels.length);
+
+  new Chart(document.getElementById("trendChart"),{
+    type:'line',
+    data:{
+      labels:labels,
+      datasets:[{
+        label:"Cash Flow",
+        data:values,
+        tension:0.4, // smooth curve
+        fill:false,
+        pointRadius:2
+      }]
+    },
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      plugins:{
+        legend:{
+          position:"bottom",
+          labels:{color:accent}
+        }
+      },
+      scales:{
+        x:{
+          ticks:{
+            color:accent,
+            maxRotation:45,
+            minRotation:20
+          }
+        },
+        y:{
+          ticks:{color:"#aaa"}
+        }
+      }
+    }
+  });
+}
+
+function drawInsights(data){
+
+  let daily = {};
+
+  // ✅ collect daily expense
+  data.forEach(d=>{
+    d.transactions.forEach(t=>{
+      if(!daily[t.date]) daily[t.date]=0;
+      daily[t.date]+=t.amount;
+    });
+  });
+
+  let entries = Object.entries(daily);
+
+  if(entries.length === 0) return;
+
+  // ✅ highest day
+  entries.sort((a,b)=>b[1]-a[1]);
+
+  let highest = entries[0];
+  document.getElementById("highDay").innerText =
+    highest[0] + " (₹ " + highest[1].toLocaleString() + ")";
+
+  // ✅ average spend
+  let total = entries.reduce((s,x)=>s+x[1],0);
+  let avg = total / entries.length;
+
+  document.getElementById("avgSpend").innerText =
+    "₹ " + Math.round(avg).toLocaleString();
+
+  // ✅ top 5 days chart
+  let top = entries.slice(0,5);
+
+  let labels = top.map(x=>x[0]);
+  let values = top.map(x=>x[1]);
+
+  setCanvasWidth("topDaysChart", labels.length);
+
+  new Chart(document.getElementById("topDaysChart"),{
+    type:'bar',
+    data:{
+      labels:labels,
+      datasets:[{
+        label:"Top Spending Days",
+        data:values,
+        borderRadius:6
+      }]
+    },
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      plugins:{
+        legend:{
+          position:"bottom",
+          labels:{color:accent}
+        }
+      },
+      scales:{
+        x:{ticks:{color:"#aaa"}},
+        y:{ticks:{color:"#aaa"}}
+      }
+    }
+  });
+}
+
+function drawCategoryTrend(data){
+
+  let monthlyCat = {};
+
+  // ✅ Build monthly category data
+  data.forEach(d=>{
+
+    let m = formatMonth(d.date);
+
+    if(!monthlyCat[m]) monthlyCat[m] = {};
+
+    d.transactions.forEach(t=>{
+
+      let cat = getCategory(t);
+
+      if(!monthlyCat[m][cat]) monthlyCat[m][cat] = 0;
+      monthlyCat[m][cat] += t.amount;
+
+    });
+
+  });
+
+  // ✅ Sort months
+  let months = Object.keys(monthlyCat).sort((a,b)=> new Date(a)-new Date(b));
+
+  // ✅ Get top 3 categories overall (avoid clutter)
+  let totalCat = {};
+
+  Object.values(monthlyCat).forEach(m=>{
+    Object.entries(m).forEach(([cat,val])=>{
+      if(!totalCat[cat]) totalCat[cat]=0;
+      totalCat[cat]+=val;
+    });
+  });
+
+  let topCats = Object.entries(totalCat)
+  .sort((a,b)=>b[1]-a[1])
+  .slice(0,10) // ✅ Top 10
+  .map(x=>x[0]);
+
+  // ✅ Build datasets
+  let datasets = topCats.map((cat,i)=>{
+  return {
+  label: cat,
+  data: months.map(m=> monthlyCat[m][cat] || 0),
+  tension:0.4,
+  borderWidth:2,
+  pointRadius:1
+  };
+  });
+
+  setCanvasWidth("catTrendChart", months.length);
+
+  // destroy old
+  if(window.catTrendChart && typeof window.catTrendChart.destroy === "function"){
+  window.catTrendChart.destroy();
+  }
+
+  window.catTrendChart = new Chart(document.getElementById("catTrendChart"),{
+    type:'line',
+    data:{
+      labels:months,
+      datasets:datasets
+    },
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      plugins:{
+      legend:{
+      position:"bottom",
+      labels:{
+      color:accent,
+      boxWidth:10,
+      font:{size:10} // smaller text
+      }
+      }
+      },
+      scales:{
+        x:{
+          ticks:{color:"#aaa"}
+        },
+        y:{
+          ticks:{color:"#aaa"}
+        }
+      }
+    }
+  });
+}
+
+
+function drawEfficiency(income, expense){
+
+  if(income === 0){
+    document.getElementById("effMsg").innerText = "No income data";
+    return;
+  }
+
+  let savings = income - expense;
+  let rate = (savings / income) * 100;
+
+  document.getElementById("savingsVal").innerText =
+    "₹ " + savings.toLocaleString();
+
+  document.getElementById("savingsRate").innerText =
+    rate.toFixed(1) + "%";
+
+  // ✅ Smart message
+  let msg = "";
+
+  if(rate >= 40){
+    msg = "🔥 Excellent saving habit";
+  }else if(rate >= 20){
+    msg = "👍 Good, but can improve";
+  }else if(rate >= 0){
+    msg = "⚠️ Low savings, control spending";
+  }else{
+    msg = "🚨 You are spending more than earning";
+  }
+
+  document.getElementById("effMsg").innerText = msg;
+}
+
+function drawFinancialScore(income, expense, category){
+
+  if(income === 0){
+    document.getElementById("finMsg").innerText = "No income data";
+    return;
+  }
+
+  let savings = income - expense;
+  let savingsRate = (savings / income) * 100;
+
+  // ✅ Score calculation
+  let score = 0;
+
+  // 1. Savings weight (50 points)
+  if(savingsRate >= 40) score += 50;
+  else if(savingsRate >= 20) score += 35;
+  else if(savingsRate >= 10) score += 20;
+  else if(savingsRate >= 0) score += 10;
+  else score += 0;
+
+  // 2. Spending control (30 points)
+  let totalExpense = Object.values(category).reduce((s,x)=>s+x,0);
+  let maxCat = Math.max(...Object.values(category));
+
+  let concentration = (maxCat / totalExpense) * 100;
+
+  if(concentration < 30) score += 30;
+  else if(concentration < 50) score += 20;
+  else score += 10;
+
+  // 3. Expense ratio (20 points)
+  let expenseRatio = (expense / income) * 100;
+
+  if(expenseRatio < 60) score += 20;
+  else if(expenseRatio < 80) score += 10;
+  else score += 5;
+
+  // ✅ Final score
+  score = Math.round(score);
+
+  document.getElementById("finScore").innerText = score + " / 100";
+
+  // ✅ Health label
+  let health = "";
+  let msg = "";
+
+  if(score >= 80){
+    health = "Excellent 🔥";
+    msg = "You are financially strong";
+  }else if(score >= 60){
+    health = "Good 👍";
+    msg = "You are doing well, small improvements needed";
+  }else if(score >= 40){
+    health = "Average ⚠️";
+    msg = "Try to control spending and save more";
+  }else{
+    health = "Poor 🚨";
+    msg = "High risk! Improve savings immediately";
+  }
+
+  document.getElementById("finHealth").innerText = health;
+  document.getElementById("finMsg").innerText = msg;
+
+  // ✅ Chart (visual score)
+  if(window.scoreChart && typeof window.scoreChart.destroy === "function"){
+    window.scoreChart.destroy();
+  }
+
+  window.scoreChart = new Chart(document.getElementById("scoreChart"),{
+    type:'doughnut',
+    data:{
+      labels:["Score","Remaining"],
+      datasets:[{
+        data:[score, 100-score]
+      }]
+    },
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      plugins:{
+        legend:{display:false}
+      }
+    }
+  });
+}
+
+function drawGrowth(data){
+
+  let timeline = [];
+
+  // ✅ collect balance over time
+  data.forEach(d=>{
+    if(d.date){
+      timeline.push({
+        date: d.date,
+        balance: d.balance || 0
+      });
+    }
+  });
+
+  if(timeline.length < 2){
+    document.getElementById("growthMsg").innerText = "Not enough data";
+    return;
+  }
+
+  // ✅ sort by date
+  timeline.sort((a,b)=> new Date(a.date) - new Date(b.date));
+
+  let first = timeline[0].balance;
+  let last = timeline[timeline.length - 1].balance;
+
+  // ✅ growth %
+  let growth = ((last - first) / (first || 1)) * 100;
+
+  document.getElementById("growthRate").innerText =
+    growth.toFixed(1) + "%";
+
+  // ✅ trend label
+  let trend = "";
+  let msg = "";
+
+  if(growth > 20){
+    trend = "📈 Strong";
+    msg = "Wealth growing fast";
+  }else if(growth > 0){
+    trend = "👍 Positive";
+    msg = "Good growth";
+  }else if(growth === 0){
+    trend = "😐 Flat";
+    msg = "No growth";
+  }else{
+    trend = "📉 Negative";
+    msg = "Wealth decreasing";
+  }
+
+  document.getElementById("growthTrend").innerText = trend;
+  document.getElementById("growthMsg").innerText = msg;
+
+  // ✅ chart data
+  let labels = timeline.map(x=>x.date);
+  let values = timeline.map(x=>x.balance);
+
+  setCanvasWidth("growthChart", labels.length);
+
+  if(window.growthChart && typeof window.growthChart.destroy === "function"){
+    window.growthChart.destroy();
+  }
+
+  window.growthChart = new Chart(document.getElementById("growthChart"),{
+    type:'line',
+    data:{
+      labels:labels,
+      datasets:[{
+        label:"Net Worth",
+        data:values,
+        tension:0.4,
+        pointRadius:2
+      }]
+    },
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      plugins:{
+        legend:{
+          position:"bottom",
+          labels:{color:accent}
+        }
+      },
+      scales:{
+        x:{
+          ticks:{
+            color:"#aaa",
+            maxRotation:45,
+            minRotation:20
+          }
+        },
+        y:{
+          ticks:{color:"#aaa"}
+        }
+      }
+    }
+  });
+}
+
+function drawRatios(data, income, expense){
+
+  if(income === 0){
+    document.getElementById("ratioMsg").innerText = "No income data";
+    return;
+  }
+
+  // ✅ Expense Ratio
+  let expRatio = (expense / income) * 100;
+
+  // ✅ Savings Ratio
+  let savings = income - expense;
+  let savRatio = (savings / income) * 100;
+
+  // ✅ Burn Rate (daily avg)
+  let days = new Set();
+
+  data.forEach(d=>{
+    d.transactions.forEach(t=>{
+      let dt = t.date || d.date;
+      if(dt) days.add(dt);
+    });
+  });
+
+  let burn = days.size ? (expense / days.size) : 0;
+
+  // ✅ Income Dependency
+  let sources = {};
+
+  data.forEach(d=>{
+    let src = d.from || "Other";
+    if(!sources[src]) sources[src]=0;
+    sources[src]+=d.income;
+  });
+
+  let maxSource = Math.max(...Object.values(sources));
+  let dep = (maxSource / income) * 100;
+
+  // ✅ UI update
+  document.getElementById("expRatio").innerText = expRatio.toFixed(1) + "%";
+  document.getElementById("savRatio").innerText = savRatio.toFixed(1) + "%";
+  document.getElementById("burnRate").innerText = "₹ " + Math.round(burn).toLocaleString();
+  document.getElementById("depRatio").innerText = dep.toFixed(1) + "%";
+
+  // ✅ Smart message
+  let msg = "";
+
+  if(expRatio > 90){
+    msg = "🚨 Very high spending";
+  }else if(expRatio > 70){
+    msg = "⚠️ Spending is high";
+  }else{
+    msg = "👍 Spending under control";
+  }
+
+  if(dep > 80){
+    msg += " | ⚠️ Income depends on one source";
+  }
+
+  document.getElementById("ratioMsg").innerText = msg;
+}
+
+function drawSummary(income, expense){
+
+  let balance = income - expense;
+
+  let labels = ["Income","Expense","Balance"];
+  let values = [income, expense, balance];
+
+  // ✅ destroy old chart (important)
+  if(window.summaryChart && typeof window.summaryChart.destroy === "function"){
+    window.summaryChart.destroy();
+  }
+
+  // ✅ optional: dynamic width for mobile
+  setCanvasWidth("summaryChart", labels.length);
+
+  window.summaryChart = new Chart(document.getElementById("summaryChart"),{
+    type:'bar',
+    data:{
+      labels:labels,
+      datasets:[{
+      data:values,
+      borderRadius:8,
+      backgroundColor:[
+      "#2196f3", 
+      "#ff4444", 
+      "#00c853"
+      ]
+      }]
+    },
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      plugins:{
+        legend:{
+          display:false
+        }
+      },
+      scales:{
+        x:{
+          ticks:{color:accent}
+        },
+        y:{
+          ticks:{color:accent}
+        }
+      }
+    }
+  });
+}
+
+
+get();
+
+
+</script>
+<script type="text/javascript">
+
+          function theame(x){
+          if(x=='b'){
+          
+          document.documentElement.style.setProperty('--bg',"white");
+          document.documentElement.style.setProperty('--accent',"black");
+          
+          }
+          if(x=='w'){
+          
+          document.documentElement.style.setProperty('--bg',"black");
+          document.documentElement.style.setProperty('--accent',"white");
+          
+          }
+          }
+          
+          let theameC=localStorage.getItem("theme");
+          theame(theameC);
+          const css = getComputedStyle(document.documentElement);
+          const bg = css.getPropertyValue('--bg').trim();
+          const accent = css.getPropertyValue('--accent').trim();
+
+</script>
+</body>
+</html>

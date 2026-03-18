@@ -1,11 +1,11 @@
 :root {
-          --inc: #28a745; 
-          --bal: #007bff; 
-          --exp: #dc3545;
+          --inc: #22c55e; 
+          --bal: #3b82f6; 
+          --exp: #ef4444;
           --texp: #fd7e14; 
           --o1k:gold;
-          --w:584B53;
-          --b:#FFFFFF;
+          --w:#f9fafb;
+          --b:#121212;
           --red:white;
           --gray:white;
           --back:#1a1a1a;
@@ -14,6 +14,10 @@
           }
           *{
           transition: background-color 1s ease;
+          font-family: 'Inter', sans-serif;
+          line-height: 1.5;
+          letter-spacing: 0.3px;
+          
           }
           
         body {
@@ -22,7 +26,7 @@
           //  background-image: url('https://webgradients.com/public/webgradients_png/001%20Warm%20Flame.png');
           font-family: Times New Roman, Times, serif;
             margin:0px;
-            padding:8px;
+            //padding:8px;
             transition: background-color 1s ease;
           //  background-image:url('https://picsum.photos/400/700');
             background-attachment:fixed;
@@ -61,6 +65,8 @@
             background: linear-gradient(44deg, rgb(36, 233, 244), rgb(160, 114, 223), rgb(217, 160, 121));
             color: transparent;
             background-clip: text;
+            font-size: 20px;
+            font-weight: 600;
         }
         #allin{
         color:var(--inc);
@@ -82,11 +88,16 @@
             border-right:0px solid var(--tbor);
             box-shadow: grey 0px 1px 4px;
             border-left:0px solid var(--bor);
+            margin:10px 10px 0px 10px;
             padding:3.2px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            
         }
         #sta{
         border-bottom:0px solid var(--tbor);
-        
+        margin:0px 10px 10px 10px;
         border-bottom-left-radius:5px;
         border-bottom-right-radius:5px;
         }
@@ -108,6 +119,8 @@
         #staa p{
         color:var(--b);
         font-size:11px;
+        font-size: 12px;
+        opacity: 0.7;
         }
         
        #rand{
@@ -125,14 +138,14 @@
         .parnt {
         display: flex;
         flex-direction: row;
-        width: 100%;
+        max-width: 100%;
         flex-wrap:wrap;
         gap:20px;
         transition: background-color 1s ease;
         background-color:transparent;
         justify-content:center;
         border-radius: 8px;
-        transition:2s;
+        margin:10px;
         }
         
         .child {
@@ -153,7 +166,7 @@
         backdrop-filter: blur(14px);
         -webkit-backdrop-filter: blur(14px);
         
-       
+       font-family: 'Inter', sans-serif;
       
         
         }
@@ -163,7 +176,7 @@
         flex-direction: row;
         width: 100%;
         
-        min-height::15px;
+        min-height:15px;
         justify-content: space-around;
         font-weight: bold;
         align-items:center;
@@ -171,13 +184,6 @@
         padding-top:7px;
         color:var(--b);
         overflow-x:none;
-        font-family: Times New Roman, Times, serif;
-        
-        
-        }
-        .idfeb font{
-        font-family: Times New Roman, Times, serif;
-        
         }
         
         .trand {
@@ -187,8 +193,6 @@
         width: 100%;
         border-top: 0px solid var(--bor);
         padding-top: 10px;
-        font-family: Times New Roman, Times, serif;
-        
         }
         
         .trans {
@@ -201,13 +205,14 @@
         flex-direction: row;
         justify-content:space-around;
         align-items: center;
+        border-bottom: 1px solid grey;
         }
-        
+        .trans:last-child{
+        border-bottom:none;
+        }
         .mony, .tdate, .tdes {
         font-size: 13px;
         color: var(--b);
-        font-family: Times New Roman, Times, serif;
-        
         }
         
         .mony {
@@ -236,9 +241,6 @@ font-size:10px;
         }
         
         font {
-        font-family: 'Arial', sans-serif;
-        font-family: Times New Roman, Times, serif;
-        
         }
         
         .incomeColumn{
@@ -270,7 +272,6 @@ font-size:10px;
         transition: background-color 1s ease;
         box-shadow: grey 0px 1px 3px;
         border-left:0px solid var(--bor);
-        transition: width 1s ease;
         }
         #seait {
         width: 47%;
@@ -282,7 +283,6 @@ font-size:10px;
         
         #seait:hover {
         width:77%;
-        transition:1s;
         }
         
         #seait:hover ~ #sinpp {
@@ -473,19 +473,27 @@ font-size:10px;
         background-color:transparent;
         justify-content:space-between;
         align-items:center;
-        width:100%;
+        max-width:100%;
         padding-bottom:5px;
         border-bottom:0px solid var(--tbor);
-        transition: background-color 1s ease;
         z-index:20;
+       
+        justify-content: space-between;
+        align-items: center;
+        padding:10px 10px 10px 10px;
+        
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        
         }
+        
+        
         .om{
         margin:0px;
         }
         .feed{
         position:absolute;
         width:150px;
-        height:280px;
+        height:360px;
         left:2px;top:2px;
         background-color:var(--w);
         padding:0px;
@@ -494,11 +502,14 @@ font-size:10px;
         display:none;
         border-radius:3px;
         flex-direction:column;
+        font-weight: 500;
+        letter-spacing: 0.3px;
         
         border:0px solid var(--tbor);
         box-shadow: grey 0px 1px 4px;
         justify-content:space-around;
         align-items:center;
+        
         }
         li{
         -webkit-user-select: none;  
@@ -511,6 +522,7 @@ font-size:10px;
         width:90%;
         color:var(--b);
         height:100%;
+        
         user-select:none;
         border-bottom:1.5px solid var(--tbor);
         text-align:left;
