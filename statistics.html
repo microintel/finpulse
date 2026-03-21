@@ -100,6 +100,64 @@ body{
 canvas{
   height:260px !important;
 }
+
+.gauge-card {
+  width: 100%;
+  background: var(--bg);
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #333;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.gauge-card:hover {
+  transform: scale(1.02);
+}
+
+.gauge-label {
+  font-size: 14px;
+  color: var(--accent);
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.gauge-bar-container {
+  width: 100%;
+  background: #222;
+  border-radius: 10px;
+  height: 18px;
+  overflow: hidden;
+}
+
+.gauge-bar {
+  height: 100%;
+  border-radius: 10px;
+  text-align: right;
+  color: #fff;
+  font-size: 12px;
+  line-height: 18px;
+  padding-right: 8px;
+  font-family: 'Inter', sans-serif;
+  transition: width 1s ease;
+}
+
+/* Sources list (toggleable) */
+.gauge-sources {
+  margin-top: 8px;
+  font-size: 13px;
+  color: #ccc;
+  background: #1a1a1a;
+  border-radius: 8px;
+  padding: 8px;
+  display: none;
+  transition: all 0.3s ease;
+}
+
+.gauge-sources div {
+  padding: 2px 0;
+}
 </style>
 </head>
 
@@ -262,6 +320,11 @@ canvas{
   </div>
 </div>
 
+<div class="section">
+  <h3>Expense Category Gauges</h3>
+  <div id="expenseGauges" style="display:flex; flex-direction:column; gap:8px;"></div>
+</div>
+
 <script>
 
 let data = [];
@@ -414,9 +477,83 @@ function analyze(){
   drawFinancialScore(totalIncome, totalExpense, category);
   drawGrowth(data);
   drawRatios(data, totalIncome, totalExpense);
+  drawExpenseGauges(category);
 }
 
-/* CHARTS */
+function drawExpenseGauges(category){
+  const container = document.getElementById("expenseGauges");
+  container.innerHTML = ""; // clear previous
+
+  // Sort categories high → low
+  const sorted = Object.entries(category).sort((a,b)=> b[1] - a[1]);
+  const total = Object.values(category).reduce((sum,val)=>sum+val,0);
+  const colors = ["#FF6384","#36A2EB","#FFCE56","#4BC0C0","#9966FF","#FF9F40","#C9CBCF"];
+
+  let i = 0;
+  for(const [cat, val] of sorted){
+    const percent = total ? ((val / total) * 100).toFixed(1) : 0;
+
+    const card = document.createElement("div");
+    card.className = "gauge-card";
+
+    // Add placeholder for sources
+    card.innerHTML = `
+      <div class="gauge-label">${cat} &nbsp; ${val}  =>&nbsp; ${percent}% </div>
+      <div class="gauge-bar-container">
+        <div class="gauge-bar" style="width:0%; background:${colors[i % colors.length]}"></div>
+      </div>
+      <div class="gauge-sources"></div>
+    `;
+    container.appendChild(card);
+
+    // Animate bar
+    setTimeout(()=>{
+      card.querySelector(".gauge-bar").style.width = percent + "%";
+    }, 50);
+
+    // Click event: toggle sources
+    card.querySelector(".gauge-bar-container").addEventListener("click", ()=>{
+      const sourcesDiv = card.querySelector(".gauge-sources");
+      if(sourcesDiv.style.display === "block"){
+        sourcesDiv.style.display = "none";
+      } else {
+        sourcesDiv.innerHTML = ""; // clear previous
+
+        // Filter all transactions for this category
+        let trans = [];
+        data.forEach(d=>{
+          d.transactions.forEach(t=>{
+            if(getCategory(t) === cat) trans.push(t);
+          });
+        });
+
+        // Group by source
+        const bySource = {};
+        trans.forEach(t=>{
+          const src = t.from || t.description || "Unknown";
+          if(!bySource[src]) bySource[src] = 0;
+          bySource[src] += t.amount;
+        });
+
+        // Build HTML
+        let njk=1;
+        for(const [src, amt] of Object.entries(bySource)){
+          const p = ((amt/val)*100).toFixed(1);
+          const div = document.createElement("div");
+          div.className="expentry";
+          div.innerHTML = ` <strong>${njk}. ${src}</strong> : ₹ ${amt.toLocaleString()} (${p}%)<br>`;
+          sourcesDiv.appendChild(div);
+          njk++;
+        }
+        
+
+        sourcesDiv.style.display = "block";
+      }
+    });
+
+    i++;
+  }
+}
 
 function drawMonthly(m){
 
