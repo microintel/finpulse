@@ -8,7 +8,9 @@ function reply(q) {
   if (t[0] === "ls" && t[1] === "cmd") {
     return listCommand();
   }
-  
+  if (t[0] === "clear" && t[1] === "chat") {
+  return clearChat();
+}
   if(t[0] === "balance" && t[1] ==="sheet"){
   return showAccountingCharts();
   }

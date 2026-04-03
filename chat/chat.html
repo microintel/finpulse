@@ -156,6 +156,41 @@ font-size:1.3rem;
   background:#21c063;
   color: #fff;
 }
+
+.menu-wrapper {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+}
+
+.menu-icon {
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.menu-dropdown {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 30px;
+  background: #111;
+  border-radius: 8px;
+  overflow: hidden;
+  min-width: 140px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+}
+
+.menu-item {
+  padding: 10px;
+  color: #ddd;
+  cursor: pointer;
+}
+
+.menu-item:hover {
+  background: #21c063;
+  color: white;
+}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
@@ -169,7 +204,14 @@ font-size:1.3rem;
   
   <h3 id="usnnn"><i onclick="location.href='../finpulse.html'" class="bi bi-arrow-left-short"></i> <img id="im" width="40px" src="https://cataas.com/cat" height="40px"> <span id="usn"></span></h3>
   
-  <i onclick="listCommand()" class="bi bi-question-circle"></i>
+<div class="menu-wrapper">
+  <i class="bi bi-three-dots-vertical menu-icon" onclick="toggleMenu()"></i>
+
+  <div id="menu-dropdown" class="menu-dropdown">
+    <div class="menu-item" onclick="listCommand(); closeMenu()">Help</div>
+    <div class="menu-item" onclick="clearChat(); closeMenu()">Clear Chat</div>
+  </div>
+</div>
   
   </div>
 
@@ -193,12 +235,138 @@ font-size:1.3rem;
 <audio src="ting.mp3" id="botNot">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+    let chatDB;
+function toggleMenu() {
+  const menu = document.getElementById("menu-dropdown");
+  menu.style.display = menu.style.display === "block" ? "none" : "block";
+}
+
+function closeMenu() {
+  document.getElementById("menu-dropdown").style.display = "none";
+}
+
+// optional: close when clicking outside
+document.addEventListener("click", (e) => {
+  const menu = document.getElementById("menu-dropdown");
+  const icon = document.querySelector(".menu-icon");
+
+  if (!menu.contains(e.target) && !icon.contains(e.target)) {
+    menu.style.display = "none";
+  }
+});
+function initChatDB() {
+  const req = indexedDB.open("chatDB", 1);
+
+  req.onupgradeneeded = e => {
+    const db = e.target.result;
+    if (!db.objectStoreNames.contains("messages")) {
+      db.createObjectStore("messages", { keyPath: "id", autoIncrement: true });
+    }
+  };
+
+  req.onsuccess = e => {
+    chatDB = e.target.result;
+    loadChats(); // 🔥 load old chats when DB ready
+  };
+
+  req.onerror = () => {
+    console.error("Chat DB error");
+  };
+}
+
+initChatDB();
+
+function saveMessage(type, text) {
+  if (!chatDB) return;
+
+  const tx = chatDB.transaction("messages", "readwrite");
+  const store = tx.objectStore("messages");
+
+  store.add({
+    type: type, // "user" or "bot"
+    text: text,
+    time: Date.now()
+  });
+}
+
+function loadChats() {
+  const tx = chatDB.transaction("messages", "readonly");
+  const store = tx.objectStore("messages");
+
+  const req = store.getAll();
+
+  req.onsuccess = () => {
+    req.result.forEach(msg => {
+      if (msg.type === "user") {
+        renderUser(msg.text);
+      } else {
+        renderBot(msg.text);
+
+        // ✅ NEW: re-render charts if exists
+        reRenderCharts();
+      }
+    });
+  };
+}
+
+function reRenderCharts() {
+  document.querySelectorAll("canvas").forEach(canvas => {
+    if (canvas.dataset.rendered) return;
+
+    const ctx = canvas.getContext("2d");
+
+    try {
+      new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: ["Reload"],
+          datasets: [{ data: [1] }]
+        }
+      });
+
+      canvas.dataset.rendered = "true";
+    } catch (e) {}
+  });
+}
+
+
+function renderUser(t) {
+  const d = document.createElement("div");
+  d.className = "msg usr";
+
+ 
+  d.innerHTML = `<div class="bbl" onclick="cmdinputadd(this.innerText)">${t}</div>`;
+
+  log.appendChild(d);
+}
+
+function renderBot(t) {
+  const d = document.createElement("div");
+  d.className = "msg bot";
+  d.innerHTML = `<div class="bbl">${t}</div>`;
+  log.appendChild(d);
+}
+
+function clearChat() {
+  const req = indexedDB.deleteDatabase("chatDB");
+  req.onsuccess = () => {
+  alert("Chats Deleted");
+    location.reload();
+    
+  };
+  alert("Chats Deleted");
+    location.reload();
+}
+
+</script>
+<script>
 
 
 
 
 const COMMANDS = [
 "ls cmd",
+"clear chat",
   "balance (tb)",
   "balance sheet",
   "income (tin)",
@@ -363,13 +531,21 @@ const ta=document.getElementById("chat-i");
 let data=[];
 let lenddata=[];
 function sendU(t){
-botNot?.play();
+  botNot?.play();
+
   const d=document.createElement("div");
   d.className="msg usr";
   d.innerHTML=`<div class="bbl" onclick="cmdinputadd(this.innerText)">${t}</div>`;
+
   log.appendChild(d);
   log.scrollTop=log.scrollHeight;
-  
+
+  // ✅ ADD ONLY THIS (no change to your logic)
+  if (chatDB) {
+    const tx = chatDB.transaction("messages", "readwrite");
+    const store = tx.objectStore("messages");
+    store.add({ type: "user", text: t, time: Date.now() });
+  }
 }
 
 function extRead(el){
@@ -402,13 +578,19 @@ function sendB(t){
     log.appendChild(d);
     log.scrollTop = log.scrollHeight;
 
+    // ✅ ADD ONLY THIS (no change to your logic)
+    if (chatDB) {
+      const tx = chatDB.transaction("messages", "readwrite");
+      const store = tx.objectStore("messages");
+      store.add({ type: "bot", text: t, time: Date.now() });
+    }
+
     const bubble = d.querySelector(".bbl");
 
     let timer;
 
     bubble.addEventListener("touchstart", () => {
       timer = setTimeout(() => {
-        
         shareText(extRead(bubble));
       }, 600);
     });
@@ -422,6 +604,7 @@ function sendB(t){
     });
 
   },1500);
+
   document.getElementById("cmd-suggestions").innerHTML="";
 }
 
