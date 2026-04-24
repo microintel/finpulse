@@ -761,10 +761,10 @@ border:none;
         </div>
         <div id="sta">
        
-        <p id="allin"></p>
-        <p id="exp"></p>
-        <p id="bal"></p>
-        <p id="exex"></p>
+        <p onclick="convertCurrency(this)" id="allin"></p>
+        <p onclick="convertCurrency(this)" id="exp"></p>
+        <p onclick="convertCurrency(this)" id="bal"></p>
+        <p onclick="convertCurrency(this)" id="exex"></p>
         </div>
         </div>
 
@@ -782,7 +782,7 @@ border:none;
        <script src="black-cha.js" type="text/javascript"></script>
        <script src="expcatdis.js" type="text/javascript"></script>
        <script src="lastsen.js" type="text/javascript"></script>
-      
+       <script type="text/javascript" src="https://microintel.github.io/Micro-Library/micron/micron.js"></script>
        <br><br>
        
        <script>
@@ -1796,8 +1796,30 @@ function grpse(x){
           
          
         //  document.getElementById("ppr").style.display="none";
-          </script>
+         
+          async function convertCurrency(ax) {
+          let a = parseFloat(ax.innerText);
           
+          // get current currency from class
+          let currentCurrency = ax.className || "INR";
+          
+          // decide next currency
+          let secondCurrency = currentCurrency === "USD" ? "INR" : "USD";
+          
+          // load rates
+          await micron.load();
+          
+          // convert
+          let result = micron.convert(a, currentCurrency, secondCurrency);
+          
+          // update UI
+          ax.innerText = result.toFixed(0);
+          
+          // update class to new currency
+          ax.className = secondCurrency;
+          }
+         
+          </script>
           
         <center>
         <img class="dbimg" id="parr" style="display:none;" src="https://raw.githubusercontent.com/microintel/endgram/main/photo/microintel-black-small.png">
