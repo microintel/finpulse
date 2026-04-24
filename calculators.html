@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BlackRoad Calculator</title>
+
+<style>
+:root{
+    --w: #FEFEFA;
+    --b: #301934;
+    --tbor: #F5F5F5;
+    --back: white;
+}
+
+body{
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: var(--back);
+    color: var(--w);
+}
+
+header{
+    text-align: center;
+    padding: 18px;
+    font-size: 22px;
+    font-weight: 600;
+    border-bottom: 1px solid var(--tbor);
+    background: var(--b);
+}
+
+.container{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    padding: 12px;
+}
+
+.card{
+    background: var(--b);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.25s;
+    border: 1px solid var(--tbor);
+}
+
+.card:hover{
+    transform: translateY(-3px);
+}
+
+.icon{
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.name{
+    font-size: 15px;
+    font-weight: 500;
+}
+
+@media (min-width: 768px){
+    header{
+        font-size: 28px;
+        padding: 25px;
+    }
+    .card{
+        padding: 30px;
+    }
+    .name{
+        font-size: 18px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>BlackRoad Calculator</header>
+
+<div class="container">
+
+    <div class="card" onclick="openCalc('https://microintel.github.io/cagr/cagr.html')">
+        <div class="icon">📈</div>
+        <div class="name">CAGR Calculator</div>
+    </div>
+
+    <div class="card" onclick="openCalc('https://microintel.github.io/vision/v2/')">
+        <div class="icon">💰</div>
+        <div class="name">SIP Calculator</div>
+    </div>
+
+
+    <div class="card" onclick="openCalc('https://microintel.github.io/micron/')">
+        <div class="icon">💱</div>
+        <div class="name">Currency Converter</div>
+    </div>
+
+</div>
+
+<script>
+function theame(x){
+    if(x=='b'){
+        document.documentElement.style.setProperty('--w',"#FEFEFA");
+        document.documentElement.style.setProperty('--b',"#301934");
+        document.documentElement.style.setProperty('--tbor',"#F5F5F5");
+        document.documentElement.style.setProperty('--back',"white");
+    }
+
+    if(x=='w'){
+        document.documentElement.style.setProperty('--w',"black");
+        document.documentElement.style.setProperty('--b',"white");
+        document.documentElement.style.setProperty('--tbor',"#F5F5F5");
+        document.documentElement.style.setProperty('--back',"black");
+    }
+
+    localStorage.setItem("theme",x);
+}
+
+function openCalc(url){
+    window.location.href = url;
+}
+
+window.onload = function(){
+    let t = localStorage.getItem("theme");
+    if(t){
+        theame(t);
+    }else{
+        theame('b');
+    }
+};
+</script>
+
+</body>
+</html>
