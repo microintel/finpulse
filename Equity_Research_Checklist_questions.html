@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Equity Research Checklist</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#000;color:#fff;padding:15px}
+.container{max-width:900px;margin:auto}
+.header{text-align:center;margin-bottom:20px}
+.header h1{font-size:28px;color:#60a5fa}
+.header p{color:#9ca3af;margin-top:5px}
+.section{background:#000;border:1px solid #374151;border-radius:10px;margin-bottom:20px;overflow:hidden}
+.section-title{background:#2563eb;padding:14px;font-size:18px;font-weight:bold}
+.question{padding:12px 14px;border-bottom:1px solid #2b3545;line-height:1.6;font-size:15px}
+.question:last-child{border-bottom:none}
+.number{color:#60a5fa;font-weight:bold}
+.footer{text-align:center;margin-top:30px;padding:20px;border-top:1px solid #374151;color:#9ca3af}
+.footer h3{color:#60a5fa;margin-bottom:8px}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="header">
+<h1>Equity Research Checklist</h1>
+<p>Structured Company Analysis Questions</p>
+</div>
+<div id="app"></div>
+<div class="footer">
+<h3>Developed by MicroIntel</h3>
+<p>Data obtained by Zebra Learn</p>
+</div>
+</div>
+<script>
+const data=[
+{title:'1. INDUSTRY RESEARCH',questions:[
+'What stage is the industry at — Innovation, Growth, Maturity, or Decline?','What is the market size of the industry?','Is the market size at least 5× the company’s sales?','Can industry players increase prices every year?','What are the key success factors in the industry?','Is there anything stopping new competitors from entering?','Do industry leaders remain the same or keep changing?','Are most companies in the industry doing well or struggling?','Do customers have too much bargaining power?','Do suppliers have too much bargaining power?','Do competitors have too much bargaining power?','What are the major risks in the industry?','Is the industry regulated? If yes, is regulation strict or lenient?']},
+{title:'2. BUSINESS MODEL',questions:['What products or services does the company sell?','How does the company make money?','Is the product or service unique?','Can this uniqueness remain for the long term?','Will the product remain relevant after 10 years?','What are the substitutes for the product or service?','Why are substitutes better?','Are customers switching to substitutes?','Is the company growing its market share?','What are the major costs associated with the product?','Are the costs fixed or variable?','What unique assets does the company have?']},
+{title:'3. KNOWING THE COMPANY',questions:['What is the company’s rank in the industry?','How long has the company existed?','Has the business remained the same over the past decade?','Will the core business grow in the next decade?','What are the company’s advantages compared to competitors?','What are the company’s disadvantages compared to competitors?','What competitive advantages does the company have?','What competitive disadvantages does the company have?','Is growth organic or acquisition-driven?']},
+{title:'4. MANAGEMENT',questions:['Who are the top-level management members?','How has the company performed under the current management?','What is the management compensation structure?','What promises has management fulfilled in the past?','Are promoter shares pledged?','If pledged, what percentage is pledged?','What is the promoter holding percentage?','What percentage of management’s net worth is invested in the company?','Who are the board of directors?']},
+{title:'5. ANNUAL REPORT',questions:['What goals are mentioned in the Chairman’s letter?','What goals are mentioned in the CEO’s letter?','What is the tone of management?','Does management appear open and honest?','What are the future goals of the company?','Do the future goals look realistic?','What are management’s views on foreseeable risks?','What special resolutions were passed?']},
+{title:'6. REVENUE',questions:['What are the major sources of revenue?','What is the historical revenue growth trend?','Which product lines are growing?']},
+{title:'7. COST OF GOODS',questions:['What is the gross margin?','What are the major raw materials?','Does the company benefit from economies of scale?']},
+{title:'8. EXPENSES',questions:['What are the largest expenses?','Are costs in line with industry players?','What do the notes to accounts say about major expenses?']},
+{title:'9. PROFITABILITY',questions:['Are fixed costs too high?','Are margins increasing or decreasing?','What contributes to margin changes?','Is Return on Equity (ROE) above 15%?','Is ROE improving or declining?']},
+{title:'10. BALANCE SHEET',questions:['What is the debt-to-equity composition?','What is the fixed asset turnover?','What is the working capital turnover?','What are the biggest balance sheet line items?','How are major line items changing over the years?']},
+{title:'11. CASH FLOW STATEMENT',questions:['Is cash flow from operations consistent with profit after tax?','How is the company using capital?','How much capital expenditure does the company make?','Has the company made acquisitions?','Does the company pay dividends?','Does the company do share buybacks?','Does the company generate consistent free cash flow?']},
+{title:'12. FINANCIAL RATIOS',questions:['What is the historical gross margin?','What is the historical EBITDA margin?','What is the historical EBIT margin?','What is the historical ROE?','What is the historical ROCE?','What is the historical ROA?']}
+];
+const app=document.getElementById('app');
+let n=1;
+data.forEach(section=>{
+const div=document.createElement('div');
+div.className='section';
+div.innerHTML=`<div class='section-title'>${section.title}</div>`;
+section.questions.forEach(q=>{
+const item=document.createElement('div');
+item.className='question';
+item.innerHTML=`<span class='number'>${n++}.</span> ${q}`;
+div.appendChild(item);
+});
+app.appendChild(div);
+});
+</script>
+</body>
+</html>
