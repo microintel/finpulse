@@ -120,19 +120,56 @@ function calculate(){
   const liabilities=borrow
   const net=assets-liabilities
 
-  document.getElementById("result").innerHTML=`
-    <div class="row"><span>Banks</span><span>₹${bankTotal}</span></div>
-    <div class="row"><span>Cash</span><span>₹${cash}</span></div>
-    <div class="row"><span>Mutual Fund</span><span>₹${mf}</span></div>
-    <div class="row"><span>FD</span><span>₹${fd}</span></div>
-    <div class="row"><span>Stocks</span><span>₹${stock}</span></div>
-    <div class="row"><span>Other</span><span>₹${other}</span></div>
-    <div class="row"><span>Receivable</span><span>₹${receivable}</span></div>
-    <div class="row"><span>Liabilities</span><span>₹${liabilities}</span></div>
-    <hr>
-    <div class="row net"><span>Net Worth</span><span>₹${net}</span></div>
-  `
-
+  const percent = x => assets ? ((x / assets) * 100).toFixed(1) : 0
+  
+  document.getElementById("result").innerHTML = `
+  <div class="row">
+  <span>Banks</span>
+  <span>₹${bankTotal} (${percent(bankTotal)}%)</span>
+  </div>
+  
+  <div class="row">
+  <span>Cash</span>
+  <span>₹${cash} (${percent(cash)}%)</span>
+  </div>
+  
+  <div class="row">
+  <span>Mutual Fund</span>
+  <span>₹${mf} (${percent(mf)}%)</span>
+  </div>
+  
+  <div class="row">
+  <span>FD</span>
+  <span>₹${fd} (${percent(fd)}%)</span>
+  </div>
+  
+  <div class="row">
+  <span>Stocks</span>
+  <span>₹${stock} (${percent(stock)}%)</span>
+  </div>
+  
+  <div class="row">
+  <span>Other</span>
+  <span>₹${other} (${percent(other)}%)</span>
+  </div>
+  
+  <div class="row">
+  <span>Receivable</span>
+  <span>₹${receivable} (${percent(receivable)}%)</span>
+  </div>
+  
+  <div class="row">
+  <span>Liabilities</span>
+  <span>₹${liabilities}</span>
+  </div>
+  
+  <hr>
+  
+  <div class="row net">
+  <span>Net Worth</span>
+  <span>₹${net}</span>
+  </div>
+  `;
   draw(assets,liabilities)
   store({banks,cash,mf,fd,stock,other,receivable,liabilities,assets,net,time:new Date().toISOString()})
 }
