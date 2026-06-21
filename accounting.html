@@ -3,41 +3,223 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BlackRoad Accounting</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230B0C0E'/%3E%3Crect x='6' y='15' width='8' height='2' rx='1' fill='%23F5C249'/%3E%3Crect x='18' y='15' width='8' height='2' rx='1' fill='%23F5C249'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
-:root{--bg:black;--accent:white}
+:root{
+  --bg:black;
+  --accent:white;
+  --gold:#F5C249;
+  --green:#37D67A;
+  --red:#FF6B6B;
+  --muted:#90949C;
+  --border:rgba(140,144,152,0.28);
+  --surface:rgba(140,144,152,0.06);
+}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);font-family:system-ui}
-.card{min-height:100vh;background:var(--bg);padding:18px 16px 90px;border-radius:18px 18px 0 0}
+
+.card{
+  position:relative;
+  min-height:100vh;
+  background:var(--bg);
+  padding:30px 16px 90px;
+  border-radius:18px 18px 0 0;
+  overflow:hidden;
+}
+.card::before{
+  content:"";
+  position:absolute;
+  top:0;left:0;right:0;
+  height:4px;
+  background-image:repeating-linear-gradient(90deg, var(--gold) 0 18px, transparent 18px 30px);
+  opacity:.9;
+}
 @media(min-width:700px){.card{max-width:420px;margin:20px auto;border-radius:18px;min-height:auto}}
-h2{text-align:center;margin:10px 0 16px;color:var(--accent)}
-.section{color:var(--accent);margin-top:16px;font-weight:600;font-size:14px}
-input{width:100%;padding:14px;border-radius:12px;border:1px solid #ddd;margin-bottom:10px;font-size:15px;background-color:var(--bg);color:var(--accent)}
+
+.eyebrow{
+  text-align:center;
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  letter-spacing:3px;
+  color:var(--gold);
+  text-transform:uppercase;
+  margin-bottom:6px;
+}
+h2{
+  text-align:center;
+  margin:0 0 18px;
+  color:var(--accent);
+  font-family:'Space Grotesk',system-ui;
+  font-weight:700;
+  font-size:23px;
+  letter-spacing:.2px;
+}
+h2 .hl{color:var(--gold)}
+
+.section{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-top:22px;
+  margin-bottom:8px;
+  color:var(--muted);
+  font-weight:600;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:1.6px;
+}
+.section::before{
+  content:"";
+  width:14px;height:2px;border-radius:2px;
+  background:var(--gold);
+  flex:0 0 auto;
+}
+
+input{
+  width:100%;
+  padding:14px 16px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  margin-bottom:10px;
+  font-size:15px;
+  background-color:var(--surface);
+  color:var(--accent);
+  font-family:'JetBrains Mono',monospace;
+  transition:border-color .15s ease, box-shadow .15s ease, background .15s ease;
+}
+input:focus{
+  outline:none;
+  border-color:var(--gold);
+  background:rgba(245,194,73,0.07);
+  box-shadow:0 0 0 3px rgba(245,194,73,0.15);
+}
 input::placeholder{
-color:grey;
+  color:var(--muted);
+  font-family:system-ui;
 }
-button{width:100%;padding:14px;border-radius:14px;border:none;background:var(--accent);color:var(--bg);font-size:15px;cursor:pointer;margin-bottom:10px}
-.secondary{background:#eee;color:#111}
-.row{display:flex;justify-content:space-between;padding:6px 0}
-.net{font-weight:700;font-size:17px}
-canvas{width:100%!important;margin-top:20px}
+
+button{
+  width:100%;
+  padding:14px;
+  border-radius:14px;
+  border:none;
+  background:var(--accent);
+  color:var(--bg);
+  font-size:15px;
+  font-weight:600;
+  letter-spacing:.2px;
+  cursor:pointer;
+  margin-bottom:10px;
+  transition:transform .12s ease, opacity .15s ease, background .15s ease;
+  font-family:system-ui;
+}
+button:active{transform:scale(.98)}
+
+.primary{
+  background:var(--gold);
+  color:#1a1300;
+  box-shadow:0 6px 18px rgba(245,194,73,0.25);
+}
+.primary:hover{opacity:.92}
+
+.secondary{
+  background:transparent;
+  color:var(--accent);
+  border:1px solid var(--border);
+}
+.secondary:hover{background:var(--surface)}
+
+.dashed-btn{
+  background:transparent;
+  color:var(--gold);
+  border:1.5px dashed rgba(245,194,73,0.55);
+}
+.dashed-btn:hover{background:rgba(245,194,73,0.08)}
+
+.custom-row{display:flex;gap:8px}
+.custom-row input{flex:1}
+.custom-row .rm{
+  flex:0 0 auto;
+  width:46px;
+  padding:0;
+  background:transparent;
+  color:var(--muted);
+  border:1px solid var(--border);
+  border-radius:12px;
+  margin-bottom:10px;
+  font-size:18px;
+  line-height:1;
+}
+.custom-row .rm:hover{color:var(--red);border-color:var(--red)}
+
 #result{
-color:var(--accent);
+  color:var(--accent);
+  margin-top:6px;
+  opacity:0;
 }
+#result.show{animation:fadeIn .4s ease forwards}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+.row{
+  display:flex;
+  justify-content:space-between;
+  padding:9px 0;
+  border-bottom:1px dashed var(--border);
+  font-family:'JetBrains Mono',monospace;
+  font-size:13.5px;
+}
+.row span:first-child{color:var(--muted);font-family:system-ui;font-size:13px}
+.row span:last-child{color:var(--accent);font-weight:600}
+
+hr{border:none;border-top:1px dashed var(--border);margin:6px 0}
+
+.net{
+  font-weight:700;
+  font-size:17px;
+  border-bottom:none;
+  border-top:2px solid var(--gold);
+  padding-top:14px;
+  margin-top:4px;
+}
+.net span:first-child{color:var(--accent);font-family:'Space Grotesk',system-ui;font-size:15px}
+.net span:last-child{font-size:21px}
+
+.subtotal{
+  font-weight:700;
+  border-bottom:none;
+  border-top:1px solid var(--border);
+  padding-top:14px;
+  margin-top:6px;
+}
+.subtotal span:first-child{color:var(--accent);font-family:'Space Grotesk',system-ui;font-size:14px}
+.subtotal span:last-child{color:var(--gold);font-size:17px}
+
+.chart-wrap{
+  margin-top:24px;
+  padding:18px;
+  border:1px solid var(--border);
+  border-radius:16px;
+  background:var(--surface);
+}
+canvas{width:100%!important}
 </style>
 </head>
 
 <body>
 
 <div class="card">
-  <h2>BlackRoad Accounting</h2>
+  <div class="eyebrow">· · · LEDGER · · ·</div>
+  <h2>Black<span class="hl">Road</span> Accounting</h2>
 
   <button class="secondary" onclick="fetchSaved()">Fetch Saved Data</button>
 
   <div class="section">Banks</div>
   <div id="banks"></div>
-  <button onclick="addBank()">+ Add Bank</button>
+  <button class="dashed-btn" onclick="addBank()">+ Add Bank</button>
 
   <div class="section">Cash</div>
   <input id="cash" placeholder="Cash">
@@ -46,14 +228,22 @@ color:var(--accent);
   <input id="mf" placeholder="Mutual Fund">
   <input id="fd" placeholder="Fixed Deposit">
   <input id="stock" placeholder="Stocks">
+  <input id="demat" placeholder="Demat Account">
+
+  <div class="section">Pending</div>
+  <input id="pending" placeholder="Pending Amount">
 
   <div class="section">Other Assets</div>
   <input id="other" placeholder="Other Assets">
 
-  <button onclick="calculate()">Calculate</button>
+  <div class="section">Additional</div>
+  <div id="customs"></div>
+  <button class="dashed-btn" onclick="addCustom()">+ Add Additional Asset</button>
+
+  <button class="primary" onclick="calculate()">Calculate</button>
 
   <div id="result"></div>
-  <canvas id="chart"></canvas>
+  <div class="chart-wrap"><canvas id="chart"></canvas></div>
 </div>
 
 <script>
@@ -104,6 +294,32 @@ function addBank(val=""){
 }
 addBank()
 
+function addCustom(name="",val=""){
+  const row=document.createElement("div")
+  row.className="custom-row"
+
+  const n=document.createElement("input")
+  n.className="custom-name"
+  n.placeholder="Asset Name"
+  n.value=name
+
+  const a=document.createElement("input")
+  a.className="custom-amt"
+  a.placeholder="Amount"
+  a.value=val
+
+  const rm=document.createElement("button")
+  rm.className="rm"
+  rm.type="button"
+  rm.innerHTML="&times;"
+  rm.onclick=()=>row.remove()
+
+  row.appendChild(n)
+  row.appendChild(a)
+  row.appendChild(rm)
+  document.getElementById("customs").appendChild(row)
+}
+
 const v=id=>Number(document.getElementById(id).value)||0
 
 function calculate(){
@@ -114,13 +330,30 @@ function calculate(){
   const mf=v("mf")
   const fd=v("fd")
   const stock=v("stock")
+  const demat=v("demat")
+  const pending=v("pending")
   const other=v("other")
 
-  const assets=bankTotal+cash+mf+fd+stock+other+receivable
+  const customRows=[...document.querySelectorAll(".custom-row")]
+  const customs=customRows.map(r=>({
+    name:r.querySelector(".custom-name").value||"Additional",
+    amt:Number(r.querySelector(".custom-amt").value)||0
+  }))
+  const customTotal=customs.reduce((a,c)=>a+c.amt,0)
+
+  const assets=bankTotal+cash+mf+fd+stock+demat+pending+other+customTotal+receivable
   const liabilities=borrow
   const net=assets-liabilities
 
   const percent = x => assets ? ((x / assets) * 100).toFixed(1) : 0
+  const netColor = net>=0 ? "var(--green)" : "var(--red)"
+
+  let customRowsHtml = customs.map(c=>`
+  <div class="row">
+  <span>${c.name}</span>
+  <span>₹${c.amt} (${percent(c.amt)}%)</span>
+  </div>
+  `).join("")
   
   document.getElementById("result").innerHTML = `
   <div class="row">
@@ -149,37 +382,66 @@ function calculate(){
   </div>
   
   <div class="row">
+  <span>Demat Account</span>
+  <span>₹${demat} (${percent(demat)}%)</span>
+  </div>
+  
+  <div class="row">
+  <span>Pending</span>
+  <span>₹${pending} (${percent(pending)}%)</span>
+  </div>
+  
+  <div class="row">
   <span>Other</span>
   <span>₹${other} (${percent(other)}%)</span>
   </div>
-  
+  ${customRowsHtml}
   <div class="row">
   <span>Receivable</span>
   <span>₹${receivable} (${percent(receivable)}%)</span>
   </div>
   
+  <div class="row subtotal">
+  <span>Total Assets (before liabilities)</span>
+  <span>₹${assets}</span>
+  </div>
+  
   <div class="row">
   <span>Liabilities</span>
-  <span>₹${liabilities}</span>
+  <span>− ₹${liabilities}</span>
   </div>
   
   <hr>
   
   <div class="row net">
-  <span>Net Worth</span>
-  <span>₹${net}</span>
+  <span>Net Worth (after liabilities)</span>
+  <span style="color:${netColor}">₹${net}</span>
   </div>
   `;
+
+  const resultEl=document.getElementById("result")
+  resultEl.classList.remove("show")
+  void resultEl.offsetWidth
+  resultEl.classList.add("show")
+
   draw(assets,liabilities)
-  store({banks,cash,mf,fd,stock,other,receivable,liabilities,assets,net,time:new Date().toISOString()})
+  store({banks,cash,mf,fd,stock,demat,pending,other,customs,receivable,liabilities,assets,net,time:new Date().toISOString()})
 }
 
 function draw(a,l){
   if(chart)chart.destroy()
   chart=new Chart(document.getElementById("chart"),{
     type:"doughnut",
-    data:{labels:["Assets","Liabilities"],datasets:[{data:[a,l]}]},
-    options:{plugins:{legend:{display:false}}}
+    data:{
+      labels:["Assets","Liabilities"],
+      datasets:[{
+        data:[a,l],
+        backgroundColor:["#F5C249","#3A3D42"],
+        borderWidth:0,
+        hoverOffset:6
+      }]
+    },
+    options:{cutout:"68%",plugins:{legend:{display:false}}}
   })
 }
 
@@ -203,7 +465,12 @@ function fetchSaved(){
       mf.value=d.mf||""
       fd.value=d.fd||""
       stock.value=d.stock||""
+      demat.value=d.demat||""
+      pending.value=d.pending||""
       other.value=d.other||""
+
+      document.getElementById("customs").innerHTML=""
+      ;(d.customs||[]).forEach(c=>addCustom(c.name,c.amt))
 
       calculate()
     }
